@@ -1,0 +1,88 @@
+<template>
+  <div id="app">
+    <router-view/>
+  </div>
+</template>
+
+<script>
+  export default {
+    name: 'App',
+    mounted () {
+      //微信配置
+      // this.$api.getWxConfig().then(res=>{
+      //   console.log('微信配置',res)
+      //   let appId = res.data.data.appid;
+      //   let noncestr = res.data.data.noncestr;
+      //   let jsapi_ticket = ['chooseImage','previewImage','uploadImage']
+      //   let signature = res.data.data.signature;
+      //   let timestamp = res.data.data.timestamp;
+      //   this.wx.config({
+      //     debug: true,
+      //     appId: appId,
+      //     timestamp: timestamp,
+      //     nonceStr: noncestr,
+      //     signature: signature,
+      //     jsApiList: jsapi_ticket
+      //   })
+      // })
+    }
+  }
+</script>
+
+<style>
+  #app {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /*text-align: center;*/
+    /*color: #2c3e50;*/
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    background-color: #F5F5F5;
+  }
+  .bold{
+    font-weight: 600;
+  }
+  .fs11 {
+    font-size: .11rem;
+  }
+
+  .fs12 {
+    font-size: .12rem;
+  }
+
+  .fs13 {
+    font-size: .13rem;
+  }
+
+  .fs14 {
+    font-size: .14rem;
+  }
+
+  .fs15 {
+    font-size: .15rem;
+  }
+  .fs16 {
+    font-size: .16rem;
+  }
+  .fs17 {
+    font-size: .17rem;
+  }
+
+  .color3 {
+    color: #333;
+  }
+
+  .color6 {
+    color: #666;
+  }
+
+  .color9 {
+    color: #999;
+  }
+</style>
