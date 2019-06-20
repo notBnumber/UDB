@@ -2,34 +2,38 @@
     <div class="content">
         <div class="top">
             <div class="left">
-                <img src="@/assets/image/tab1.png" alt="">
+                <img src="@/assets/image/tab1.png"  v-if="myInfo.img_head == ''" alt="">
+                 <img :src=myInfo.img_head   v-if="myInfo.img_head != ''" alt="">
             </div>
             <div class="right">
-                <div class="name">select from...</div>
+                <div class="name">{{myInfo.username}}</div>
                 <div class="info">
                     <div class="uid">
-                        UID：6113
+                        UID：{{myInfo.userid}}
                     </div>
-                    <div class="level">
-                        级别：VIP1星
-                    </div>
+              <div class="level" v-if='myInfo.level == 0'>级别：普通用户</div>
+              <div class="level" v-if='myInfo.level == 1'>级别：VIP1星</div>
+              <div class="level" v-if='myInfo.level == 2'>级别：VIP2星</div>
+              <div class="level" v-if='myInfo.level == 3'>级别：VIP3星</div>
+              <div class="level" v-if='myInfo.level == 4'>级别：VIP4星</div>
+              <div class="level" v-if='myInfo.level == 5'>级别：VIP5星</div>
                 </div>
             </div>
         </div>
         <div class="bottom">
             <div>
                 <span>
-                  余额：   
+                 {{ $t("info.yue")}}：   
                 </span>
                 <img src="@/assets/image/logo1.png" alt="">
-                <span>5555</span>
+                <span>{{yemoney}}</span>
             </div>
             <div>
                 <span>
-                  资产：      
+                  {{ $t("info.Assets")}}：      
                 </span>
                 <img src="@/assets/image/logo1.png" alt="">
-                <span>5555</span>
+                <span>{{zcmoney}}</span>
             </div>
         </div>
     </div>
@@ -37,10 +41,31 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      myInfo: {},
+
+      yemoney: "",
+      zcmoney: ""
+    };
   },
-  methods: {},
-  mounted() {}
+  methods: {
+    init() {
+      this.$api.getInfo({}).then(res => {
+        if (res.status == 1) {
+          // this.$router.push({ path: "/index" });
+          this.myInfo = res.result.userinfo;
+          this.yemoney = res.result.yemoney;
+          this.zcmoney = res.result.zcmoney;
+        } else {
+        }
+      });
+    }
+  },
+  mounted() {
+    console.log("个人信息");
+
+    this.init();
+  }
 };
 </script>
 
@@ -79,6 +104,9 @@ export default {
         font-weight: 400;
         color: rgba(255, 255, 255, 1);
       }
+      .level {
+        margin-left: .2rem;
+      }
     }
   }
   .bottom {
@@ -87,7 +115,7 @@ export default {
     bottom: 0;
     width: 100%;
     height: 0.4rem;
-    background: rgba(12, 105, 220, .5);
+    background: rgba(12, 105, 220, 0.5);
     border-radius: 0 0 0.16rem 0.16rem;
     padding-left: 0.13rem;
     display: flex;
@@ -101,15 +129,15 @@ export default {
       color: rgba(255, 255, 255, 1);
       opacity: 1;
       span {
-      margin-left: .05rem;
+        margin-left: 0.05rem;
       }
       img {
-        width: .12rem;
+        width: 0.12rem;
       }
-      &:last-child{
-          margin-left: .46rem;
+      &:last-child {
+        margin-left: 0.46rem;
       }
-    } 
+    }
   }
 }
 </style>

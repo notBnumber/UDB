@@ -17,16 +17,16 @@
         </div>
       </div>
       <div class="duihuan" v-if="tabIndex==0">
-        <div class="title">单价：8.39</div>
-        <input type="text" class placeholder="请输入需要兑换的UDB通证数">
+        <div class="title">单价：{{obj.udbprice}}</div>
+        <input type="text" class placeholder="请输入需要兑换的UDB通证数" v-model="UDB">
         <div class="tip">（提示：最低的兑换数量是1，请输入1的整数倍）</div>
-        <div class="btn df">确认兑换</div>
+        <div class="btn df" @click="duiHuan">确认兑换</div>
       </div>
       <div class="duihuan" v-if="tabIndex==1">
-        <div class="title">单价：8.39</div>
-        <input type="text" class placeholder="请输入需要兑换的AKFL通证数">
+        <div class="title">单价：{{obj.akprice}}</div>
+        <input type="text" class placeholder="请输入需要兑换的AKFL通证数" v-model="AKl">
         <div class="tip">（提示：最低的兑换数量是1，请输入1的整数倍）</div>
-        <div class="btn df">确认兑换</div>
+        <div class="btn df" @click="duiHuan">确认兑换</div>
       </div>
     </div>
   </div>
@@ -39,6 +39,12 @@ export default {
   name: "login",
   data() {
     return {
+      UDB:'',
+      AKl:'',
+      obj: {
+        akPrice: "",
+        udbprice: ""
+      },
       timeArr: [],
       arr: ["product"],
       list: [
@@ -83,6 +89,44 @@ export default {
   },
   created() {},
   methods: {
+    duiHuan() {
+      if (this.tabIndex == 0) {
+        this.$api
+          .tzchange({
+            zcnum: this.UDB,
+            type: 0
+          })
+          .then(res => {
+            if (res.status == 1) {
+              this.$toast(res.message);
+            } else {
+              console.log(333);
+            }
+          });
+      } else if (this.tabIndex == 1) {
+        this.$api
+          .tzchange({
+            zcnum: this.AKl,
+            type: 0
+          })
+          .then(res => {
+            if (res.status == 1) {
+              this.$toast(res.message);
+            } else {
+            }
+          });
+      }
+    },
+    init() {
+      this.$api.getPrice({}).then(res => {
+        if (res.status == 1) {
+          this.obj = res.result;
+          console.log(this.obj);
+          
+        } else {
+        }
+      });
+    },
     tab(index) {
       this.tabIndex = index;
     },
@@ -263,6 +307,8 @@ export default {
   },
   mounted() {
     document.title = "UDB通证";
+    this.init();
+
     this.drawLine();
     // var time = null;
     this.getDateArray();

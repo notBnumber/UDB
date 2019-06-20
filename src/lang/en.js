@@ -6,17 +6,25 @@ module.exports = {
         url:'../assets/image/tab1.png',
         tabList:[
             {
-                name:'index',
-                url:'../assets/image/tab1.png'
+                name:'Interturn',
             },
             {
-                name:'index',
-                url:'../assets/image/tab1.png'
+                name:'Exchange',
 
             },
             {
-                name:'index',
-                url:'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3966531786,4128907932&fm=27&gp=0.jpg'
+                name:'Investment',
+
+            },
+            {
+                name:'Recharge',
+            },
+            {
+                name:'House',
+
+            },
+            {
+                name:'Share',
 
             }
         ],
@@ -70,6 +78,30 @@ module.exports = {
         sale:'sale',
         price:'price',
         buy:'buy'
+    },
+    // 通证页面
+    info:{
+        yue:'balance',
+        Assets:'Assets'
+    },
+    myShareTab:[
+        {
+            name:'UDB'
+        },
+        {
+            name:'AKFL'
+        },
+        {
+            name:'withdrawal'
+        },
+        {
+            name:'record '
+        },
+    ],
+    myShareInfo:{
+        price:'price',
+        tip1:'(Note: The minimum amount of exchange is 1. Please enter an integer multiple of 1.)',
+        tip2:'(Note: The minimum amount of exchange is 1. Please enter an integer multiple of 1.)',
+        ok:'Confirmation of Exchange'
     }
-
 }

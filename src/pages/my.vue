@@ -43,7 +43,7 @@
          <span>{{zcmoney}}</span>
        </div>
        <div class="bottoms">
-         余额
+         资产
        </div>
       </div>
     </div>
@@ -211,6 +211,7 @@ export default {
             color: rgba(255, 255, 255, 1);
           }
           .level {
+            margin-left: .2rem;
             font-size: 0.15rem;
             font-family: PingFang-SC-Regular;
             font-weight: 400;

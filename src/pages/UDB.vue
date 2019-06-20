@@ -20,7 +20,7 @@
         <div class="content">
           <div class="left">
             <div class="top">UDB通证</div>
-            <div class="bottom">888.00</div>
+            <div class="bottom">{{money}}</div>
           </div>
           <div class="right">
             <div class="open df" @click="open(0)">解仓</div>
@@ -34,9 +34,9 @@
         </div>
         <div class="content">
           <div class="item" v-for="(item,index) in noteList" :key="index">
-            <div style="color:#F90101">{{item.now}}</div>
+            <div style="color:#F90101">{{item.getnum}}</div>
             <div>{{item.time}}</div>
-            <div>{{item.name}}</div>
+            <div>{{item.remark}}</div>
           </div>
         </div>
       </div>
@@ -51,6 +51,8 @@ export default {
   name: "login",
   data() {
     return {
+      money:'',
+      num:0,
       timeArr: [],
       arr: ["product"],
       list: [
@@ -74,29 +76,54 @@ export default {
         }
       ],
       noteList: [
-        {
-          name: "备注",
-          now: "728.31",
-          time: "2019-06-07 14:28:12"
-        },
-        {
-          name: "备注",
-          now: "728.31",
-          time: "2019-06-07 14:28:12"
-        },
 
-        {
-          name: "备注",
-          now: "728.31",
-          time: "2019-06-07 14:28:12"
-        }
       ]
     };
   },
   created() {},
   methods: {
+    init() {
+            this.$api
+        .indexinfo({
+        })
+        .then(res => {
+          if (res.status == 1) {
+            this.money = res.result.basemoney.tongzheng
+          } else {
+          }
+        });
+    },
+    getList(num) {
+      this.$api
+        .udbearninglist({
+          page: num
+        })
+        .then(res => {
+          if (res.status == 1) {
+            this.noteList = res.result;
+          } else {
+          }
+        });
+    },
     tab(index) {
       this.tabIndex = index;
+    },
+
+    onScroll() {
+      //可滚动容器的高度
+      let innerHeight = document.querySelector("#app").clientHeight;
+      //屏幕尺寸高度
+      let outerHeight = document.documentElement.clientHeight;
+      //可滚动容器超出当前窗口显示范围的高度
+      let scrollTop = document.documentElement.scrollTop;
+      //scrollTop在页面为滚动时为0，开始滚动后，慢慢增加，滚动到页面底部时，出现innerHeight < (outerHeight + scrollTop)的情况，严格来讲，是接近底部。
+      // console.log(innerHeight + " " + outerHeight + " " + scrollTop);
+      this.getList(++this.num);
+      if (innerHeight < outerHeight + scrollTop) {
+        //加载更多操作
+        console.log("loadmore", "jjjjjj");
+        // this.num += 1;
+      }
     },
     drawLine(arrs) {
       console.log(222);
@@ -116,7 +143,7 @@ export default {
           source: [
             arrs,
 
-            [ this.$t("udbInfo.zong"), 41.1, 30.4, 65.1, 53.3, 83.8, 98.7],
+            [this.$t("udbInfo.zong"), 41.1, 30.4, 65.1, 53.3, 83.8, 98.7],
             [this.$t("udbInfo.buy"), 86.5, 92.1, 85.7, 83.1, 73.4, 55.1],
             [this.$t("udbInfo.sale"), 24.1, 67.2, 79.5, 86.4, 65.2, 82.5],
             [this.$t("udbInfo.price"), 55.2, 67.1, 69.2, 72.4, 53.9, 39.1]
@@ -273,13 +300,16 @@ export default {
       return currentdate;
     }
   },
+  created() {
+    window.addEventListener("scroll", this.onScroll);
+  },
   mounted() {
     document.title = "UDB通证";
     this.drawLine();
     // var time = null;
     this.getDateArray();
-
-    // console.log(a);
+    this.init()
+    this.getList(this.num);
 
     this.timeArr = setInterval(this.getDateArray, 50000);
   },

@@ -25,6 +25,38 @@ class API {
   getInfo = params => {
     return http.post('User/getperinfo', params)
   }
+  // 兑换通证单价
+  getPrice = params => {
+    return http.post('PublicApi/tzprice', params)
+  }
+  // db兑换   myApi/tzchange
+  tzchange = params => {
+    return http.post('myApi/tzchange', params)
+  }
+  // UDB提现myApi/txudb
+  txudb = params => {
+    return http.post('myApi/txudb', params)
+  }
+  // 提现记录
+  txlist = params => {
+    return http.post('myApi/txlist', params)
+  }
+  // 收益纪律
+  udbearninglist = params => {
+    return http.post('myApi/udbearninglist', params)
+  }
+  // 首页信息
+  indexinfo = params => {
+    return http.post('myApi/indexinfo', params)
+  }
+  // 复投
+  dofutou = params => {
+    return http.post('myApi/dofutou', params)
+  }
+    // 复投记录
+    ftlist = params => {
+      return http.post('myApi/ftlist', params)
+    }
 }
 
 

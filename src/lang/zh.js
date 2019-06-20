@@ -6,44 +6,53 @@ module.exports = {
         url:'../assets/image/tab1.png',
         tabList:[
             {
-                name:'首页',
-                url:'img'
+                name:'互转',
 
             },
             {
-                name:'首页',
-                url:'img'
+                name:'兑换',
 
             },
             {
-                name:'首页',
-                url:'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3966531786,4128907932&fm=27&gp=0.jpg'
+                name:'复投',
+
+            },
+            {
+                name:'充值',
+
+            },
+            {
+                name:'房产',
+
+            },
+            {
+                name:'分享',
 
             }
         ],
         tabsList:[
             {
-                name:'首页',
+                name:'余额',
                 num:111
             },
             {
-                name:'首页',
+                name:'资产',
                 num:111
             },
             {
-                name:'首页',
+                name:'RP',
                 num:111
             },
             {
-                name:'首页',
+                name:'AKFL通证',
                 num:111
             },
             {
-                name:'首页',
+                name:'UDB通证',
                 num:111
             },
             {
-                name:'首页',
+                name:'购物券',
                 num:111
             },
         ]
@@ -71,5 +80,30 @@ module.exports = {
             sale:'出售量',
             price:'单价',
             buy:'购入量'
-        }
+        },
+            // 通证页面
+    info:{
+        yue:'余额',
+        Assets:'资产'
+    },
+    myShareTab:[
+        {
+            name:'UDB兑换'
+        },
+        {
+            name:'AKFL兑换'
+        },
+        {
+            name:'提现'
+        },
+        {
+            name:'记录 '
+        },
+    ],
+    myShareInfo:{
+        price:'单价',
+        tip1:'（提示：最低的兑换数量是1，请输入1的整数倍）',
+        tip2:'（提示：最低的兑换数量是1，请输入1的整数倍）',
+        ok:'确认兑换'
+    }
 }

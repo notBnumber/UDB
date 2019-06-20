@@ -2,77 +2,51 @@
   <div class="login">
     <!-- <div class="title">
       {{$t("message.title")}}
-    </div> -->
+    </div>-->
     <div class="top">
-        <info>
-
-        </info>
+      <info></info>
     </div>
     <div class="tab">
-      <div class="item "  :class="[tabIndex == index && 'active']" v-for="(item,index) in list" :key="index" @click="tab(index)">
-          <span>
-            {{item.name}}
-          </span>
-      <div class="xian">
-
+      <div
+        class="item"
+        :class="[tabIndex == index && 'active']"
+        v-for="(item,index) in $t('myShareTab')"
+        :key="index"
+        @click="tab(index)"
+      >
+        <span>{{item.name}}</span>
+        <div class="xian"></div>
       </div>
-      </div>  
     </div>
     <div class="duihuan" v-if="tabIndex==0">
-      <div class="title">
-        单价：8.39
-      </div>
-      <input type="text" class="" placeholder="请输入需要兑换的UDB通证数" >
-      <div class="tip">
-        （提示：最低的兑换数量是1，请输入1的整数倍）
-      </div>
-      <div class="btn df">
-        确认兑换
-      </div>
+      <div class="title">{{$t('myShareInfo.price')}}：{{obj.udbprice}}</div>
+      <input type="text" class placeholder="请输入需要兑换的UDB通证数" v-model="UDB">
+      <div class="tip">{{$t('myShareInfo.tip1')}}</div>
+      <div class="btn df" @click="duiHuan">确认兑换</div>
     </div>
-        <div class="duihuan" v-if="tabIndex==1">
-          <div class="title">
-            单价：8.39
-          </div>
-          <input type="text" class="" placeholder="请输入需要兑换的AKFL通证数" >
-          <div class="tip">
-            （提示：最低的兑换数量是1，请输入1的整数倍）
-          </div>
-          <div class="btn df">
-            确认兑换
-          </div>
+    <div class="duihuan" v-if="tabIndex==1">
+      <div class="title">{{$t('myShareInfo.price')}}：{{obj.akprice}}</div>
+      <input type="text" class placeholder="请输入需要兑换的AKFL通证数" v-model="AKl">
+      <div class="tip">{{$t('myShareInfo.tip2')}}</div>
+      <div class="btn df" @click="duiHuan">确认兑换</div>
     </div>
     <div class="tixian" v-if="tabIndex==2">
-      <input type="text" placeholder="请输入提现的钱包地址">
-      <input type="text" placeholder="请输入提现的UDB通证数额">
-      <div class="tip">
-        （提示：请认真核对提现的钱包地址，填错自负）
-      </div>
-          <div class="btn df">
-            确认提现
-          </div>
+      <input type="text" placeholder="请输入提现的钱包地址" v-model="address">
+      <input type="text" placeholder="请输入提现的UDB通证数额" v-model="money">
+      <div class="tip">（提示：请认真核对提现的钱包地址，填错自负）</div>
+      <div class="btn df" @click="txudb">确认提现</div>
     </div>
     <!-- 请输入需要兑换的AKFL通证数 -->
     <div class="note" v-if="tabIndex==3">
       <div class="tabs">
-        <div class="item df" v-for="(item,index) in noteTab" :key="index">
-          {{item.name}}
-        </div>
+        <div class="item df" v-for="(item,index) in noteTab" :key="index">{{item.name}}</div>
       </div>
       <div class="content">
         <div class="item" v-for="(item,index) in noteList" :key="index">
-          <div>
-            {{item.name}}
-          </div>
-                    <div>
-            {{item.money}}
-          </div>
-                    <div>
-            {{item.now}}
-          </div>
-                    <div>
-            {{item.time}}
-          </div>
+          <div>{{item.remark}}</div>
+          <div>{{item.tongzhengnum}}</div>
+          <div>{{item.time}}</div>
+          <div>{{item.state == 1?'申请中':(item.state == 2?'已通过':'已拒绝')}}</div>
         </div>
       </div>
     </div>
@@ -90,6 +64,15 @@ export default {
   name: "login",
   data() {
     return {
+      num: 0,
+      address: "",
+      money: "",
+      UDB: "",
+      AKl: "",
+      obj: {
+        akPrice: "",
+        udbprice: ""
+      },
       phone: "",
       pwd: "",
       student: true,
@@ -119,33 +102,13 @@ export default {
           name: "金额"
         },
         {
-          name: "当前余额"
+          name: "时间"
         },
         {
-          name: "时间"
+          name: "状态"
         }
       ],
-      noteList: [
-        {
-          name: "UDB兑换",
-          money: "8.39",
-          now: "728.31",
-          time: "2019-06-07 14:28:12"
-        },
-        {
-          name: "UDB兑换",
-          money: "8.39",
-          now: "728.31",
-          time: "2019-06-07 14:28:12"
-        },
-
-        {
-          name: "UDB兑换",
-          money: "8.39",
-          now: "728.31",
-          time: "2019-06-07 14:28:12"
-        }
-      ]
+      noteList: []
     };
   },
   created() {},
@@ -155,11 +118,108 @@ export default {
     },
     tab(index) {
       this.tabIndex = index;
+      if (this.tabIndex == 0) {
+        this.AKl = "";
+        this.address = "";
+        this.money = "";
+      } else if (this.tabIndex == 1) {
+        this.UDB = "";
+        this.address = "";
+        this.money = "";
+      } else if (this.tabIndex == 2) {
+        this.AKl = "";
+        this.UDB = "";
+      }
+    },
+    init() {
+      this.$api.getPrice({}).then(res => {
+        if (res.status == 1) {
+          this.obj = res.result;
+        } else {
+        }
+      });
+    },
+
+    duiHuan() {
+      if (this.tabIndex == 0) {
+        this.$api
+          .tzchange({
+            zcnum: this.UDB,
+            type: 0
+          })
+          .then(res => {
+            if (res.status == 1) {
+              this.$toast(res.message);
+            } else {
+              console.log(333);
+            }
+          });
+      } else if (this.tabIndex == 1) {
+        this.$api
+          .tzchange({
+            zcnum: this.AKl,
+            type: 0
+          })
+          .then(res => {
+            if (res.status == 1) {
+              this.$toast(res.message);
+            } else {
+            }
+          });
+      }
+    },
+    // udb提现
+    txudb() {
+      this.$api
+        .txudb({
+          zcnum: this.money,
+          moneyadress: this.address
+        })
+        .then(res => {
+          if (res.status == 1) {
+            this.obj = res.result;
+          } else {
+          }
+        });
+    },
+    //
+    getList(num) {
+      this.$api
+        .txlist({
+          page: num
+        })
+        .then(res => {
+          if (res.status == 1) {
+            this.noteList = this.noteList.concat(res.result);
+          } else {
+          }
+        });
+    },
+    onScroll() {
+      //可滚动容器的高度
+      let innerHeight = document.querySelector("#app").clientHeight;
+      //屏幕尺寸高度
+      let outerHeight = document.documentElement.clientHeight;
+      //可滚动容器超出当前窗口显示范围的高度
+      let scrollTop = document.documentElement.scrollTop;
+      //scrollTop在页面为滚动时为0，开始滚动后，慢慢增加，滚动到页面底部时，出现innerHeight < (outerHeight + scrollTop)的情况，严格来讲，是接近底部。
+      // console.log(innerHeight + " " + outerHeight + " " + scrollTop);
+        this.getList(++this.num)
+      if (innerHeight < outerHeight + scrollTop) {
+        //加载更多操作
+        console.log("loadmore",'jjjjjj');
+        // this.num += 1;
+        
+      }
     }
   },
   mounted() {
-    document.title = "我的学习";
-    this.http = localStorage.getItem("http");
+    document.title = "通证";
+    this.init();
+    this.getList(this.num);
+  },
+  created() {
+    window.addEventListener("scroll", this.onScroll);
   }
 };
 </script>
@@ -192,7 +252,6 @@ export default {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      
     }
     .active {
       font-size: 0.15rem;
@@ -344,7 +403,7 @@ export default {
           // flex-wrap: wrap;
           width: 22.5%;
           height: 0.55rem;
-          font-size: 0.15rem;
+          font-size: 0.13rem;
           font-family: SourceHanSansSC-Regular;
           font-weight: 400;
           color: rgba(51, 51, 51, 1);

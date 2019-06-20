@@ -24,7 +24,7 @@
     <div class="tab">
       <div class="item" v-for='(item,index) in $t("message.tabsList")' :key='index'>
         <div class="top">{{item.name}}</div>
-        <div class="top">{{item.num}}</div>
+        <div class="top">{{item.num == null?'0.000':item.num}}</div>
       </div>
     </div>
     <div class="tabs">
@@ -52,14 +52,9 @@ export default {
         this.$t("brands.item3"),
         this.$t("brands.item4"),
         this.$t("brands.item5"),
-        this.$t("brands.item6"),
-        
+        this.$t("brands.item6")
       ],
-      liss:[
-        {url:img},
-        {url:img},
-        {url:img}
-      ],
+      liss: [{ url: img }, { url: img }, { url: img },{ url: img }, { url: img }, { url: img }],
       Chinese: {
         title: "标题"
       },
@@ -106,6 +101,22 @@ export default {
     };
   },
   methods: {
+    init() {
+      this.$api.indexinfo({}).then(res => {
+        if (res.status == 1) {
+          let list = this.$t("message.tabsList")
+          for (let i in list) {
+            // list[i].num = res.reult.moneytype 
+            for(let i in res.result.moneytype ) {
+              console.log(1);
+              
+              list[i].num  = res.result.moneytype[i]
+            }
+          }
+        } else {
+        }
+      });
+    },
     china() {
       localStorage.setItem("language", true);
       this.language = true;
@@ -133,25 +144,26 @@ export default {
       } else if (index == 1) {
         localStorage.setItem("locale", "en");
         this.$i18n.locale = localStorage.getItem("locale");
-
       }
-        this.brands = this.$t("brands")
+      this.brands = this.$t("brands");
 
-            for(let item of this.$t("message.tabsList")) {
-      item.num = 2
-    }
-    console.log((navigator.language || navigator.browserLanguage).toLowerCase());
-    
+      // for (let item of this.$t("message.tabsList")) {
+      //   item.num = 2;
+      // }
+      console.log(
+        (navigator.language || navigator.browserLanguage).toLowerCase()
+      );
     }
   },
   mounted() {
     document.title = "首页";
+    this.init();
     // var arr, reg = new RegExp("(^| )" + 'PLAY_LANG' + "=([^;]*)(;|$)");
     // console.log(document.cookie.match(reg),'8888');
     //  var lang = navigator.language||navigator.userLanguage;//常规浏览器语言和IE浏
     //  console.log(lang);
     // //  alert(lang)
-         
+
     // this.http = localStorage.getItem("http");
     //   var languageindex=localStorage.getItem('language');
     //   var locallang=localStorage.getItem("locale");
@@ -163,7 +175,7 @@ export default {
     //   }
 
     // // this.selectText = this.selectList[languageindex].name;
-    
+
     // this.selectIndex=0
     // this.$i18n.locale = locallang;
     // function getUrlParam(name) {
