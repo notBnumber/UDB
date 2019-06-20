@@ -20,7 +20,6 @@ import liuyan from '@/pages/liuyan' //留言反馈
 import ii from '@/pages/ii' //测试
 import posterCenter from '@/pages/posterCenter' //海报中心
 import my from '@/pages/my' //个人中心
-import shop from '@/pages/shop' //商城
 import our from '@/pages/our' //个人中心
 import myInfo from '@/pages/myInfo' //我的资料
 import vip from '@/pages/vip' //成为VIP
@@ -165,11 +164,6 @@ export default new Router({
       path: '/my',
       name: 'my',
       component: my
-    },
-    {
-      path: '/shop',
-      name: 'shop',
-      component: shop
     },
     {
       path: '/our',

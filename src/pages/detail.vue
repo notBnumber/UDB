@@ -1,95 +1,6 @@
 <template>
   <div class="login">
-    <div class="mask" v-if="share == true">
-      <div class="infos">
-        <!-- add_21a02.png -->
-        <img src="@/assets/img/add_21a02.png" alt="">
-        <span>点此右上角便可以分享给他人</span>
-      </div>
-      <div class="btns" @click="share = false">我知道了</div>
-    </div>
-    <div id="bg" v-if="show"></div>
-    <div class="home" @click="tohome">
-      <img src="@/assets/img/btn_home.png" alt="">
-    </div>
-    <div class="top" v-if="show == true">
-      <img src="@/assets/img/home_b12.png" alt="">
-      <p>您已成功预约此直播！</p>
-      <span>直播开始前15分钟将通过服务号通知</span>
-      <div class="xin">您如果想要更多优质内容，请填写相关信息， 我们会有专人联系您</div>
-      <div class="button">
-        <div class="left" @click="nono">
-          不需要
-        </div>
-        <div class="right" @click="toInfo">
 
-          去填写
-        </div>
-      </div>
-    </div>
-    <div class="video " :style="{backgroundImage: 'url(' + http+bespokeInfo.cover + ')'}">
-      <div class="mask">
-
-      </div>
-      <div class="classDetail" @click="toDetail(bespokeInfo.curriculumId)">
-        <span>
-          课程详情
-        </span>
-        <img src="@/assets/img/home_b11@2x.png" alt="">
-      </div>
-
-      <div class="start" v-if="start == false">
-        <span>
-          直播未开始
-        </span>
-        <p v-if="bespokeInfo.isBuy == true">
-          开播前提醒
-        </p>
-      </div>
-    </div>
-    <div class="title">
-      <p>{{bespokeInfo.title}}</p>
-      <div class="content">
-        <p>{{bespokeInfo.timeStyle}}</p>
-        <div class="div1" :class="[bespokeInfo.isBuy==false && 'div2']">{{bespokeInfo.isBuy==true?'已购买课程':'未购买课程'}}</div>
-      </div>
-    </div>
-    <div class="main">
-      <span>讲师</span>
-      <div class="info" style="margin-top:.18rem">
-        <img :src="http+bespokeInfo.head" alt="">
-        <span>{{bespokeInfo.lecturerName}}</span>
-      </div>
-      <p style="margin-top:.14rem" v-html="bespokeInfo.lecturerDetail"></p>
-      <div class="content" v-html="bespokeInfo.introduce">
-        <!-- <span>课程简介</span>
-        <img src="@/assets/img/home_b04.png" alt="">
-        <p>
-          绘画历史20余年，合作品牌包括故宫、德芙、杜蕾斯、 周黑鸭以及电影《大鱼海棠》，参与录制淘宝造物节官 方宣传片MV，优酷首播第一期了不起的匠人，入驻诚品 书店苏州店。电影《大鱼海棠》，参与录制淘宝造物节官 方宣传片MV，优酷首播第一期了不起的匠人，入驻诚品 书店苏州店。
-        </p>
-        <img src="@/assets/img/home_b05.png" alt=""> -->
-      </div>
-    </div>
-    <div class="foot">
-      <div class="left">
-        <div class="t">
-          <img src="@/assets/img/home_b06.png" alt="">
-          <span>客服</span>
-        </div>
-        <div class="t">
-          <img src="@/assets/img/home_b07.png" alt="" v-if="iscell == false" @click="cell">
-          <img src="@/assets/img/home_b09.png" alt="" v-if="iscell == true" @click="cell">
-          <span>收藏</span>
-        </div>
-        <div class="t" @click="shares">
-          <img src="@/assets/img/home_b08.png" alt="">
-          <span>分享</span>
-        </div>
-      </div>
-      <div class="right" @click="btn" :class="[is == true && 'right_active']">
-        {{msg}}
-      </div>
-    </div>
   </div>
 </template>
 
@@ -351,20 +262,7 @@ export default {
     }
   },
   mounted() {
-    document.title = "预告详情";
-    console.log(this.$route);
-    this.http = localStorage.getItem("http");
-    if (this.getUrlParam("id") == "") {
-      this.id = this.getUrlParam("ids");
-    } else {
 
-      this.id = this.getUrlParam("id");
-    }
-    this.sessionId = this.getUrlParam('sessionId')
-    this.getNowFormatDate();
-    this.init();
-    this.getWx();
-    this.getShare();
   }
 };
 </script>

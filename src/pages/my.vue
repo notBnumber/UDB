@@ -3,16 +3,22 @@
     <div class="top">
       <div class="info">
         <div class="left">
-          <img src="@/assets/image/tab1.png" alt="">
+          <img :src="myInfo.img_head" alt="">
         </div>
         <div class="right">
           <div class="lt">
             <div class="name">
-              select*from ysk_use...
+              {{myInfo.username}}
             </div>
             <div class="bottom">
-              <div class="id">UID：6113</div>
-              <div class="level">级别：VIP1星</div>
+              <div class="id">UID：{{myInfo.userid}}</div>
+              <div class="level" v-if='myInfo.level == 0'>级别：普通用户</div>
+              <div class="level" v-if='myInfo.level == 1'>级别：VIP1星</div>
+              <div class="level" v-if='myInfo.level == 2'>级别：VIP2星</div>
+              <div class="level" v-if='myInfo.level == 3'>级别：VIP3星</div>
+              <div class="level" v-if='myInfo.level == 4'>级别：VIP4星</div>
+              <div class="level" v-if='myInfo.level == 5'>级别：VIP5星</div>
+              
             </div>
           </div>
           <div class="rt">
@@ -25,7 +31,7 @@
       <div class="item">
        <div class="tops">
          <img src="@/assets/image/logo.png" alt="">
-         <span>614.83</span>
+         <span>{{yemoney}}</span>
        </div>
        <div class="bottoms">
          余额
@@ -34,7 +40,7 @@
             <div class="item">
        <div class="tops">
          <img src="@/assets/image/logo.png" alt="">
-         <span>614.83</span>
+         <span>{{yemoney}}</span>
        </div>
        <div class="bottoms">
          余额
@@ -115,7 +121,8 @@ export default {
       classIndex: 0,
       browsePages: [],
       http: "",
-      websock: null //建立的连接
+      yemoney:'',
+      zcmoney:""
     };
   },
   created() {
@@ -130,7 +137,9 @@ export default {
       this.$api.getInfo({}).then(res => {
         if (res.status == 1) {
           // this.$router.push({ path: "/index" });
-          
+          this.yemoney = res.result.yemoney
+          this.yemoney = res.result.yemoney
+
         } else {
         }
       });

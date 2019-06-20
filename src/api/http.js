@@ -56,10 +56,10 @@ export default {
     return new Promise (async (resolve, reject) => {
       try {
         const data = await http.get(url,{params})
-          const code = Number(data.data.code)
-          const desc = data.data.desc
-          if (status != 1) {
-            vm.$toast(data.data.desc)
+          const code = Number(data.data.status)
+          const desc = data.data.message
+          if (code != 1) {
+            vm.$toast(data.data.message)
           }
           resolve(data.data)
       }
@@ -73,12 +73,12 @@ export default {
     return new Promise(async (resolve, reject) => {
       try {
         const data = await http.post(url, qs.stringify(params))
-        const code = Number(data.data.code)
+        const code = Number(data.data.status)
         if(code == 0){
 
         }
         if (code != 1) {
-          vm.$toast(data.data.desc)
+          vm.$toast(data.data.message)
           return
         }
         if(code == 2){
@@ -100,11 +100,11 @@ export default {
     return new Promise(async (reslove, reject) => {
       try {
         const data = await form.post(url, params)
-        const code = Number(data.data.code)
+        const code = Number(data.data.status)
         if (code === 1) {
           reslove(data.data)
         } else {
-          vm.$toast(data.data.desc)
+          vm.$toast(data.data.message)
         }
       } catch (err) {
         console.log(err)

@@ -1,17 +1,38 @@
 <template>
   <div class="login">
-    <img src="@/assets/image/4.png" alt class="logo">
+    <img
+      src="@/assets/image/4.png"
+      alt
+      class="logo"
+    >
     <div class="content">
       <div class="item">
-        <img src="@/assets/image/youxiang.png" alt>
-        <input type="text" placeholder="请输入邮箱号" v-model="email">
+        <img
+          src="@/assets/image/youxiang.png"
+          alt
+        >
+        <input
+          type="text"
+          placeholder="请输入邮箱号"
+          v-model="email"
+        >
       </div>
       <div class="item last">
-        <img src="@/assets/image/pwd.png" alt>
-        <input type="password" placeholder="请输入登录密码" v-model="pwd">
+        <img
+          src="@/assets/image/pwd.png"
+          alt
+        >
+        <input
+          type="password"
+          placeholder="请输入登录密码"
+          v-model="pwd"
+        >
       </div>
       <span v-if="error == false">账号或密码有误，请核对后再输入</span>
-      <div class="btn df" @click="login">登录</div>
+      <div
+        class="btn df"
+        @click="login"
+      >登录</div>
       <div class="util">
         <div class="items">注册</div>
         <div class="items">忘记密码？</div>
@@ -45,27 +66,28 @@ export default {
   },
   methods: {
     login() {
-      // this.$api
-      //   .toLogin({
-      //     account: this.email,
-      //     password: this.pwd
-      //   })
-      //   .then(res => {
-      //     if (res.code == 1) {
-      //     } else {
-      //     }
-      //   });
-      this.$axios
-        .post("http://udb.red/Login/reg", {
-          account: "Fred",
-          password: "Flintstone"
+      this.$api
+        .toLogin({
+          account: '15625738634@163.com',
+          password: 123456
         })
-        .then(function(response) {
-          console.log(response);
-        })
-        .catch(function(error) {
-          console.log(error);
+        .then(res => {
+          if (res.status == 1) {
+            this.$router.push({ path: "/index" });
+          } else {
+          }
         });
+      // axios
+      //   .post("http://udb.red/Login/checkLogin", {
+      //     firstName: "Fred",
+      //     lastName: "Flintstone"
+      //   })
+      //   .then(function(response) {
+      //     console.log(response);
+      //   })
+      //   .catch(function(error) {
+      //     console.log(error);
+      //   });
     },
     log(info) {
       console.log(info);
@@ -92,25 +114,6 @@ export default {
     // 显示密码
     showPwd() {
       this.pwdType = this.pwdType === "password" ? "text" : "password";
-    },
-    wxLogin() {
-      // this.$api.authLogin({}).then(res => {
-      //   if (res.status == 1) {
-      //     this.$router.push({ path: "/index" });
-      //   } else {
-      //   }
-      // });
-      axios
-        .post("http://udb.red/Login/reg", {
-          firstName: "Fred",
-          lastName: "Flintstone"
-        })
-        .then(function(response) {
-          console.log(response);
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
     }
   },
   destroyed() {

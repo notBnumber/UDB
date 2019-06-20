@@ -1,111 +1,6 @@
 <template>
   <div class="login">
-    <div class="mask" v-if="share == true">
-      <div class="infos">
-        <img src="@/assets/img/add_21a02.png" alt="">
-        <span>点此右上角便可以分享给他人</span>
-      </div>
-      <div class="btns" @click="share = false">我知道了</div>
-    </div>
-    <div id="bg" v-if="show"></div>
-    <div class="home" @click="tohome">
-      <img src="@/assets/img/btn_home.png" alt="">
-    </div>
-    <div class="top" v-if="show == true">
-      <img src="@/assets/img/home_b12.png" alt="">
-      <p>您已成功加入学习！</p>
-      <div class="xin">您如果想要更多优质内容，请填写相关信息， 我们会有专人联系您</div>
-      <div class="button">
-        <div class="left" @click="show=false">
-          不需要
-        </div>
-        <div class="right" @click="toInfo">
-
-          去填写
-        </div>
-      </div>
-    </div>
-    <div class="video" :style="{backgroundImage: 'url(' + http+info.cover + ')'}">
-
-      <!-- <p class="classDetail">课程详情 ></p> -->
-
-      <!-- <div class="start">
-        <span>
-          直播未开始
-        </span>
-        <p>
-          开播前提醒
-        </p>
-      </div> -->
-    </div>
-    <div class="tabs">
-      <span v-for="(item , index ) in tabList" :key="index" :class="[tabIndex == index && 'span_active']" @click="tabs(index)">{{item.title}}
-        <p></p>
-      </span>
-
-    </div>
-    <div class="title" v-if="tabIndex == 0">
-      <p>{{info.name}}</p>
-      <div class="content">
-        <p>{{info.createTime}}至{{info.effectiveTime}}</p>
-        <p>{{info.studyCount}}人正在学习</p>
-        <!--  -->
-        <div v-if="info.isFree == 1">￥{{info.price}}</div>
-      </div>
-    </div>
-    <div class="main" v-if="tabIndex == 0">
-      <span>讲师</span>
-      <div class="teacher" v-for="(item ,index )  in info.lecturerList" :key="index">
-        <div class="info" style="margin-top:.18rem">
-
-          <img alt="" :src="http+item.head"> 
-          <span>{{item.name}}</span>
-        </div>
-        <p style="margin-top:.14rem" v-html="item.detail"></p>
-        <div class="content">
-          <span>课程简介</span>
-          <div v-html="info.content"></div>
-        </div>
-      </div>
-    </div>
-    <div class="main2" v-if="tabIndex == 1">
-      <div v-for="(item,index) in lists" :key="index" @click="toDetail(item.id,item.state)">
-        <span class="sp1">
-          <!-- <span>{{item.state == 1?'直播':'回放'}}</span> -->
-          <span v-if="item.state == 1">直播</span>
-          <span v-if="item.state == 2">回放</span>
-          <span v-if="item.state == 4">预约</span>
-        </span>
-        <span class="sp2">{{item.title}}</span>
-        <p v-if="item.state == 1">直播开始：2019-01-18 20:00-21:00</p>
-      </div>
-    </div>
-    <div class="foot">
-      <div class="left">
-        <div class="t">
-          <img src="@/assets/img/home_b06.png" alt="">
-          <span>客服</span>
-        </div>
-        <div class="t">
-          <img src="@/assets/img/home_b07.png" alt="" v-if="iscell == false" @click="cell">
-          <img src="@/assets/img/home_b09.png" alt="" v-if="iscell == true" @click="cell">
-          <span>收藏</span>
-        </div>
-        <div class="t" @click="shares">
-          <img src="@/assets/img/home_b08.png" alt="">
-          <span>分享</span>
-        </div>
-      </div>
-      <div class="right" @click="btn" v-if="isfree == false && this.need == false" :class="[is == true && 'right_active']">
-        {{msg}}
-      </div>
-      <div class="right" v-if="isfree == true && this.need == false ">
-        {{msgs}}
-      </div>
-      <div class="right" v-if="need == true" @click="tofree(info)">
-        {{info.isBuy == true?'已付费':'去付费'}}
-      </div>
-    </div>
+    
   </div>
 </template>
 
@@ -444,17 +339,17 @@ export default {
     }
   },
   mounted() {
-    document.title = "课程详情";
-    this.http = localStorage.getItem("http");
-    if (this.getUrlParam("id") == "") {
-      this.id = this.getUrlParam("ids");
-    } else {
-      this.id = this.getUrlParam("id");
-    }
-    this.sessionId = this.getUrlParam("sessionId");
-    this.init();
-    this.getWx();
-    this.getShare();
+    // document.title = "课程详情";
+    // this.http = localStorage.getItem("http");
+    // if (this.getUrlParam("id") == "") {
+    //   this.id = this.getUrlParam("ids");
+    // } else {
+    //   this.id = this.getUrlParam("id");
+    // }
+    // this.sessionId = this.getUrlParam("sessionId");
+    // this.init();
+    // this.getWx();
+    // this.getShare();
   }
 };
 </script>
