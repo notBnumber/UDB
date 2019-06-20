@@ -40,7 +40,7 @@
             <div class="item">
        <div class="tops">
          <img src="@/assets/image/logo.png" alt="">
-         <span>{{yemoney}}</span>
+         <span>{{zcmoney}}</span>
        </div>
        <div class="bottoms">
          余额
@@ -137,8 +137,9 @@ export default {
       this.$api.getInfo({}).then(res => {
         if (res.status == 1) {
           // this.$router.push({ path: "/index" });
+          this.myInfo = res.result.userinfo
           this.yemoney = res.result.yemoney
-          this.yemoney = res.result.yemoney
+          this.zcmoney = res.result.zcmoney
 
         } else {
         }
