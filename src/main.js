@@ -120,6 +120,13 @@ Vue.use(CellGroup);
 import echarts from 'echarts'
 
 Vue.prototype.$echarts = echarts 
+
+import VueScroller from 'vue-scroller'
+Vue.use(VueScroller)
+
+import { ImagePreview } from 'vant';
+
+Vue.use(ImagePreview);
 // 中英文切换
 import VueI18n from 'vue-i18n'
 

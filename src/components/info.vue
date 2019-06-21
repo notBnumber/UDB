@@ -11,12 +11,12 @@
                     <div class="uid">
                         UID：{{myInfo.userid}}
                     </div>
-              <div class="level" v-if='myInfo.level == 0'>级别：普通用户</div>
-              <div class="level" v-if='myInfo.level == 1'>级别：VIP1星</div>
-              <div class="level" v-if='myInfo.level == 2'>级别：VIP2星</div>
-              <div class="level" v-if='myInfo.level == 3'>级别：VIP3星</div>
-              <div class="level" v-if='myInfo.level == 4'>级别：VIP4星</div>
-              <div class="level" v-if='myInfo.level == 5'>级别：VIP5星</div>
+              <div class="level" v-if='myInfo.level == 0'>{{$t('info.level')}}：{{$t('info.level0')}}</div>
+              <div class="level" v-if='myInfo.level == 1'>{{$t('info.level')}}：{{$t('info.level1')}}</div>
+              <div class="level" v-if='myInfo.level == 2'>{{$t('info.level')}}：{{$t('info.level2')}}</div>
+              <div class="level" v-if='myInfo.level == 3'>{{$t('info.level')}}：{{$t('info.level3')}}</div>
+              <div class="level" v-if='myInfo.level == 4'>{{$t('info.level')}}：{{$t('info.level4')}}</div>
+              <div class="level" v-if='myInfo.level == 5'>{{$t('info.level')}}：{{$t('info.level5')}}</div>
                 </div>
             </div>
         </div>

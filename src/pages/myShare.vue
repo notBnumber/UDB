@@ -1,5 +1,5 @@
 <template>
-  <div class="login" >
+  <div class="login">
     <!-- <div class="title">
       {{$t("message.title")}}
     </div>-->
@@ -31,23 +31,26 @@
       <div class="btn df" @click="duiHuan">{{$t('myShareInfo.ok')}}</div>
     </div>
     <div class="tixian" v-if="tabIndex==2">
-      <input type="text" placeholder="请输入提现的钱包地址" v-model="address">
-      <input type="text" placeholder="请输入提现的UDB通证数额" v-model="money">
-      <div class="tip">（提示：请认真核对提现的钱包地址，填错自负）</div>
+      <input type="text" :placeholder=p3 v-model="address">
+      <input type="text" :placeholder=p4 v-model="money">
+      <div class="tip">{{$t('myShareInfo.tip3')}}</div>
       <div class="btn df" @click="txudb">{{$t('myShareInfo.ok')}}</div>
     </div>
+
     <div class="note" v-if="tabIndex==3" id="app">
-      <div class="tabs">
-        <div class="item df" v-for="(item,index) in noteTab" :key="index">{{item.name}}</div>
-      </div>
-      <div class="content">
-        <div class="item" v-for="(item,index) in noteList" :key="index">
-          <div>{{item.remark}}</div>
-          <div>{{item.tongzhengnum}}</div>
-          <div>{{item.time}}</div>
-          <div>{{item.state == 1?'申请中':(item.state == 2?'已通过':'已拒绝')}}</div>
+      <scroller :on-infinite="infinite">
+        <div class="tabs">
+          <div class="item df" v-for="(item,index) in $t('shareNoteTab')" :key="index">{{item.name}}</div>
         </div>
-      </div>
+        <div class="content">
+          <div class="item" v-for="(item,index) in noteList" :key="index">
+            <div>{{item.remark}}</div>
+            <div>{{item.tongzhengnum}}</div>
+            <div>{{item.time}}</div>
+            <div>{{item.state == 1?'申请中':(item.state == 2?'已通过':'已拒绝')}}</div>
+          </div>
+        </div>
+      </scroller>
     </div>
     <Tab :tabIndex="1"></Tab>
   </div>
@@ -63,8 +66,10 @@ export default {
   name: "login",
   data() {
     return {
-      p1:this.$t('myShareInfo.p1'),
-      p2:this.$t('myShareInfo.p2'),
+      p1: this.$t("myShareInfo.p1"),
+      p2: this.$t("myShareInfo.p2"),
+      p3: this.$t("myShareInfo.p3"),
+      p4: this.$t("myShareInfo.p4"),
       num: 0,
       address: "",
       money: "",
@@ -110,17 +115,16 @@ export default {
         }
       ],
       noteList: [],
-      wrapper:'',
-      noteHeight:""
+      wrapper: "",
+      noteHeight: ""
     };
   },
   created() {},
   methods: {
     toDetail(id) {
-      if(index == 3) {
-      this.$router.push({ path: "/AKFL" });
-
-      } 
+      if (index == 3) {
+        this.$router.push({ path: "/AKFL" });
+      }
     },
     tab(index) {
       this.tabIndex = index;
@@ -135,8 +139,10 @@ export default {
       } else if (this.tabIndex == 2) {
         this.AKl = "";
         this.UDB = "";
-      } else if(index == 3) {
-            this.noteHeight = document.getElementById("tab").offsetHeight + document.getElementById("top").offsetHeight
+      } else if (index == 3) {
+        this.noteHeight =
+          document.getElementById("tab").offsetHeight +
+          document.getElementById("top").offsetHeight;
       }
     },
     init() {
@@ -203,6 +209,11 @@ export default {
           }
         });
     },
+    infinite(done) {
+      this.getList(++this.num)
+      done(true);
+      console.log(11111);
+    },
     onScroll() {
       // //可滚动容器的高度
       // let clientHeight = document.querySelector("#app").clientHeight;
@@ -217,11 +228,11 @@ export default {
       // //   //加载更多操作
       // //   console.log("loadmore",'jjjjjj');
       // //   // this.num += 1;
-        
+
       // // }
       //           if(scrollTop >= (scrollHeight - clientHeight)) {
       //             console.log('jjjjjhjhj');
-                  
+
       //       // if(this.totalRow > this.goodsList.length){
       //       //   console.log('加载');
       //       //   this.pageNumber +=1
@@ -231,27 +242,23 @@ export default {
       //       // }
       //     }
 
-      let scrollHeight = this.wrapper.scrollHeight
-          let clientHeight = this.wrapper.clientHeight
-          let scrollTop = this.wrapper.scrollTop
-          console.log(scrollHeight,clientHeight,scrollTop,'898888');
-          if(scrollTop >= (scrollHeight - clientHeight)) {
-            console.log(9999);
-            
-          }
+      let scrollHeight = this.wrapper.scrollHeight;
+      let clientHeight = this.wrapper.clientHeight;
+      let scrollTop = this.wrapper.scrollTop;
+      console.log(scrollHeight, clientHeight, scrollTop, "898888");
+      if (scrollTop >= scrollHeight - clientHeight) {
+        console.log(9999);
+      }
     }
   },
   mounted() {
     document.title = "通证";
     this.init();
     this.getList(this.num);
-    this.wrapper = document.getElementById('app')
- 
-
-    
+    this.wrapper = document.getElementById("app");
   },
   created() {
-    window.addEventListener("scroll", this.onScroll);
+    // window.addEventListener("scroll", this.onScroll);
   }
 };
 </script>
@@ -408,9 +415,10 @@ export default {
     }
   }
   .note {
+    position: relative;
     height: 4.78rem;
-    overflow-y :auto;
-      padding-bottom: .7rem;
+    // overflow-y: auto;
+    padding-bottom: 0.7rem;
     .tabs {
       height: 0.43rem;
       width: 100%;

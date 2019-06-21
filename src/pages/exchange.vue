@@ -49,10 +49,10 @@ export default {
       arr: ["product"],
       list: [
         {
-          name: "所持通证"
+          name: "UDB兑换"
         },
         {
-          name: "收益记录"
+          name: "AKFL兑换"
         }
       ],
       tabIndex: 0,

@@ -29,16 +29,18 @@
         </div>
       </div>
       <div class="note" v-if="tabIndex==1">
-        <div class="tabs">
-          <div class="item df" v-for="(item,index) in noteTab" :key="index">{{item.name}}</div>
-        </div>
-        <div class="content">
-          <div class="item" v-for="(item,index) in noteList" :key="index">
-            <div style="color:#F90101">{{item.getnum}}</div>
-            <div>{{item.time}}</div>
-            <div>{{item.remark}}</div>
+        <scroller :on-infinite="infinite">
+          <div class="tabs">
+            <div class="item df" v-for="(item,index) in noteTab" :key="index">{{item.name}}</div>
           </div>
-        </div>
+          <div class="content">
+            <div class="item" v-for="(item,index) in noteList" :key="index">
+              <div style="color:#F90101">{{item.getnum}}</div>
+              <div>{{item.time}}</div>
+              <div>{{item.remark}}</div>
+            </div>
+          </div>
+        </scroller>
       </div>
     </div>
   </div>
@@ -51,8 +53,8 @@ export default {
   name: "login",
   data() {
     return {
-      money:'',
-      num:0,
+      money: "",
+      num: 0,
       timeArr: [],
       arr: ["product"],
       list: [
@@ -75,39 +77,33 @@ export default {
           name: "备注"
         }
       ],
-      noteList: [
-
-      ]
+      noteList: []
     };
   },
   created() {},
   methods: {
     open(index) {
-      if(index == 0) {
+      if (index == 0) {
         this.$router.push({ path: "/jiecang" });
 
-// 截仓
+        // 截仓
       } else {
-// 锁仓
-      // this.$api.closeudb({}).then(res => {
-      //   if (res.status == 1) {
-      //   } else {
-      //   }
-      // });
+        // 锁仓
+        // this.$api.closeudb({}).then(res => {
+        //   if (res.status == 1) {
+        //   } else {
+        //   }
+        // });
         this.$router.push({ path: "/Position" });
-      
       }
     },
     init() {
-            this.$api
-        .indexinfo({
-        })
-        .then(res => {
-          if (res.status == 1) {
-            this.money = res.result.basemoney.tongzheng
-          } else {
-          }
-        });
+      this.$api.indexinfo({}).then(res => {
+        if (res.status == 1) {
+          this.money = res.result.basemoney.tongzheng;
+        } else {
+        }
+      });
     },
     getList(num) {
       this.$api
@@ -314,17 +310,22 @@ export default {
       console.log(this.timeArr);
 
       return currentdate;
+    },
+    infinite(done) {
+      this.getList(++this.num);
+      done(true);
+      console.log(11111);
     }
   },
   created() {
-    window.addEventListener("scroll", this.onScroll);
+    // window.addEventListener("scroll", this.onScroll);
   },
   mounted() {
     document.title = "UDB通证";
     this.drawLine();
     // var time = null;
     this.getDateArray();
-    this.init()
+    this.init();
     this.getList(this.num);
 
     this.timeArr = setInterval(this.getDateArray, 50000);
@@ -431,6 +432,7 @@ i {
     }
 
     .note {
+      position: relative;
       .tabs {
         height: 0.43rem;
         width: 100%;

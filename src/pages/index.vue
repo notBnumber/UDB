@@ -54,7 +54,14 @@ export default {
         this.$t("brands.item5"),
         this.$t("brands.item6")
       ],
-      liss: [{ url: img }, { url: img }, { url: img },{ url: img }, { url: img }, { url: img }],
+      liss: [
+        { url: img },
+        { url: img },
+        { url: img },
+        { url: img },
+        { url: img },
+        { url: img }
+      ],
       Chinese: {
         title: "标题"
       },
@@ -97,47 +104,45 @@ export default {
       selectList: [{ name: "CN 中文" }, { name: "EN 英文" }],
       selectIndex: 0,
       isSelect: false,
-      selectText: "CN 中文"
+      selectText: "CN 中文",
+      numList:[]
     };
   },
   methods: {
     // 详情
     toDetail(index) {
-      if(index == 3) {
-         this.$router.push({ path: "/AKFL" });
-      }
-      else if(index == 4) {
-      this.$router.push({ path: "/UDB" });
-
+      if (index == 3) {
+        this.$router.push({ path: "/AKFL" });
+      } else if (index == 4) {
+        this.$router.push({ path: "/UDB" });
       }
     },
     detail(index) {
-      if(index == 0) {
+      if (index == 0) {
         this.$router.push({ path: "/Interturn" });
-      } else if(index == 1) {
+      } else if (index == 1) {
         this.$router.push({ path: "/exchange" });
-      } else if(index == 2) {
+      } else if (index == 2) {
         this.$router.push({ path: "/doubles" });
-      } else if(index == 3) {
+      } else if (index == 3) {
         this.$router.push({ path: "/chongzhiNote" });
-      } else if(index == 4 ) {
+      } else if (index == 4) {
         this.$router.push({ path: "/house" });
-
-      } else if(index == 5) {
+      } else if (index == 5) {
         //  this.$router.push({ path: "/house" });
-
       }
     },
     init() {
       this.$api.indexinfo({}).then(res => {
         if (res.status == 1) {
-          let list = this.$t("message.tabsList")
+          let list = this.$t("message.tabsList");
+          this.numList  = res.result.moneytype
           for (let i in list) {
-            // list[i].num = res.reult.moneytype 
-            for(let i in res.result.moneytype ) {
+            // list[i].num = res.reult.moneytype
+            for (let i in res.result.moneytype) {
               console.log(1);
-              
-              list[i].num  = res.result.moneytype[i]
+
+              list[i].num = res.result.moneytype[i];
             }
           }
         } else {
@@ -164,6 +169,15 @@ export default {
       this.selectText = this.selectList[index].name;
       this.isSelect = !this.isSelect;
       this.language = !this.language;
+      let list = this.$t("message.tabsList");      
+      for (let i in list) {
+        // list[i].num = res.reult.moneytype
+        for (let i in this.numList) {
+          console.log(1);
+
+          list[i].num = this.numList[i];
+        }
+      }
       localStorage.setItem("language", index);
       if (index == 0) {
         localStorage.setItem("locale", "zh");
@@ -185,6 +199,8 @@ export default {
   mounted() {
     document.title = "首页";
     this.init();
+    this.$i18n.locale = localStorage.getItem("locale");
+    this.selectText = this.selectList[localStorage.getItem("language")].name;
     // var arr, reg = new RegExp("(^| )" + 'PLAY_LANG' + "=([^;]*)(;|$)");
     // console.log(document.cookie.match(reg),'8888');
     //  var lang = navigator.language||navigator.userLanguage;//常规浏览器语言和IE浏

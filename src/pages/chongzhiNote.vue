@@ -1,21 +1,9 @@
 <template>
   <div class="login">
-    <div
-      class="popContainer df"
-      v-if="show"
-    >
+    <div class="popContainer df" v-if="show">
       <div class="mask df">
-        <img
-          src="@/assets/image/close.png"
-          class="close"
-          alt
-          @click="show=!show"
-        >
-        <img
-          class="img1"
-          src="@/assets/image/qianbao.png"
-          alt
-        >
+        <img src="@/assets/image/close.png" class="close" alt @click="show=!show">
+        <img class="img1" src="@/assets/image/qianbao.png" alt>
       </div>
     </div>
 
@@ -34,106 +22,47 @@
         <div class="xian"></div>
       </div>
     </div>
-    <div
-      class="duihuan"
-      v-if="tabIndex==0"
-    >
+    <div class="duihuan" v-if="tabIndex==0">
       <div class="title">
         <div class="mon df">金额</div>
-        <input
-          type="text"
-          placeholder="请输入您的充值金额"
-          class="inp"
-          v-model="moneynum"
-        >
+        <input type="text" placeholder="请输入您的充值金额" class="inp" v-model="moneynum">
       </div>
       <div class="textContent">
-        <textarea
-          name
-          id
-          cols="30"
-          rows="10"
-          maxlength="300"
-          placeholder="充值备注"
-          v-model="content"
-        ></textarea>
+        <textarea name id cols="30" rows="10" maxlength="300" placeholder="充值备注" v-model="content"></textarea>
         <div class="tips">{{content.length}}/300</div>
       </div>
       <div class="tipss">请上传充值凭证，保持图片清晰度，不可涂改，提高充值审核通过率（图片不超过3张）</div>
       <div class="contentAdd">
-        <div
-          class="imgUrl"
-          v-if="imgUrl.length!=0"
-        >
+        <div class="imgUrl" v-if="imgUrl.length!=0">
           <div class="imgs df">
             <div class="del">
-              <img
-                src="@/assets/image/close.png"
-                class="close"
-                alt
-                @click="del(index)"
-              >
+              <img src="@/assets/image/close.png" class="close" alt @click="del(index)">
             </div>
-            <img
-              :src="item"
-              v-for="(item,index) in imgUrl"
-              :key="index"
-              alt
-            >
+            <img :src="item" v-for="(item,index) in imgUrl" :key="index" alt>
           </div>
         </div>
-        <div
-          class="add"
-          v-if="imgUrl.length<3"
-        >
-          <input
-            type="file"
-            accept="image/*"
-            ref="avatarInput"
-            @change="changeImage($event)"
-          >
-          <img
-            src="@/assets/image/add1.png"
-            alt
-          >
+        <div class="add" v-if="imgUrl.length<3">
+          <input type="file" accept="image/*" ref="avatarInput" @change="changeImage($event)">
+          <img src="@/assets/image/add1.png" alt>
           <span>上传凭证</span>
         </div>
       </div>
       <div class="btnContent">
-        <div class="btn df" @click="submit">
-          充值
-        </div>
+        <div class="btn df" @click="submit">充值</div>
       </div>
     </div>
 
     <!-- 请输入需要兑换的AKFL通证数 -->
-    <div
-      class="note"
-      v-if="tabIndex==1"
-    >
+    <div class="note" v-if="tabIndex==1">
       <div class="tabs">
-        <div
-          class="item df"
-          v-for="(item,index) in noteTab"
-          :key="index"
-        >{{item.name}}</div>
+        <div class="item df" v-for="(item,index) in noteTab" :key="index">{{item.name}}</div>
       </div>
       <div class="content">
-        <div
-          class="item"
-          v-for="(item,index) in noteList"
-          :key="index"
-        >
-          <div>{{item.time}}</div>
-          <div
-            class="money"
-            :class="[item.state ==0 && 'active']"
-          >{{item.money}}</div>
-          <div>{{item.states}}</div>
-          <div
-            class="open df"
-            @click="open()"
-          >查看凭证</div>
+        <div class="item" v-for="(item,index) in noteList" :key="index">
+          <div>{{item.addtime}}</div>
+          <div class="money" :class="[item.state ==0 && 'active']">{{item.moneynum}}</div>
+          <div>{{item.status == 0?'待确认':(item.status == 1?'已确认':'拒绝')}}</div>
+          <div class="open df" @click="open(item.pzimgarr)">查看凭证</div>
         </div>
       </div>
     </div>
@@ -143,14 +72,14 @@
 // import qs from 'qs'
 import Tab from "../components/Tab";
 import info from "../components/info";
-
+import { ImagePreview } from 'vant';
 export default {
   components: { Tab, info },
 
   name: "login",
   data() {
     return {
-      imgString:[],
+      imgString: [],
       content: "",
       show: false,
       phone: "",
@@ -182,125 +111,26 @@ export default {
           name: "凭证"
         }
       ],
-      noteList: [
-        {
-          name: "UDB兑换",
-          money: "8.39",
-          now: "728.31",
-          time: "2019-06-07 14:28:12",
-          state: 0,
-          states: "已完成"
-        },
-        {
-          name: "UDB兑换",
-          money: "8.39",
-          now: "728.31",
-          time: "2019-06-07 14:28:12",
-          state: 1,
-          states: "已完成"
-        },
-
-        {
-          name: "UDB兑换",
-          money: "8.39",
-          now: "728.31",
-          time: "2019-06-07 14:28:12",
-          state: 1,
-          states: "已完成"
-        },
-        {
-          name: "UDB兑换",
-          money: "8.39",
-          now: "728.31",
-          time: "2019-06-07 14:28:12",
-          state: 0,
-          states: "已完成"
-        },
-        {
-          name: "UDB兑换",
-          money: "8.39",
-          now: "728.31",
-          time: "2019-06-07 14:28:12",
-          state: 1,
-          states: "已完成"
-        },
-
-        {
-          name: "UDB兑换",
-          money: "8.39",
-          now: "728.31",
-          time: "2019-06-07 14:28:12",
-          state: 1,
-          states: "已完成"
-        },
-        {
-          name: "UDB兑换",
-          money: "8.39",
-          now: "728.31",
-          time: "2019-06-07 14:28:12",
-          state: 0,
-          states: "已完成"
-        },
-        {
-          name: "UDB兑换",
-          money: "8.39",
-          now: "728.31",
-          time: "2019-06-07 14:28:12",
-          state: 1,
-          states: "已完成"
-        },
-
-        {
-          name: "UDB兑换",
-          money: "8.39",
-          now: "728.31",
-          time: "2019-06-07 14:28:12",
-          state: 1,
-          states: "已完成"
-        },
-        {
-          name: "UDB兑换",
-          money: "8.39",
-          now: "728.31",
-          time: "2019-06-07 14:28:12",
-          state: 0,
-          states: "已完成"
-        },
-        {
-          name: "UDB兑换",
-          money: "8.39",
-          now: "728.31",
-          time: "2019-06-07 14:28:12",
-          state: 1,
-          states: "已完成"
-        },
-
-        {
-          name: "UDB兑换",
-          money: "8.39",
-          now: "728.31",
-          time: "2019-06-07 14:28:12",
-          state: 1,
-          states: "已完成"
-        }
-      ],
+      noteList: [],
       imgUrl: [],
       imgInfo: [],
-      moneynum:""
+      moneynum: ""
     };
   },
   created() {},
   methods: {
     submit() {
-      this.$api.addmoney({
-        pzimg:this.imgString.toString(),
-        comment:this.content,
-        moneynum:this.moneynum
-      }).then(res=> {
-        if(res.status == 1) {
-          this.$toast('提交成功')
-        }
-      })
+      this.$api
+        .addmoney({
+          pzimg: this.imgString.toString(),
+          comment: this.content,
+          moneynum: this.moneynum
+        })
+        .then(res => {
+          if (res.status == 1) {
+            this.$toast("提交成功");
+          }
+        });
     },
     // 删除图片
     del(index) {
@@ -324,22 +154,23 @@ export default {
         console.log(this.result);
         console.log(that.imgUrl, that.imgInfo);
         const formd = new FormData();
-        formd.append("uploadfile", that.imgInfo[that.imgInfo.length-1]);
+        formd.append("uploadfile", that.imgInfo[that.imgInfo.length - 1]);
         console.log(formd);
-        that.$axios({
-          url: "http://udb.red/User/upImg",
-          method: "post",
-          data: formd,
-          headers: {
-            "Content-Type": "multipart/form-data"
-          }
-        })
+        that
+          .$axios({
+            url: "http://udb.red/User/upImg",
+            method: "post",
+            data: formd,
+            headers: {
+              "Content-Type": "multipart/form-data"
+            }
+          })
           //then里面跟一个成功回调函数
           .then(function(resp) {
             if (resp.data.status == 1) {
-                that.imgString.push(resp.data.result)
-                console.log(that.imgString);
-                
+              that.imgString.push(resp.data.result);
+              console.log(that.imgString);
+
               // $.toast("成功", "text");
             } else {
               // $.toast("无法加载", "text");
@@ -351,17 +182,22 @@ export default {
           });
       };
     },
-    open() {
-      this.show = !this.show;
-      console.log(1);
+    open(arr) {
+      // this.show = !this.show;
+      // console.log(1);
+      ImagePreview(arr);
     },
     toDetail(id) {
       this.$router.push({ path: "/zhiboDetail", query: { id: id } });
     },
     tab(index) {
       this.tabIndex = index;
-      if(index == 1) {
-        
+      if (index == 1) {
+        this.$api.addrecordlist({}).then(res => {
+          this.noteList = res.result;
+        });
+      } else {
+        this.noteList = [];
       }
     },
     next() {

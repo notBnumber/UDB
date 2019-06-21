@@ -10,7 +10,7 @@
       <div
         class="item"
         :class="[tabIndex == index && 'active']"
-        v-for="(item,index) in list"
+        v-for="(item,index) in $t('retrun.list')"
         :key="index"
         @click="tab(index)"
       >
@@ -23,11 +23,11 @@
       v-if="tabIndex==0"
     >
       <div v-if="!show">
-        <div class="title">请输入收款方UID进行转账</div>
+        <div class="title">{{$t('retrun.tip1')}}</div>
         <input
           type="text"
           class
-          placeholder="请输入对方UID账号"
+          :placeholder=p1
           v-model="udbId"
         >
         <div
@@ -54,11 +54,11 @@
       v-if="tabIndex==1"
     >
       <div v-if="!show">
-        <div class="title">请输入收款方UID进行转账</div>
+        <div class="title">{{$t('retrun.tip1')}}</div>
         <input
           type="text"
           class
-          placeholder="请输入对方UID账号"
+          :placeholder=p1
           v-model="yueId"
         >
         <div
@@ -67,7 +67,7 @@
         >下一步</div>
       </div>
       <div v-if="show">
-        <div class="title">请输入转出金额</div>
+        <div class="title">{{$t('retrun.tip1')}}</div>
         <input
           type="text"
           class
@@ -121,6 +121,7 @@ export default {
   name: "login",
   data() {
     return {
+      p1:this.$t('retrun.tip2'),
       info: null,
       udbId: "",
       yueId: "",

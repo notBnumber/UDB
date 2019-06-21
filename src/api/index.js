@@ -96,6 +96,14 @@ class API {
   setpsw = params => {
     return http.post("myApi/setpsw", params);
   };
+  // 解仓 
+  setpsw = params => {
+    return http.post("myApi/setpsw", params);
+  };
+  // 充值记录 MyApi/addrecordlist
+  addrecordlist = params => {
+    return http.post("myApi/addrecordlist", params);
+  };
 }
 
 export default new API();

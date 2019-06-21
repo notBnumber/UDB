@@ -8,6 +8,8 @@
   export default {
     name: 'App',
     mounted () {
+    this.$i18n.locale = localStorage.getItem("locale");
+
       //微信配置
       // this.$api.getWxConfig().then(res=>{
       //   console.log('微信配置',res)
