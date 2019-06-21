@@ -36,7 +36,7 @@
         >下一步</div>
       </div>
       <div v-if="show">
-        <div class="title">请输入转出金额</div>
+        <div class="title">{{$t('retrun.tip1')}}</div>
         <input
           type="text"
           class
