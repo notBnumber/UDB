@@ -22,13 +22,13 @@
 
     </div>
     <div class="tab">
-      <div class="item" v-for='(item,index) in $t("message.tabsList")' :key='index'>
+      <div class="item" v-for='(item,index) in $t("message.tabsList")' :key='index' @click='toDetail(index)'>
         <div class="top">{{item.name}}</div>
         <div class="top">{{item.num == null?'0.000':item.num}}</div>
       </div>
     </div>
     <div class="tabs">
-      <div class="item"  v-for='(item,index) in $t("message.tabList")' :key='index'>
+      <div class="item"  v-for='(item,index) in $t("message.tabList")' :key='index' @click='detail(index)'>
         <img :src=liss[index].url alt="">
           <div>{{item.name}}</div>
       </div>
@@ -101,6 +101,33 @@ export default {
     };
   },
   methods: {
+    // 详情
+    toDetail(index) {
+      if(index == 3) {
+         this.$router.push({ path: "/AKFL" });
+      }
+      else if(index == 4) {
+      this.$router.push({ path: "/UDB" });
+
+      }
+    },
+    detail(index) {
+      if(index == 0) {
+        this.$router.push({ path: "/Interturn" });
+      } else if(index == 1) {
+        this.$router.push({ path: "/exchange" });
+      } else if(index == 2) {
+        this.$router.push({ path: "/doubles" });
+      } else if(index == 3) {
+        this.$router.push({ path: "/chongzhiNote" });
+      } else if(index == 4 ) {
+        this.$router.push({ path: "/house" });
+
+      } else if(index == 5) {
+        //  this.$router.push({ path: "/house" });
+
+      }
+    },
     init() {
       this.$api.indexinfo({}).then(res => {
         if (res.status == 1) {

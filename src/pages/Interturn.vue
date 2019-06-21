@@ -4,7 +4,7 @@
       {{$t("message.title")}}
     </div>-->
     <div class="top">
-      <info></info>
+      <info :info='info'></info>
     </div>
     <div class="tab">
       <div
@@ -18,28 +18,91 @@
         <div class="xian"></div>
       </div>
     </div>
-    <div class="duihuan" v-if="tabIndex==0" >
+    <div
+      class="duihuan"
+      v-if="tabIndex==0"
+    >
       <div v-if="!show">
         <div class="title">请输入收款方UID进行转账</div>
-      <input type="text" class placeholder="请输入对方UID账号">
-      <div class="btn df" @click="next()">下一步</div>
+        <input
+          type="text"
+          class
+          placeholder="请输入对方UID账号"
+          v-model="udbId"
+        >
+        <div
+          class="btn df"
+          @click="next()"
+        >下一步</div>
       </div>
-            <div v-if="show">
+      <div v-if="show">
         <div class="title">请输入转出金额</div>
-      <input type="text" class placeholder="请输入1的整数倍">
-      <div class="btn df">确认兑换</div>
+        <input
+          type="text"
+          class
+          placeholder="请输入1的整数倍"
+          v-model="udbNum"
+        >
+        <div
+          class="btn df"
+          @click='btn'
+        >确认兑换</div>
       </div>
     </div>
-
+    <div
+      class="duihuan"
+      v-if="tabIndex==1"
+    >
+      <div v-if="!show">
+        <div class="title">请输入收款方UID进行转账</div>
+        <input
+          type="text"
+          class
+          placeholder="请输入对方UID账号"
+          v-model="yueId"
+        >
+        <div
+          class="btn df"
+          @click="next()"
+        >下一步</div>
+      </div>
+      <div v-if="show">
+        <div class="title">请输入转出金额</div>
+        <input
+          type="text"
+          class
+          placeholder="请输入1的整数倍"
+          v-model="yueNum"
+        >
+        <div
+          class="btn df"
+          @click='btn'
+        >确认兑换</div>
+      </div>
+    </div>
     <!-- 请输入需要兑换的AKFL通证数 -->
-    <div class="note" v-if="tabIndex==1">
+    <div
+      class="note"
+      v-if="tabIndex==2"
+    >
       <div class="tabs">
-        <div class="item df" v-for="(item,index) in noteTab" :key="index">{{item.name}}</div>
+        <div
+          class="item df"
+          v-for="(item,index) in noteTab"
+          :key="index"
+        >{{item.name}}</div>
       </div>
       <div class="content">
-        <div class="item" v-for="(item,index) in noteList" :key="index">
+        <div
+          class="item"
+          v-for="(item,index) in noteList"
+          :key="index"
+        >
           <div>{{item.name}}</div>
-          <div class="money" :class="[item.state ==0 && 'active']">{{item.money}}</div>
+          <div
+            class="money"
+            :class="[item.state ==0 && 'active']"
+          >{{item.money}}</div>
           <div>{{item.now}}</div>
           <div>{{item.time}}</div>
         </div>
@@ -58,7 +121,12 @@ export default {
   name: "login",
   data() {
     return {
-      show:false,
+      info: null,
+      udbId: "",
+      yueId: "",
+      udbNum: "",
+      yueNum: "",
+      show: false,
       phone: "",
       pwd: "",
       student: true,
@@ -67,7 +135,10 @@ export default {
       http: "",
       list: [
         {
-          name: "转出 "
+          name: "UDB转出 "
+        },
+        {
+          name: "余额转出 "
         },
         {
           name: "互转记录"
@@ -94,15 +165,14 @@ export default {
           money: "8.39",
           now: "728.31",
           time: "2019-06-07 14:28:12",
-          state:0
+          state: 0
         },
         {
           name: "UDB兑换",
           money: "8.39",
           now: "728.31",
           time: "2019-06-07 14:28:12",
-          state:1
-
+          state: 1
         },
 
         {
@@ -110,7 +180,7 @@ export default {
           money: "8.39",
           now: "728.31",
           time: "2019-06-07 14:28:12",
-          state:1
+          state: 1
         }
       ]
     };
@@ -124,7 +194,58 @@ export default {
       this.tabIndex = index;
     },
     next() {
-      this.show = !this.show
+      this.show = !this.show;
+      if (this.tabIndex == 0) {
+        this.$api
+          .getInfo({
+            touid: this.udbId
+          })
+          .then(res => {
+            if (res.status == 1) {
+              this.info = res.result;
+            } else {
+            }
+          });
+      } else {
+        this.$api
+          .getInfo({
+            touid: this.yueId
+          })
+          .then(res => {
+            if (res.status == 1) {
+              this.info = res.result;
+            } else {
+            }
+          });
+      }
+    },
+    btn() {
+      this.show = !this.show;
+      if (this.tabIndex == 0) {
+        this.$api
+          .changetz({
+            touid: this.udbId,
+            tznum: this.udbNum
+          })
+          .then(res => {
+            if (res.status == 1) {
+              this.info = res.result;
+            } else {
+            }
+          });
+      } else {
+        this.$api
+          .changemoney({
+            touid: this.yueId,
+            money: this.yueNum
+          })
+          .then(res => {
+            if (res.status == 1) {
+              this.info = res.result;
+            } else {
+            }
+          });
+      }
     }
   },
   mounted() {
@@ -296,7 +417,6 @@ export default {
         font-family: SourceHanSansSC-Regular;
         font-weight: 400;
         color: rgba(102, 102, 102, 1);
-
       }
     }
     .content {
@@ -319,8 +439,8 @@ export default {
           font-weight: 400;
           color: rgba(51, 51, 51, 1);
         }
-                .money {
-          color: #F90101;
+        .money {
+          color: #f90101;
         }
         .active {
           color: #008000;

@@ -40,6 +40,7 @@
 </template>
 <script>
 export default {
+  props: ["info"],
   data() {
     return {
       myInfo: {},
@@ -47,6 +48,16 @@ export default {
       yemoney: "",
       zcmoney: ""
     };
+  },
+  watch: {
+    info() {
+      console.log(333);
+      // this.myInfo  = this.info
+      console.log(this.info, this.myInfo);
+      this.myInfo = this.info.userinfo;
+      this.yemoney = this.info.yemoney;
+      this.zcmoney = this.info.zcmoney;
+    }
   },
   methods: {
     init() {
@@ -64,7 +75,13 @@ export default {
   mounted() {
     console.log("个人信息");
 
-    this.init();
+    if (this.info == null) {
+      console.log(5566);
+
+      this.init();
+    } else {
+      this.info = this.myInfo;
+    }
   }
 };
 </script>
@@ -105,7 +122,7 @@ export default {
         color: rgba(255, 255, 255, 1);
       }
       .level {
-        margin-left: .2rem;
+        margin-left: 0.2rem;
       }
     }
   }

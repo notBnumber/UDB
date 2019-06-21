@@ -13,7 +13,7 @@ axios.defaults.withCredentials = true
 // axios 配置
 //发送一般请求
 const http = axios.create({
-  timeout: 5000,
+  timeout: 50000,
   baseURL: URL,
   header: {
     'Content-Type': 'application/x-www-form-urlencoded',

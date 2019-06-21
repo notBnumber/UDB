@@ -107,7 +107,7 @@ export default {
         this.$api
           .tzchange({
             zcnum: this.AKl,
-            type: 0
+            type: 1
           })
           .then(res => {
             if (res.status == 1) {

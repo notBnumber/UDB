@@ -1,12 +1,12 @@
 <template>
-  <div class="login">
+  <div class="login" >
     <!-- <div class="title">
       {{$t("message.title")}}
     </div>-->
-    <div class="top">
+    <div class="top" id="top">
       <info></info>
     </div>
-    <div class="tab">
+    <div class="tab" id="tab">
       <div
         class="item"
         :class="[tabIndex == index && 'active']"
@@ -20,24 +20,23 @@
     </div>
     <div class="duihuan" v-if="tabIndex==0">
       <div class="title">{{$t('myShareInfo.price')}}：{{obj.udbprice}}</div>
-      <input type="text" class placeholder="请输入需要兑换的UDB通证数" v-model="UDB">
+      <input type="text" class :placeholder="p1" v-model="UDB">
       <div class="tip">{{$t('myShareInfo.tip1')}}</div>
-      <div class="btn df" @click="duiHuan">确认兑换</div>
+      <div class="btn df" @click="duiHuan">{{$t('myShareInfo.ok')}}</div>
     </div>
     <div class="duihuan" v-if="tabIndex==1">
       <div class="title">{{$t('myShareInfo.price')}}：{{obj.akprice}}</div>
-      <input type="text" class placeholder="请输入需要兑换的AKFL通证数" v-model="AKl">
+      <input type="text" class :placeholder="p2" v-model="AKl">
       <div class="tip">{{$t('myShareInfo.tip2')}}</div>
-      <div class="btn df" @click="duiHuan">确认兑换</div>
+      <div class="btn df" @click="duiHuan">{{$t('myShareInfo.ok')}}</div>
     </div>
     <div class="tixian" v-if="tabIndex==2">
       <input type="text" placeholder="请输入提现的钱包地址" v-model="address">
       <input type="text" placeholder="请输入提现的UDB通证数额" v-model="money">
       <div class="tip">（提示：请认真核对提现的钱包地址，填错自负）</div>
-      <div class="btn df" @click="txudb">确认提现</div>
+      <div class="btn df" @click="txudb">{{$t('myShareInfo.ok')}}</div>
     </div>
-    <!-- 请输入需要兑换的AKFL通证数 -->
-    <div class="note" v-if="tabIndex==3">
+    <div class="note" v-if="tabIndex==3" id="app">
       <div class="tabs">
         <div class="item df" v-for="(item,index) in noteTab" :key="index">{{item.name}}</div>
       </div>
@@ -64,6 +63,8 @@ export default {
   name: "login",
   data() {
     return {
+      p1:this.$t('myShareInfo.p1'),
+      p2:this.$t('myShareInfo.p2'),
       num: 0,
       address: "",
       money: "",
@@ -108,13 +109,18 @@ export default {
           name: "状态"
         }
       ],
-      noteList: []
+      noteList: [],
+      wrapper:'',
+      noteHeight:""
     };
   },
   created() {},
   methods: {
     toDetail(id) {
-      this.$router.push({ path: "/zhiboDetail", query: { id: id } });
+      if(index == 3) {
+      this.$router.push({ path: "/AKFL" });
+
+      } 
     },
     tab(index) {
       this.tabIndex = index;
@@ -129,6 +135,8 @@ export default {
       } else if (this.tabIndex == 2) {
         this.AKl = "";
         this.UDB = "";
+      } else if(index == 3) {
+            this.noteHeight = document.getElementById("tab").offsetHeight + document.getElementById("top").offsetHeight
       }
     },
     init() {
@@ -196,27 +204,51 @@ export default {
         });
     },
     onScroll() {
-      //可滚动容器的高度
-      let innerHeight = document.querySelector("#app").clientHeight;
-      //屏幕尺寸高度
-      let outerHeight = document.documentElement.clientHeight;
-      //可滚动容器超出当前窗口显示范围的高度
-      let scrollTop = document.documentElement.scrollTop;
-      //scrollTop在页面为滚动时为0，开始滚动后，慢慢增加，滚动到页面底部时，出现innerHeight < (outerHeight + scrollTop)的情况，严格来讲，是接近底部。
-      // console.log(innerHeight + " " + outerHeight + " " + scrollTop);
-        this.getList(++this.num)
-      if (innerHeight < outerHeight + scrollTop) {
-        //加载更多操作
-        console.log("loadmore",'jjjjjj');
-        // this.num += 1;
+      // //可滚动容器的高度
+      // let clientHeight = document.querySelector("#app").clientHeight;
+      // //屏幕尺寸高度
+      // let outerHeight = document.documentElement.clientHeight;
+      // //可滚动容器超出当前窗口显示范围的高度
+      // let scrollTop = document.documentElement.scrollTop;
+      // //scrollTop在页面为滚动时为0，开始滚动后，慢慢增加，滚动到页面底部时，出现innerHeight < (outerHeight + scrollTop)的情况，严格来讲，是接近底部。
+      // // console.log(innerHeight + " " + outerHeight + " " + scrollTop);
+      // // if (innerHeight < outerHeight + scrollTop) {
+      // //   this.getList(++this.num)
+      // //   //加载更多操作
+      // //   console.log("loadmore",'jjjjjj');
+      // //   // this.num += 1;
         
-      }
+      // // }
+      //           if(scrollTop >= (scrollHeight - clientHeight)) {
+      //             console.log('jjjjjhjhj');
+                  
+      //       // if(this.totalRow > this.goodsList.length){
+      //       //   console.log('加载');
+      //       //   this.pageNumber +=1
+      //       //   this.pageList()
+      //       // }else{
+      //       //   this.$Toast('没有更多咯!!!')
+      //       // }
+      //     }
+
+      let scrollHeight = this.wrapper.scrollHeight
+          let clientHeight = this.wrapper.clientHeight
+          let scrollTop = this.wrapper.scrollTop
+          console.log(scrollHeight,clientHeight,scrollTop,'898888');
+          if(scrollTop >= (scrollHeight - clientHeight)) {
+            console.log(9999);
+            
+          }
     }
   },
   mounted() {
     document.title = "通证";
     this.init();
     this.getList(this.num);
+    this.wrapper = document.getElementById('app')
+ 
+
+    
   },
   created() {
     window.addEventListener("scroll", this.onScroll);
@@ -226,9 +258,11 @@ export default {
 <style lang="scss" scoped>
 .login {
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
   background-color: #fff;
   padding: 0 0.15rem;
+
   .top {
     width: 100%;
     height: 1.4rem;
@@ -374,6 +408,9 @@ export default {
     }
   }
   .note {
+    height: 4.78rem;
+    overflow-y :auto;
+      padding-bottom: .7rem;
     .tabs {
       height: 0.43rem;
       width: 100%;

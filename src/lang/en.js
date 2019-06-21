@@ -102,6 +102,8 @@ module.exports = {
         price:'price',
         tip1:'(Note: The minimum amount of exchange is 1. Please enter an integer multiple of 1.)',
         tip2:'(Note: The minimum amount of exchange is 1. Please enter an integer multiple of 1.)',
-        ok:'Confirmation of Exchange'
+        ok:'Confirmation of Exchange',
+        p1:'Please enter the number of UDB passes to be converted',
+        p2:'Please enter the number of AKFL passes to be converted'
     }
 }

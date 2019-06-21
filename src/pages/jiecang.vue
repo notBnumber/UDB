@@ -1,15 +1,26 @@
 <template>
   <div class="login">
     <div class="tabs">
-      <div class="item df" v-for="(item,index) in noteTab" :key="index">{{item.name}}</div>
+      <div
+        class="item df"
+        v-for="(item,index) in noteTab"
+        :key="index"
+      >{{item.name}}</div>
     </div>
     <div class="content">
-      <div class="item" v-for="(item,index) in noteList" :key="index">
-        <div>{{item.time}}</div>
-        <div class="num">{{item.num}}</div>
-        <div>{{item.day}}</div>
-        <div class="state df" @click="open(item.state)">
-          {{item.state == 0?'锁仓中':(item.state == 1 ?'已解仓':'解仓')}}
+      <div
+        class="item"
+        v-for="(item,index) in noteList"
+        :key="index"
+      >
+        <div>{{item.addtime}}</div>
+        <div class="num">{{item.nums}}</div>
+        <div>{{item.closetime}}</div>
+        <div
+          class="state df"
+          @click="open(item.ispasstime)"
+        >
+          {{item.ispasstime == 0?'锁仓中':'解仓'}}
         </div>
       </div>
     </div>
@@ -61,12 +72,20 @@ export default {
   created() {},
   methods: {
     open(state) {
-      console.log(state);
-      this.$toast("解仓成功");
+        this.$router.push({ path: "/Position"});
+    },
+    init() {
+      this.$api.udbcloselist({}).then(res => {
+        if (res.status == 1) {
+          this.noteList = res.result
+        } else {
+        }
+      });
     }
   },
   mounted() {
     document.title = "解仓";
+    this.init();
   }
 };
 </script>

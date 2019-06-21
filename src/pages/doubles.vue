@@ -87,22 +87,10 @@ export default {
   },
   created() {},
   methods: {
-    init() {
+    duihuan() {
       this.$api
         .dofutou({
           money: this.money
-        })
-        .then(res => {
-          if (res.status == 1) {
-            this.$toast(res.message);
-          } else {
-          }
-        });
-    },
-    duihuan(num) {
-      this.$api
-        .ftlist({
-          page: num
         })
         .then(res => {
           if (res.status == 1) {

@@ -54,6 +54,7 @@ import myCode from '@/pages/myCode' //我的二维码
 import exchange from '@/pages/exchange' //兑换
 import Position from '@/pages/Position' //锁仓
 import cartAddress from '@/pages/cartAddress' //钱包地址
+import choosePwd from '@/pages/choosePwd' //设置密码
 Vue.use(Router)
 
 export default new Router({
@@ -332,6 +333,11 @@ export default new Router({
       path: '/cartAddress',
       name: 'cartAddress',
       component: cartAddress
+    },
+    {
+      path: '/choosePwd',
+      name: 'choosePwd',
+      component: choosePwd
     },
   ]
 })

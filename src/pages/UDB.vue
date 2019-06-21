@@ -82,6 +82,22 @@ export default {
   },
   created() {},
   methods: {
+    open(index) {
+      if(index == 0) {
+        this.$router.push({ path: "/jiecang" });
+
+// 截仓
+      } else {
+// 锁仓
+      // this.$api.closeudb({}).then(res => {
+      //   if (res.status == 1) {
+      //   } else {
+      //   }
+      // });
+        this.$router.push({ path: "/Position" });
+      
+      }
+    },
     init() {
             this.$api
         .indexinfo({
