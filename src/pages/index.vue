@@ -200,7 +200,7 @@ export default {
     document.title = "首页";
     this.init();
     this.$i18n.locale = localStorage.getItem("locale");
-    this.selectText = this.selectList[localStorage.getItem("language")].name;
+    // this.selectText = this.selectList[localStorage.getItem("language")].name;
     // var arr, reg = new RegExp("(^| )" + 'PLAY_LANG' + "=([^;]*)(;|$)");
     // console.log(document.cookie.match(reg),'8888');
     //  var lang = navigator.language||navigator.userLanguage;//常规浏览器语言和IE浏
