@@ -8,7 +8,8 @@
   export default {
     name: 'App',
     mounted () {
-    this.$i18n.locale = localStorage.getItem("locale");
+      
+    this.$i18n.locale = localStorage.getItem("locale") == null?'zh':localStorage.getItem("locale");
 
       //微信配置
       // this.$api.getWxConfig().then(res=>{

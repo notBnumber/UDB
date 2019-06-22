@@ -136,7 +136,12 @@ import LangZhCHS from '@/lang/zh.js'
 
 // import {getCookie,name} from '@/lang/language.js'
 // console.log(getCookie('PLAY_LANG','zh'),'语言');
-
+// let lang = localStorage.getItem("locale");
+// if(localStorage.getItem("locale") == 0) {
+//   lang = 'zh'
+// } else {
+//   lang = 'en'
+// }
 const i18n = new VueI18n({
   locale: 'zh', 
   silentTranslationWarn: true,
