@@ -47,7 +47,7 @@
       >登录</div>
       <div class="util">
         <div class="items" @click="register">注册</div>
-        <div class="items">忘记密码？</div>
+        <div class="items" @click="forget">忘记密码？</div>
       </div>
     </div>
   </div>
@@ -104,6 +104,10 @@ export default {
     register() {
             this.$router.push({ path: "/register" });
       
+    },
+    forget() {
+            this.$router.push({ path: "/forget" });
+
     },
     login() {
       this.$api
