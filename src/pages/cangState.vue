@@ -9,15 +9,15 @@
       </div>
       <div class="item">
         <p class='p1'>锁仓通证</p>
-        <p class='p2'>1200.00</p>
+        <p class='p2'>{{obj.money}}</p>
       </div>
       <div class="item">
         <p class='p1'>锁仓时间</p>
-        <p class='p2'>2019-06-07   14：28：12</p>
+        <p class='p2'>{{obj.time}}</p>
       </div>
       <div class="item">
         <p class='p1'>锁仓期限</p>
-        <p class='p2'>3个月</p>
+        <p class='p2'>{{obj.date == 1?"三个月":'六个月'}}</p>
       </div>
     </div>
     <div class="btn df" @click="open()">
@@ -29,7 +29,9 @@
 export default {
   components: {},
   data() {
-    return {};
+    return {
+      obj:{}
+    };
   },
   methods: {
     open() {
@@ -38,6 +40,9 @@ export default {
   },
   mounted() {
     document.title = "锁仓中";
+    this.obj = this.$route.query
+    console.log(this.$route.query);
+    
   }
 };
 </script>

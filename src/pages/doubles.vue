@@ -2,25 +2,16 @@
   <div class="login">
     <!-- <div class="title">
       {{$t("message.title")}}
-    </div> -->
+    </div>-->
     <div class="top">
-        <info>
-
-        </info>
+      <info></info>
     </div>
-    <div class="duihuan" >
-      <div class="title">
-        请输入需要复投的金额
-      </div>
-      <input type="text" class="" :placeholder='place' >
-      <div class="tip">
-        （提示：此操作将余额兑换成资产，点击查看规则） 
-      </div>
-      <div class="btn df">
-        确认兑换
-      </div>
+    <div class="duihuan">
+      <div class="title">请输入需要复投的金额</div>
+      <input type="text" class :placeholder="place" v-model="money">
+      <div class="tip">（提示：此操作将余额兑换成资产，点击查看规则）</div>
+      <div class="btn df" @click="duihuan">确认兑换</div>
     </div>
-    
   </div>
 </template>
 <script>
@@ -34,7 +25,8 @@ export default {
   name: "login",
   data() {
     return {
-      place:'请输入11的整数倍',
+      money: "",
+      place: "请输入11的整数倍",
       phone: "",
       pwd: "",
       student: true,
@@ -95,16 +87,47 @@ export default {
   },
   created() {},
   methods: {
+    duihuan() {
+      this.$api
+        .dofutou({
+          money: this.money
+        })
+        .then(res => {
+          if (res.status == 1) {
+            this.$toast(res.message);
+          } else {
+          }
+        });
+    },
     toDetail(id) {
       this.$router.push({ path: "/zhiboDetail", query: { id: id } });
     },
     tab(index) {
       this.tabIndex = index;
+    },
+    onScroll() {
+      //可滚动容器的高度
+      let innerHeight = document.querySelector("#app").clientHeight;
+      //屏幕尺寸高度
+      let outerHeight = document.documentElement.clientHeight;
+      //可滚动容器超出当前窗口显示范围的高度
+      let scrollTop = document.documentElement.scrollTop;
+      //scrollTop在页面为滚动时为0，开始滚动后，慢慢增加，滚动到页面底部时，出现innerHeight < (outerHeight + scrollTop)的情况，严格来讲，是接近底部。
+      // console.log(innerHeight + " " + outerHeight + " " + scrollTop);
+      this.init(++this.num);
+      if (innerHeight < outerHeight + scrollTop) {
+        //加载更多操作
+        console.log("loadmore", "jjjjjj");
+        // this.num += 1;
+      }
     }
   },
   mounted() {
-    document.title = "我的学习";
-    this.http = localStorage.getItem("http");
+    document.title = "复投";
+    // this.init();
+  },
+  created() {
+    // window.addEventListener("scroll", this.onScroll);
   }
 };
 </script>
@@ -137,7 +160,6 @@ export default {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      
     }
     .active {
       font-size: 0.15rem;

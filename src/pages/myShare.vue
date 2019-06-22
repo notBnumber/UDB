@@ -2,79 +2,55 @@
   <div class="login">
     <!-- <div class="title">
       {{$t("message.title")}}
-    </div> -->
-    <div class="top">
-        <info>
-
-        </info>
+    </div>-->
+    <div class="top" id="top">
+      <info></info>
     </div>
-    <div class="tab">
-      <div class="item "  :class="[tabIndex == index && 'active']" v-for="(item,index) in list" :key="index" @click="tab(index)">
-          <span>
-            {{item.name}}
-          </span>
-      <div class="xian">
-
+    <div class="tab" id="tab">
+      <div
+        class="item"
+        :class="[tabIndex == index && 'active']"
+        v-for="(item,index) in $t('myShareTab')"
+        :key="index"
+        @click="tab(index)"
+      >
+        <span>{{item.name}}</span>
+        <div class="xian"></div>
       </div>
-      </div>  
     </div>
     <div class="duihuan" v-if="tabIndex==0">
-      <div class="title">
-        单价：8.39
-      </div>
-      <input type="text" class="" placeholder="请输入需要兑换的UDB通证数" >
-      <div class="tip">
-        （提示：最低的兑换数量是1，请输入1的整数倍）
-      </div>
-      <div class="btn df">
-        确认兑换
-      </div>
+      <div class="title">{{$t('myShareInfo.price')}}：{{obj.udbprice}}</div>
+      <input type="text" class :placeholder="p1" v-model="UDB">
+      <div class="tip">{{$t('myShareInfo.tip1')}}</div>
+      <div class="btn df" @click="duiHuan">{{$t('myShareInfo.ok')}}</div>
     </div>
-        <div class="duihuan" v-if="tabIndex==1">
-          <div class="title">
-            单价：8.39
-          </div>
-          <input type="text" class="" placeholder="请输入需要兑换的AKFL通证数" >
-          <div class="tip">
-            （提示：最低的兑换数量是1，请输入1的整数倍）
-          </div>
-          <div class="btn df">
-            确认兑换
-          </div>
+    <div class="duihuan" v-if="tabIndex==1">
+      <div class="title">{{$t('myShareInfo.price')}}：{{obj.akprice}}</div>
+      <input type="text" class :placeholder="p2" v-model="AKl">
+      <div class="tip">{{$t('myShareInfo.tip2')}}</div>
+      <div class="btn df" @click="duiHuan">{{$t('myShareInfo.ok')}}</div>
     </div>
     <div class="tixian" v-if="tabIndex==2">
-      <input type="text" placeholder="请输入提现的钱包地址">
-      <input type="text" placeholder="请输入提现的UDB通证数额">
-      <div class="tip">
-        （提示：请认真核对提现的钱包地址，填错自负）
-      </div>
-          <div class="btn df">
-            确认提现
-          </div>
+      <input type="text" :placeholder=p3 v-model="address">
+      <input type="text" :placeholder=p4 v-model="money">
+      <div class="tip">{{$t('myShareInfo.tip3')}}</div>
+      <div class="btn df" @click="txudb">{{$t('myShareInfo.ok')}}</div>
     </div>
-    <!-- 请输入需要兑换的AKFL通证数 -->
-    <div class="note" v-if="tabIndex==3">
-      <div class="tabs">
-        <div class="item df" v-for="(item,index) in noteTab" :key="index">
-          {{item.name}}
+
+    <div class="note" v-if="tabIndex==3" id="app">
+      <scroller :on-infinite="infinite">
+        <div class="tabs">
+          <div class="item df" v-for="(item,index) in $t('shareNoteTab')" :key="index">{{item.name}}</div>
         </div>
-      </div>
-      <div class="content">
-        <div class="item" v-for="(item,index) in noteList" :key="index">
-          <div>
-            {{item.name}}
-          </div>
-                    <div>
-            {{item.money}}
-          </div>
-                    <div>
-            {{item.now}}
-          </div>
-                    <div>
-            {{item.time}}
+        <div class="content">
+          <div class="item" v-for="(item,index) in noteList" :key="index">
+            <div>{{item.remark}}</div>
+            <div>{{item.tongzhengnum}}</div>
+            <div>{{item.time}}</div>
+            <div>{{item.state == 1?'申请中':(item.state == 2?'已通过':'已拒绝')}}</div>
           </div>
         </div>
-      </div>
+      </scroller>
     </div>
     <Tab :tabIndex="1"></Tab>
   </div>
@@ -90,6 +66,19 @@ export default {
   name: "login",
   data() {
     return {
+      p1: this.$t("myShareInfo.p1"),
+      p2: this.$t("myShareInfo.p2"),
+      p3: this.$t("myShareInfo.p3"),
+      p4: this.$t("myShareInfo.p4"),
+      num: 0,
+      address: "",
+      money: "",
+      UDB: "",
+      AKl: "",
+      obj: {
+        akPrice: "",
+        udbprice: ""
+      },
       phone: "",
       pwd: "",
       student: true,
@@ -119,56 +108,168 @@ export default {
           name: "金额"
         },
         {
-          name: "当前余额"
+          name: "时间"
         },
         {
-          name: "时间"
+          name: "状态"
         }
       ],
-      noteList: [
-        {
-          name: "UDB兑换",
-          money: "8.39",
-          now: "728.31",
-          time: "2019-06-07 14:28:12"
-        },
-        {
-          name: "UDB兑换",
-          money: "8.39",
-          now: "728.31",
-          time: "2019-06-07 14:28:12"
-        },
-
-        {
-          name: "UDB兑换",
-          money: "8.39",
-          now: "728.31",
-          time: "2019-06-07 14:28:12"
-        }
-      ]
+      noteList: [],
+      wrapper: "",
+      noteHeight: ""
     };
   },
   created() {},
   methods: {
     toDetail(id) {
-      this.$router.push({ path: "/zhiboDetail", query: { id: id } });
+      if (index == 3) {
+        this.$router.push({ path: "/AKFL" });
+      }
     },
     tab(index) {
       this.tabIndex = index;
+      if (this.tabIndex == 0) {
+        this.AKl = "";
+        this.address = "";
+        this.money = "";
+      } else if (this.tabIndex == 1) {
+        this.UDB = "";
+        this.address = "";
+        this.money = "";
+      } else if (this.tabIndex == 2) {
+        this.AKl = "";
+        this.UDB = "";
+      } else if (index == 3) {
+        this.noteHeight =
+          document.getElementById("tab").offsetHeight +
+          document.getElementById("top").offsetHeight;
+      }
+    },
+    init() {
+      this.$api.getPrice({}).then(res => {
+        if (res.status == 1) {
+          this.obj = res.result;
+        } else {
+        }
+      });
+    },
+
+    duiHuan() {
+      if (this.tabIndex == 0) {
+        this.$api
+          .tzchange({
+            zcnum: this.UDB,
+            type: 0
+          })
+          .then(res => {
+            if (res.status == 1) {
+              this.$toast(res.message);
+            } else {
+              console.log(333);
+            }
+          });
+      } else if (this.tabIndex == 1) {
+        this.$api
+          .tzchange({
+            zcnum: this.AKl,
+            type: 0
+          })
+          .then(res => {
+            if (res.status == 1) {
+              this.$toast(res.message);
+            } else {
+            }
+          });
+      }
+    },
+    // udb提现
+    txudb() {
+      this.$api
+        .txudb({
+          zcnum: this.money,
+          moneyadress: this.address
+        })
+        .then(res => {
+          if (res.status == 1) {
+            this.obj = res.result;
+          } else {
+          }
+        });
+    },
+    //
+    getList(num) {
+      this.$api
+        .txlist({
+          page: num
+        })
+        .then(res => {
+          if (res.status == 1) {
+            this.noteList = this.noteList.concat(res.result);
+          } else {
+          }
+        });
+    },
+    infinite(done) {
+      this.getList(++this.num)
+      done(true);
+      console.log(11111);
+    },
+    onScroll() {
+      // //可滚动容器的高度
+      // let clientHeight = document.querySelector("#app").clientHeight;
+      // //屏幕尺寸高度
+      // let outerHeight = document.documentElement.clientHeight;
+      // //可滚动容器超出当前窗口显示范围的高度
+      // let scrollTop = document.documentElement.scrollTop;
+      // //scrollTop在页面为滚动时为0，开始滚动后，慢慢增加，滚动到页面底部时，出现innerHeight < (outerHeight + scrollTop)的情况，严格来讲，是接近底部。
+      // // console.log(innerHeight + " " + outerHeight + " " + scrollTop);
+      // // if (innerHeight < outerHeight + scrollTop) {
+      // //   this.getList(++this.num)
+      // //   //加载更多操作
+      // //   console.log("loadmore",'jjjjjj');
+      // //   // this.num += 1;
+
+      // // }
+      //           if(scrollTop >= (scrollHeight - clientHeight)) {
+      //             console.log('jjjjjhjhj');
+
+      //       // if(this.totalRow > this.goodsList.length){
+      //       //   console.log('加载');
+      //       //   this.pageNumber +=1
+      //       //   this.pageList()
+      //       // }else{
+      //       //   this.$Toast('没有更多咯!!!')
+      //       // }
+      //     }
+
+      let scrollHeight = this.wrapper.scrollHeight;
+      let clientHeight = this.wrapper.clientHeight;
+      let scrollTop = this.wrapper.scrollTop;
+      console.log(scrollHeight, clientHeight, scrollTop, "898888");
+      if (scrollTop >= scrollHeight - clientHeight) {
+        console.log(9999);
+      }
     }
   },
   mounted() {
-    document.title = "我的学习";
-    this.http = localStorage.getItem("http");
+    document.title = "通证";
+    this.init();
+    this.getList(this.num);
+    this.wrapper = document.getElementById("app");
+  },
+  created() {
+    // window.addEventListener("scroll", this.onScroll);
   }
 };
 </script>
 <style lang="scss" scoped>
 .login {
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
   background-color: #fff;
   padding: 0 0.15rem;
+
   .top {
     width: 100%;
     height: 1.4rem;
@@ -192,7 +293,6 @@ export default {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      
     }
     .active {
       font-size: 0.15rem;
@@ -315,6 +415,10 @@ export default {
     }
   }
   .note {
+    position: relative;
+    height: 4.78rem;
+    // overflow-y: auto;
+    padding-bottom: 0.7rem;
     .tabs {
       height: 0.43rem;
       width: 100%;
@@ -344,7 +448,7 @@ export default {
           // flex-wrap: wrap;
           width: 22.5%;
           height: 0.55rem;
-          font-size: 0.15rem;
+          font-size: 0.13rem;
           font-family: SourceHanSansSC-Regular;
           font-weight: 400;
           color: rgba(51, 51, 51, 1);

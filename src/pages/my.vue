@@ -3,16 +3,22 @@
     <div class="top">
       <div class="info">
         <div class="left">
-          <img src="@/assets/image/tab1.png" alt="">
+          <img :src="myInfo.img_head" alt="">
         </div>
         <div class="right">
           <div class="lt">
             <div class="name">
-              select*from ysk_use...
+              {{myInfo.username}}
             </div>
             <div class="bottom">
-              <div class="id">UID：6113</div>
-              <div class="level">级别：VIP1星</div>
+              <div class="id">UID：{{myInfo.userid}}</div>
+              <div class="level" v-if='myInfo.level == 0'>级别：普通用户</div>
+              <div class="level" v-if='myInfo.level == 1'>级别：VIP1星</div>
+              <div class="level" v-if='myInfo.level == 2'>级别：VIP2星</div>
+              <div class="level" v-if='myInfo.level == 3'>级别：VIP3星</div>
+              <div class="level" v-if='myInfo.level == 4'>级别：VIP4星</div>
+              <div class="level" v-if='myInfo.level == 5'>级别：VIP5星</div>
+              
             </div>
           </div>
           <div class="rt">
@@ -25,7 +31,7 @@
       <div class="item">
        <div class="tops">
          <img src="@/assets/image/logo.png" alt="">
-         <span>614.83</span>
+         <span>{{yemoney}}</span>
        </div>
        <div class="bottoms">
          余额
@@ -34,15 +40,15 @@
             <div class="item">
        <div class="tops">
          <img src="@/assets/image/logo.png" alt="">
-         <span>614.83</span>
+         <span>{{zcmoney}}</span>
        </div>
        <div class="bottoms">
-         余额
+         资产
        </div>
       </div>
     </div>
     <div class="contents">
-      <div class="item">
+      <div class="item" @click='cart'>
         <div class="itemContent">
                   <div class="lt">
           <img src="@/assets/image/qianbao.png" alt="">
@@ -51,11 +57,11 @@
         <div class="rt"><img src="@/assets/image/jiantou.png" alt=""></div>
         </div>
       </div>
-            <div class="item">
+            <div class="item" @click='pwd'>
         <div class="itemContent special">
-          <div class="tip">
+          <!-- <div class="tip">
             未设置
-          </div>
+          </div> -->
                   <div class="lt">
           <img src="@/assets/image/mima.png" alt="">
           <span>支付密码</span>
@@ -63,7 +69,7 @@
         <div class="rt"><img src="@/assets/image/jiantou.png" alt=""></div>
         </div>
       </div>
-            <div class="item">
+            <div class="item" @click=tixian>
         <div class="itemContent">
                   <div class="lt">
           <img src="@/assets/image/tixian.png" alt="">
@@ -72,7 +78,7 @@
         <div class="rt"><img src="@/assets/image/jiantou.png" alt=""></div>
         </div>
       </div>
-            <div class="item">
+            <div class="item" @click='chongzhi'>
         <div class="itemContent">
                   <div class="lt">
           <img src="@/assets/image/chongzhi.png" alt="">
@@ -81,7 +87,7 @@
         <div class="rt"><img src="@/assets/image/jiantou.png" alt=""></div>
         </div>
       </div>
-            <div class="item">
+            <div class="item" @click='myTeam'>
         <div class="itemContent">
                   <div class="lt">
           <img src="@/assets/image/team.png" alt="">
@@ -90,7 +96,7 @@
         <div class="rt"><img src="@/assets/image/jiantou.png" alt=""></div>
         </div>
       </div>
-            <div class="item">
+            <div class="item" @click='setting'>
         <div class="itemContent">
                   <div class="lt">
           <img src="@/assets/image/shezhi.png" alt="">
@@ -115,7 +121,8 @@ export default {
       classIndex: 0,
       browsePages: [],
       http: "",
-      websock: null //建立的连接
+      yemoney: "",
+      zcmoney: ""
     };
   },
   created() {
@@ -125,12 +132,33 @@ export default {
     //页面销毁时关闭长连接
   },
   methods: {
-    init() {
+    setting() {
+      this.$router.push({ path: "/setting" });
+    },
+    tixian() {
+      this.$router.push({ path: "/house" });
+    },
+    cart() {
+      console.log(1);
 
+      this.$router.push({ path: "/cartAddress" });
+    },
+    chongzhi() {
+      this.$router.push({ path: "/chongzhiNote" });
+    },
+    myTeam() {
+      this.$router.push({ path: "/chongzhiNote" });
+    },
+    pwd() {
+      this.$router.push({ path: "/choosePwd" });
+    },
+    init() {
       this.$api.getInfo({}).then(res => {
         if (res.status == 1) {
           // this.$router.push({ path: "/index" });
-          
+          this.myInfo = res.result.userinfo;
+          this.yemoney = res.result.yemoney;
+          this.zcmoney = res.result.zcmoney;
         } else {
         }
       });
@@ -201,6 +229,7 @@ export default {
             color: rgba(255, 255, 255, 1);
           }
           .level {
+            margin-left: 0.2rem;
             font-size: 0.15rem;
             font-family: PingFang-SC-Regular;
             font-weight: 400;

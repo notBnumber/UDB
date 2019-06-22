@@ -1,49 +1,6 @@
 <template>
   <div class="container">
 
-    <div class="player" ref="video">
-      <video-player class="video-player vjs-custom-skin" ref="videoPlayer" :playsinline="true" :options="playerOptions" @play="onPlayerPlay($event)" @pause="onPlayerPause($event)">
-      </video-player>
-    </div>
-    <div class="title">
-      <p>{{info.title}}</p>
-      <div class="tools">
-        <div class="t">
-          <img src="@/assets/img/home_b06.png" alt="">
-          <span>客服</span>
-        </div>
-        <div class="t">
-          <img src="@/assets/img/home_b07.png" alt="" v-if="iscell == false" @click="cell">
-          <img src="@/assets/img/home_b09.png" alt="" v-if="iscell == true" @click="cell">
-          <span>收藏</span>
-        </div>
-        <div class="t">
-          <img src="@/assets/img/home_b08.png" alt="">
-          <span>分享</span>
-        </div>
-      </div>
-    </div>
-    <div class="content">
-      <div class="top">
-        <span>共{{lists.length}}个课时</span>
-        <span>目录 ></span>
-
-      </div>
-      <div class="nav">
-        <div class="slide-box">
-          <div class="ing_content_flex" :class="[classIndex == index && 'ing_content_flex_active']" v-for="(item , index ) in lists" :key="index" @click.stop="toclass(item.id)">
-            <div class="ing_img">
-              <img :src="http+item.cover" alt="">
-              <div class="tip">
-                {{item.watchNumber}}人
-              </div>
-            </div>
-            <span>{{item.title}}</span>
-            <p>{{item.name}}</p>
-          </div>
-        </div>
-      </div>
-    </div>
 
   </div>
 </template>
@@ -182,9 +139,7 @@ export default {
   },
   mounted() {
     document.title = "回放详情";
-    this.http = localStorage.getItem("http");
-    this.init();
-    this.getList();
+
   }
 };
 </script>

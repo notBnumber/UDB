@@ -2,13 +2,19 @@
   <div class="login">
     <div class="content">
       <div class="top">
-        <img src="@/assets/image/tab1.png" alt>
+        <img
+          src="@/assets/image/tab1.png"
+          alt
+        >
         <div class="info">
-          <div class="nick">Vances</div>
-          <div class="ids">UID：dddd1</div>
+          <div class="nick">{{myInfo.username}}</div>
+          <div class="ids">UID：{{myInfo.userid}}</div>
         </div>
       </div>
-      <div class="bottom df">退出当前用户</div>
+      <div
+        class="bottom df"
+        @click="out"
+      >退出当前用户</div>
     </div>
   </div>
 </template>
@@ -16,12 +22,38 @@
 export default {
   name: "login",
   data() {
-    return {};
+    return {
+      myInfo: null,
+    };
   },
-  methods: {},
+  methods: {
+    init() {
+      this.$api.getInfo({}).then(res => {
+        if (res.status == 1) {
+          // this.$router.push({ path: "/index" });
+          console.log(res.result.userinfo);
+          
+          this.myInfo = res.result.userinfo;
+          console.log(this.myInfo,'44');
+          
+        } else {
+        }
+      });
+    },
+    out() {
+      this.$api.logout({}).then(res => {
+        if (res.status == 1) {
+          this.$toast('退出成功')
+        this.$router.push({ path: "/login" });
+
+        } else {
+        }
+      });
+    }
+  },
   mounted() {
     document.title = "设置";
-    this.http = localStorage.getItem("http");
+    this.init();
   }
 };
 </script>
@@ -34,7 +66,7 @@ export default {
   .content {
     // width: 100%;
     .top {
-      height:  0.98rem;
+      height: 0.98rem;
       background-color: #fff;
       padding: 0 0.15rem;
       display: flex;

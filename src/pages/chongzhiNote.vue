@@ -25,7 +25,7 @@
     <div class="duihuan" v-if="tabIndex==0">
       <div class="title">
         <div class="mon df">金额</div>
-        <input type="text" placeholder="请输入您的充值金额" class="inp">
+        <input type="text" placeholder="请输入您的充值金额" class="inp" v-model="moneynum">
       </div>
       <div class="textContent">
         <textarea name id cols="30" rows="10" maxlength="300" placeholder="充值备注" v-model="content"></textarea>
@@ -47,11 +47,9 @@
           <span>上传凭证</span>
         </div>
       </div>
-        <div class="btnContent">
-          <div class="btn df">
-            充值
-          </div>
-        </div>
+      <div class="btnContent">
+        <div class="btn df" @click="submit">充值</div>
+      </div>
     </div>
 
     <!-- 请输入需要兑换的AKFL通证数 -->
@@ -61,10 +59,10 @@
       </div>
       <div class="content">
         <div class="item" v-for="(item,index) in noteList" :key="index">
-          <div>{{item.time}}</div>
-          <div class="money" :class="[item.state ==0 && 'active']">{{item.money}}</div>
-          <div>{{item.states}}</div>
-          <div class="open df" @click="open()">查看凭证</div>
+          <div>{{item.addtime}}</div>
+          <div class="money" :class="[item.state ==0 && 'active']">{{item.moneynum}}</div>
+          <div>{{item.status == 0?'待确认':(item.status == 1?'已确认':'拒绝')}}</div>
+          <div class="open df" @click="open(item.pzimgarr)">查看凭证</div>
         </div>
       </div>
     </div>
@@ -74,13 +72,14 @@
 // import qs from 'qs'
 import Tab from "../components/Tab";
 import info from "../components/info";
-
+import { ImagePreview } from 'vant';
 export default {
   components: { Tab, info },
 
   name: "login",
   data() {
     return {
+      imgString: [],
       content: "",
       show: false,
       phone: "",
@@ -112,114 +111,27 @@ export default {
           name: "凭证"
         }
       ],
-      noteList: [
-        {
-          name: "UDB兑换",
-          money: "8.39",
-          now: "728.31",
-          time: "2019-06-07 14:28:12",
-          state: 0,
-          states: "已完成"
-        },
-        {
-          name: "UDB兑换",
-          money: "8.39",
-          now: "728.31",
-          time: "2019-06-07 14:28:12",
-          state: 1,
-          states: "已完成"
-        },
-
-        {
-          name: "UDB兑换",
-          money: "8.39",
-          now: "728.31",
-          time: "2019-06-07 14:28:12",
-          state: 1,
-          states: "已完成"
-        },
-        {
-          name: "UDB兑换",
-          money: "8.39",
-          now: "728.31",
-          time: "2019-06-07 14:28:12",
-          state: 0,
-          states: "已完成"
-        },
-        {
-          name: "UDB兑换",
-          money: "8.39",
-          now: "728.31",
-          time: "2019-06-07 14:28:12",
-          state: 1,
-          states: "已完成"
-        },
-
-        {
-          name: "UDB兑换",
-          money: "8.39",
-          now: "728.31",
-          time: "2019-06-07 14:28:12",
-          state: 1,
-          states: "已完成"
-        },
-        {
-          name: "UDB兑换",
-          money: "8.39",
-          now: "728.31",
-          time: "2019-06-07 14:28:12",
-          state: 0,
-          states: "已完成"
-        },
-        {
-          name: "UDB兑换",
-          money: "8.39",
-          now: "728.31",
-          time: "2019-06-07 14:28:12",
-          state: 1,
-          states: "已完成"
-        },
-
-        {
-          name: "UDB兑换",
-          money: "8.39",
-          now: "728.31",
-          time: "2019-06-07 14:28:12",
-          state: 1,
-          states: "已完成"
-        },
-        {
-          name: "UDB兑换",
-          money: "8.39",
-          now: "728.31",
-          time: "2019-06-07 14:28:12",
-          state: 0,
-          states: "已完成"
-        },
-        {
-          name: "UDB兑换",
-          money: "8.39",
-          now: "728.31",
-          time: "2019-06-07 14:28:12",
-          state: 1,
-          states: "已完成"
-        },
-
-        {
-          name: "UDB兑换",
-          money: "8.39",
-          now: "728.31",
-          time: "2019-06-07 14:28:12",
-          state: 1,
-          states: "已完成"
-        }
-      ],
+      noteList: [],
       imgUrl: [],
-      imgInfo: []
+      imgInfo: [],
+      moneynum: ""
     };
   },
   created() {},
   methods: {
+    submit() {
+      this.$api
+        .addmoney({
+          pzimg: this.imgString.toString(),
+          comment: this.content,
+          moneynum: this.moneynum
+        })
+        .then(res => {
+          if (res.status == 1) {
+            this.$toast("提交成功");
+          }
+        });
+    },
     // 删除图片
     del(index) {
       this.imgUrl.shift(index);
@@ -238,20 +150,55 @@ export default {
 
       reader.readAsDataURL(that.file);
       reader.onload = function(e) {
-        that.imgUrl.push(this.result);
+        that.imgUrl = that.imgUrl.concat(this.result);
         console.log(this.result);
         console.log(that.imgUrl, that.imgInfo);
+        const formd = new FormData();
+        formd.append("uploadfile", that.imgInfo[that.imgInfo.length - 1]);
+        console.log(formd);
+        that
+          .$axios({
+            url: "http://udb.red/User/upImg",
+            method: "post",
+            data: formd,
+            headers: {
+              "Content-Type": "multipart/form-data"
+            }
+          })
+          //then里面跟一个成功回调函数
+          .then(function(resp) {
+            if (resp.data.status == 1) {
+              that.imgString.push(resp.data.result);
+              console.log(that.imgString);
+
+              // $.toast("成功", "text");
+            } else {
+              // $.toast("无法加载", "text");
+            }
+          })
+          // catch中跟一个失败回调函数
+          .catch(function(error) {
+            console.log(error);
+          });
       };
     },
-    open() {
-      this.show = !this.show;
-      console.log(1);
+    open(arr) {
+      // this.show = !this.show;
+      // console.log(1);
+      ImagePreview(arr);
     },
     toDetail(id) {
       this.$router.push({ path: "/zhiboDetail", query: { id: id } });
     },
     tab(index) {
       this.tabIndex = index;
+      if (index == 1) {
+        this.$api.addrecordlist({}).then(res => {
+          this.noteList = res.result;
+        });
+      } else {
+        this.noteList = [];
+      }
     },
     next() {
       this.show = !this.show;
@@ -466,24 +413,24 @@ export default {
       margin-top: 0.23rem;
       text-align: center;
     }
-  .btnContent {
-    padding: 0 .16rem;
-    width: 100%;
-        .btn {
-      height: 0.4rem;
-      background: linear-gradient(
-        90deg,
-        rgba(58, 48, 207, 1),
-        rgba(65, 104, 238, 1)
-      );
-      border-radius: 0.2rem;
-      margin-top: 0.65rem;
-      font-size: 0.14rem;
-      font-family: SourceHanSansSC-Regular;
-      font-weight: 400;
-      color: rgba(255, 255, 255, 1);
+    .btnContent {
+      padding: 0 0.16rem;
+      width: 100%;
+      .btn {
+        height: 0.4rem;
+        background: linear-gradient(
+          90deg,
+          rgba(58, 48, 207, 1),
+          rgba(65, 104, 238, 1)
+        );
+        border-radius: 0.2rem;
+        margin-top: 0.65rem;
+        font-size: 0.14rem;
+        font-family: SourceHanSansSC-Regular;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 1);
+      }
     }
-  }
   }
   .tixian {
     // padding-top: 0.6rem;

@@ -2,27 +2,50 @@
   <div class="login">
     <div class="title">
       <span class="number">锁仓通证数</span>
-      <span class="rule">锁仓规则</span>
+      <span class="rule" @click="rule">锁仓规则</span>
     </div>
     <div class="inp">
       <div class="left">
-        <img src="@/assets/image/logo.png" alt>
+        <img
+          src="@/assets/image/logo.png"
+          alt
+        >
       </div>
       <div class="right">
-        <input type="text" v-model="number" placeholder="最低买入101">
+        <input
+          type="text"
+          v-model="number"
+          placeholder="最低买入101"
+        >
       </div>
     </div>
     <div class="select">
       <div class="tit">选择锁仓期限</div>
       <div class="content">
-        <div class="item" v-for="(item,index) in  list" :key="index" @click="select(index)">
-          <img src="@/assets/image/xuan.png" alt v-if="item.state">
-          <img src="@/assets/image/wei.png" alt v-else>
+        <div
+          class="item"
+          v-for="(item,index) in  list"
+          :key="index"
+          @click="select(index)"
+        >
+          <img
+            src="@/assets/image/xuan.png"
+            alt
+            v-if="item.state"
+          >
+          <img
+            src="@/assets/image/wei.png"
+            alt
+            v-else
+          >
           <span>{{item.name}}</span>
         </div>
       </div>
     </div>
-    <div class="btn df">提交锁仓</div>
+    <div
+      class="btn df"
+      @click="btn"
+    >提交锁仓</div>
   </div>
 </template>
 <script>
@@ -31,7 +54,8 @@ export default {
   data() {
     return {
       number: "",
-      list: [{ name: "3个月", state: false }, { name: "6个月", state: false }]
+      list: [{ name: "3个月", state: false }, { name: "6个月", state: false }],
+      closetype: ""
     };
   },
   methods: {
@@ -40,6 +64,27 @@ export default {
         item.state = false;
       }
       this.list[index].state = !this.list[index].state;
+      this.closetype = index + 1;
+    },
+    btn() {
+      this.$api
+        .closeudb({
+          closenum: this.number,
+          closetype: this.closetype
+        })
+        .then(res => {
+          if (res.status == 1) {
+            var myDate = new Date();
+            var mytime=myDate.toLocaleTimeString();
+        this.$router.push({ path: "/cangState" ,query:{date:this.closetype,money:this.number,time:mytime}});
+      
+          } else {
+          }
+        });
+    },
+    rule() {
+        this.$router.push({ path: "/cangRule" });
+
     }
   },
   mounted() {
@@ -154,10 +199,10 @@ export default {
     );
     border-radius: 0.2rem;
 
-font-size:.14rem;
-font-family:SourceHanSansSC-Regular;
-font-weight:400;
-color:rgba(255,255,255,1);
+    font-size: 0.14rem;
+    font-family: SourceHanSansSC-Regular;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 1);
   }
 }
 </style>

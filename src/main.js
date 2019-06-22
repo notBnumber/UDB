@@ -4,44 +4,44 @@ import Vue from 'vue'
 import App from './App'
 // import ElementUI from 'element-ui';
 // import 'element-ui/lib/theme-chalk/index.css';
-import VueHtml5Editor from 'vue-html5-editor'
+// import VueHtml5Editor from 'vue-html5-editor'
 import router from './router'
 import global_func from '@/assets/js/global_func'
-import * as socketApi from '@/assets/js/ws'
-Vue.prototype.socketApi = socketApi
+// import * as socketApi from '@/assets/js/ws'
+// Vue.prototype.socketApi = socketApi
 Vue.prototype.global_func = global_func
 // Vue.use(ElementUI);
 // Vue.use(global_func);
-Vue.use(VueHtml5Editor, {
-  name: "vue-html5-editor",
-  image: {
-    sizeLimit: 512 * 1024,
-    upload: {
-      url: null,
-      headers: {},
-      params: {},
-      fieldName: {}
-    },
-    compress: null
-  }
-});
+// Vue.use(VueHtml5Editor, {
+//   name: "vue-html5-editor",
+//   image: {
+//     sizeLimit: 512 * 1024,
+//     upload: {
+//       url: null,
+//       headers: {},
+//       params: {},
+//       fieldName: {}
+//     },
+//     compress: null
+//   }
+// });
 import '@/assets/js/rem.js'
 import '@/assets/css/base.css'
 import 'vant/lib/index.css';
-import wx from 'weixin-js-sdk'
+// import wx from 'weixin-js-sdk'
 import axios from 'axios'
 import api from '@/api/index'
 Vue.prototype.$global_func = global_func;
 Vue.prototype.$api = api;
-Vue.prototype.wx = wx;
+// Vue.prototype.wx = wx;
 Vue.prototype.$axios= axios;
 Vue.prototype.imgUrl = process.env.API_ROOT
 // 视频插件
-require('video.js/dist/video-js.css')
-require('vue-video-player/src/custom-theme.css')
+// require('video.js/dist/video-js.css')
+// require('vue-video-player/src/custom-theme.css')
 
-import VideoPlayer from 'vue-video-player'
-Vue.use(VideoPlayer);
+// import VideoPlayer from 'vue-video-player'
+// Vue.use(VideoPlayer);
 
 // 轮播
 import {
@@ -120,6 +120,13 @@ Vue.use(CellGroup);
 import echarts from 'echarts'
 
 Vue.prototype.$echarts = echarts 
+
+import VueScroller from 'vue-scroller'
+Vue.use(VueScroller)
+
+import { ImagePreview } from 'vant';
+
+Vue.use(ImagePreview);
 // 中英文切换
 import VueI18n from 'vue-i18n'
 

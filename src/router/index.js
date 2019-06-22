@@ -20,11 +20,10 @@ import liuyan from '@/pages/liuyan' //留言反馈
 import ii from '@/pages/ii' //测试
 import posterCenter from '@/pages/posterCenter' //海报中心
 import my from '@/pages/my' //个人中心
-import shop from '@/pages/shop' //商城
 import our from '@/pages/our' //个人中心
 import myInfo from '@/pages/myInfo' //我的资料
 import vip from '@/pages/vip' //成为VIP
-import del from '@/pages/del' 
+import del from '@/pages/del'
 import free from '@/pages/free' //去支付
 import payState from '@/pages/payState' //支付成功
 import zhifubao from '@/pages/zhifubao' //支付宝
@@ -47,13 +46,15 @@ import Rule from '@/pages/Rule' //复投规则
 import UDB from '@/pages/UDB' //udb
 import Interturn from '@/pages/Interturn' //互转
 import house from '@/pages/house' //房产
-import doubles  from '@/pages/doubles' // 复投
-import chongzhiNote  from '@/pages/chongzhiNote' //充值记录
-import setting  from '@/pages/setting' //设置
-import chooseName  from '@/pages/chooseName' //修改名字
-import myCode  from '@/pages/myCode' //我的二维码
-import exchange  from '@/pages/exchange' //兑换
-import Position  from '@/pages/Position' //锁仓
+import doubles from '@/pages/doubles' // 复投
+import chongzhiNote from '@/pages/chongzhiNote' //充值记录
+import setting from '@/pages/setting' //设置
+import chooseName from '@/pages/chooseName' //修改名字
+import myCode from '@/pages/myCode' //我的二维码
+import exchange from '@/pages/exchange' //兑换
+import Position from '@/pages/Position' //锁仓
+import cartAddress from '@/pages/cartAddress' //钱包地址
+import choosePwd from '@/pages/choosePwd' //设置密码
 Vue.use(Router)
 
 export default new Router({
@@ -165,11 +166,6 @@ export default new Router({
       path: '/my',
       name: 'my',
       component: my
-    },
-    {
-      path: '/shop',
-      name: 'shop',
-      component: shop
     },
     {
       path: '/our',
@@ -331,6 +327,17 @@ export default new Router({
       path: '/Position',
       name: 'Position',
       component: Position
-    }
+    },
+
+    {
+      path: '/cartAddress',
+      name: 'cartAddress',
+      component: cartAddress
+    },
+    {
+      path: '/choosePwd',
+      name: 'choosePwd',
+      component: choosePwd
+    },
   ]
 })
