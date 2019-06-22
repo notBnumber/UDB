@@ -22,33 +22,33 @@ const http = axios.create({
   }
 })
 const noSessionPost = axios.create({
-  timeout: 5000,
-  baseURL: URL,
-  header: {
-    'Content-Type': 'application/x-www-form-urlencoded'
-  }
+    timeout: 5000,
+    baseURL: URL,
+    header: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+    }
 })
 
 const form = axios.create({
-  timeout: 60000,
-  baseURL: URL,
-  headers: {
-    'Content-Type': 'multipart/form-data'
-  }
+    timeout: 60000,
+    baseURL: URL,
+    headers: {
+        'Content-Type': 'multipart/form-data'
+    }
 })
 //添加请求拦截器
 http.interceptors.request.use(config => {
-  // Do something before request is sent
-  // console.log(config)
-  if (localStorage.getItem('sessionId')) {
-    // const token = localStorage.getItem('sessionId')
-    // config.data += '&language=' + localStorage.getItem('lang')
-  }
+    // Do something before request is sent
+    // console.log(config)
+    if (localStorage.getItem('sessionId')) {
+        // const token = localStorage.getItem('sessionId')
+        // config.data += '&language=' + localStorage.getItem('lang')
+    }
 
-  return config
+    return config
 }, err => {
 
-  return Promise.reject(error);
+    return Promise.reject(error);
 })
 
 export default {
@@ -88,11 +88,11 @@ export default {
           return
         }
 
-        resolve(data.data)
-      } catch (err) {
-        console.log(err)
-        vm.$toast('网络繁忙,请稍后再试')
-      }
+                resolve(data.data)
+            } catch (err) {
+                console.log(err)
+                vm.$toast('网络繁忙,请稍后再试')
+            }
 
     })
   },
