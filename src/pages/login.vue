@@ -1,5 +1,17 @@
 <template>
   <div class="login">
+
+        <div class="select">
+      <div class="top" @click='select()'>
+        {{selectText}}
+
+      </div>
+      <div class="bottom" v-if='isSelect'>
+        <div class="item df"  v-for='(item,index) in selectList' :key='index' @click='changeLanguage(index)'>
+          {{item.name}}
+        </div>
+      </div>
+    </div>
     <img
       src="@/assets/image/4.png"
       alt
@@ -51,7 +63,11 @@ export default {
       pwd: "",
       student: true,
       pwdType: "password",
-      state: 0
+      state: 0,
+      selectList: [{ name: "CN 中文" }, { name: "EN 英文" }],
+            selectIndex: 0,
+      isSelect: false,
+      selectText: "CN 中文"
     };
   },
   created() {},
@@ -65,6 +81,26 @@ export default {
     }
   },
   methods: {
+        select() {
+      this.isSelect = !this.isSelect;
+    },
+        changeLanguage(index) {
+      this.selectText = this.selectList[index].name;
+      this.isSelect = !this.isSelect;
+      localStorage.setItem("language", index);
+      if (index == 0) {
+        localStorage.setItem("locale", "zh");
+        this.$i18n.locale = localStorage.getItem("locale");
+      } else if (index == 1) {
+        localStorage.setItem("locale", "en");
+        this.$i18n.locale = localStorage.getItem("locale");
+      }
+
+      // for (let item of this.$t("message.tabsList")) {
+      //   item.num = 2;
+      // }
+
+    },
     register() {
             this.$router.push({ path: "/register" });
       
@@ -72,12 +108,13 @@ export default {
     login() {
       this.$api
         .toLogin({
-          account: '15625738634@163.com',
-          password: 123456
+          account: this.email,
+          password: this.pwd
         })
         .then(res => {
           if (res.status == 1) {
-            this.$router.push({ path: "/index" });
+            localStorage.setItem('login',true)
+          this.$router.push({ path: "/index" });
           } else {
           }
         });
@@ -128,6 +165,8 @@ export default {
   },
   mounted() {
     document.title = "登录";
+        this.$i18n.locale = localStorage.getItem("locale") == null?'zh':localStorage.getItem("locale");
+    this.selectText = this.selectList[localStorage.getItem('language') == null?0:localStorage.getItem('language')].name
   },
   created() {}
 };
@@ -143,6 +182,35 @@ i {
   padding: 1rem 0.15rem;
   box-sizing: border-box;
   position: relative;
+    .select {
+    position: absolute;
+    right: 0.13rem;
+    top: 0.05rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    .top {
+      font-size: 0.16rem;
+      font-family: SourceHanSansSC-Regular;
+      font-weight: 400;
+      color: rgba(254, 254, 254, 1);
+    }
+    .bottom {
+      .item {
+        width: 0.9rem;
+        height: 0.3rem;
+        background: rgba(0, 0, 0, 1);
+        opacity: 0.6;
+        font-size: 0.16rem;
+        font-family: SourceHanSansSC-Regular;
+        font-weight: 400;
+        color: rgba(254, 254, 254, 1);
+        &:first-child {
+          border-bottom: 0.01rem solid #ffffff;
+        }
+      }
+    }
+  }
   .logo {
     position: absolute;
     top: 0;

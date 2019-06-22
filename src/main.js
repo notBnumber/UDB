@@ -150,6 +150,8 @@ const i18n = new VueI18n({
     'en': LangEn
   }
 })
+
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
@@ -159,4 +161,19 @@ new Vue({
     App
   },
   template: '<App/>'
+})
+router.beforeEach((to, from, next) => {
+
+  console.log(1);
+  if(localStorage.getItem('login')  || to.name  == 'login') {
+    console.log('已登陆');
+    
+    next()
+  } else {
+    console.log('未登录');
+    
+    next({ name : 'login'})
+    return
+  }
+  // next()
 })

@@ -58,6 +58,7 @@ import choosePwd from '@/pages/choosePwd' //设置密码
 Vue.use(Router)
 
 export default new Router({
+  
   routes: [{
       path: '/',
       component: login
@@ -340,4 +341,6 @@ export default new Router({
       component: choosePwd
     },
   ]
+  
 })
+
