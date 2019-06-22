@@ -151,6 +151,7 @@ module.exports = {
     tip1: '（ Please enter an integer multiple of 1.）',
     tip2: 'Please enter an integer multiple of 1.',
     tip3:'Please enter the transfer amount.',
-
+    next:'next',
+    ok:'ok'
   }
 }

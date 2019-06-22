@@ -33,20 +33,20 @@
         <div
           class="btn df"
           @click="next()"
-        >下一步</div>
+        >{{$t('retrun.next')}}</div>
       </div>
       <div v-if="show">
         <div class="title">{{$t('retrun.tip1')}}</div>
         <input
           type="text"
           class
-          placeholder="请输入1的整数倍"
+          :placeholder=p1
           v-model="udbNum"
         >
         <div
           class="btn df"
           @click='btn'
-        >确认兑换</div>
+        >{{$t('retrun.ok')}}</div>
       </div>
     </div>
     <div
@@ -61,23 +61,22 @@
           :placeholder=p1
           v-model="yueId"
         >
-        <div
-          class="btn df"
+        <div 
           @click="next()"
-        >下一步</div>
+        >{{$t('retrun.next')}}</div>
       </div>
       <div v-if="show">
         <div class="title">{{$t('retrun.tip1')}}</div>
         <input
           type="text"
           class
-          placeholder="请输入1的整数倍"
+          :placeholder=p1
           v-model="yueNum"
         >
         <div
           class="btn df"
           @click='btn'
-        >确认兑换</div>
+        >{{$t('retrun.ok')}}</div>
       </div>
     </div>
     <!-- 请输入需要兑换的AKFL通证数 -->
@@ -88,7 +87,7 @@
       <div class="tabs">
         <div
           class="item df"
-          v-for="(item,index) in noteTab"
+          v-for="(item,index) in $t('retrun.noteTab')"
           :key="index"
         >{{item.name}}</div>
       </div>
