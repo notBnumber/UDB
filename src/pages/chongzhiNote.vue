@@ -127,7 +127,7 @@ export default {
   created() {},
   methods: {
     rule() {
-      this.$router.push({ path: "/Rule" ,query:{state:3}});
+      this.$router.push({ path: "/Rule" ,query:{state:1}});
 
     },
     copy() {
@@ -232,7 +232,7 @@ export default {
   },
   mounted() {
     document.title = this.$t('alltitle.topup');;
-    this.http = localStorage.getItem("http");
+    this.init()
   }
 };
 </script>

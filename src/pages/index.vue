@@ -41,6 +41,15 @@ import articleList from "../components/articleList";
 import consultation from "../components/consultation";
 import Tab from "../components/Tab";
 import img from "../assets/image/tab1.png";
+import img1 from "../assets/image/111.png";
+
+import img2 from "../assets/image/222.png";
+
+import img3 from "../assets/image/333.png";
+
+import img4 from "../assets/image/444.png";
+import img5 from "../assets/image/555.png";
+
 
 export default {
   components: { articleList, consultation, Tab },
@@ -54,7 +63,7 @@ export default {
         this.$t("brands.item5"),
         this.$t("brands.item6")
       ],
-      liss: [{ url: img }, { url: img }, { url: img },{ url: img }, { url: img }, { url: img }],
+      liss: [{ url: img }, { url: img1 }, { url: img2},{ url: img3 }, { url: img4 }, { url: img5 }],
       Chinese: {
         title: "标题"
       },
@@ -130,7 +139,7 @@ export default {
         this.$router.push({ path: "/house" });
 
       } else if(index == 5) {
-        //  this.$router.push({ path: "/house" });
+         this.$router.push({ path: "/share" });
 
       }
     },

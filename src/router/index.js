@@ -59,7 +59,7 @@ import chooseAddress from '@/pages/chooseAddress' //设置密码
 import yueNote from '@/pages/yueNote' //余额列表
 import moneyNote from '@/pages/moneyNote' //资产列表
 import team from '@/pages/team' //团队
-
+import share from '@/pages/share' //分享
 Vue.use(Router)
 
 export default new Router({
@@ -364,6 +364,11 @@ export default new Router({
       path: '/team',
       name: 'team',
       component: team
+    },
+    {
+      path: '/share',
+      name: 'share',
+      component: share
     }
   ]
   

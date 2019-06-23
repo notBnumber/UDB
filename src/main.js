@@ -171,7 +171,7 @@ new Vue({
 router.beforeEach((to, from, next) => {
 
   console.log(to);
-  if(localStorage.getItem('login')  || to.name  == 'login'  || to.name  == 'register'  || to.name  == 'forget' ) {
+  if(localStorage.getItem('login')  || to.name  == 'login'  || to.name  == 'register'  || to.name  == 'forget' || to.name == 'Rule') {
     console.log('已登陆');
     
     next()

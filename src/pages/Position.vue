@@ -83,7 +83,7 @@ export default {
         });
     },
     rule() {
-        this.$router.push({ path: "/cangRule" });
+        this.$router.push({ path: "/Rule" , query:{state:2} });
 
     }
   },

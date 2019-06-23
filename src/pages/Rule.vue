@@ -8,14 +8,27 @@ export default {
   components: {},
   data() {
     return {
-      content:'<p>富文本</p>'
+      content:''
     };
   },
-  methods: {},
+  methods: {
+    init() {
+      this.$api.getxieyi({
+        type:this.$route.query.state
+      }).then(res=>{
+        this.content = res.result
+      })
+    }
+  },
   mounted() {
-    document.title = "复投规则";
+    if(this.$route.query.state == 0) {
+    document.title = "注册协议";
+
+    } else if (this.$route.query.state == 1) {
+       document.title = "充值说明";
+    }
     console.log(this.$route.query);
-    
+    this.init()
   }
 };
 </script>

@@ -102,7 +102,7 @@ export default {
       // }
     },
     read() {
-      this.$router.push({ path: "/Rule" });
+      this.$router.push({ path: "/Rule",query:{state:0}});
 
     },
     check() {

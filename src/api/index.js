@@ -136,6 +136,10 @@ class API {
     myteam = params => {
       return http.post("MyApi/myteam", params);
     };
+    // 协议
+    getxieyi = params => {
+      return http.post("PublicApi/getxieyi", params);
+    };  
 }
 
 export default new API();
