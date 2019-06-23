@@ -159,6 +159,161 @@ module.exports = {
     tip3:'请输入转出金额',
     next:'下一步',
     ok:'确认兑换'
-  }
-
+  },
+    login:{
+      login:'登录',
+      reg:'注册',
+      fogetpsw:'忘记密码',
+      tip1:'请输入邮箱号',
+      tip2:'请输入登录密码',
+      tip3:'账号或密码有误，请核对后再输入',
+    }
+    ,
+    reg:{
+        tologin:'账号登录',
+        resendcode:'重发',
+        sendcode:'获取验证码',
+        tip1:'请输入昵称',
+        tip2:'请输入验证码',
+        tip3:'请再次输入登录密码',
+        tip4:'请输入推荐人ID',
+        tip5:'获取验证码',
+    }
+    ,
+    reset:{
+        reset:'重置',
+        tip1:'请输入新的登录密码',
+        tip2:'请再次输入新的登录密码',
+    },
+    exchange:{
+        list: [
+            {
+                name: "UDB兑换 "
+            },
+            {
+                name: "AKFL兑换"
+            }
+        ],
+        price:'单价',
+        tip1:'请输入需要兑换的UDB通证数',
+        tip2:'请输入需要兑换的AKFL通证数',
+        Confirm:'确认兑换',
+        Tip:'提示：最低的兑换数量是1，请输入1的整数倍',
+    },
+    alltitle:{
+      index:'首页',
+      login:'登录',
+      regin:'注册',
+      reset:'重置密码',
+      udbchange:'UDB兑换',
+      udbtz:'UDB通证',
+      futou:'复投',
+      topup:'充值',
+    },
+    udb:{
+        list: [
+            {
+                name: "所持通证"
+            },
+            {
+                name: "收益记录"
+            },
+        ],
+        udbtz:'UDB通证',
+        close:'锁仓',
+        open:'解仓',
+    }
+    ,
+    doubles:{
+      tip1:'请输入需要复投的金额',
+      tip2:'请输入11的整数倍',
+      tip3:'提示：此操作将余额兑换成资产，点击查看规则',
+    },
+    topup:{
+      title:'充值说明',
+      list:[
+          {
+            name:'充值'
+          },
+          {
+            name:'充值记录'
+          }
+      ],
+        noteTab: [
+            {
+                name: "充值时间"
+            },
+            {
+                name: "金额"
+            },
+            {
+                name: "状态"
+            },
+            {
+                name: "凭证"
+            }
+        ],
+        copy:'复制地址',
+        instructions:'充值说明',
+        money:'金额',
+        lookpz:'查看凭证',
+        istrue:'已确认',
+        waittrue:'待确认',
+        Refused:'拒绝',
+        tip1:'请输入您的充值金额',
+        tip2:'充值备注',
+        tip3:'请上传充值凭证，保持图片清晰度，不可涂改，提高充值审核通过率（图片不超过3张）',
+    },
+    my:{
+      txaddress:'提现地址',
+      paypsw:'支付密码',
+      txmanagement:'提现管理',
+      topupupload:'充值上传',
+      myteam:'我的团队',
+      setting:'设置',
+    },
+    cartAddress:{
+      title:'转账唯一地址，填错自负!!!',
+      content:'（点击此处 复制链接地址）',
+      address:'请输入地址',
+      do:'修改'
+    },
+    team:{
+      title:"我的直推人",
+      time:"注册时间",
+      team:'我的团队',
+      out:"退出当前用户"
+    },
+    yueNote:{
+      noteTab: [
+        {
+          name: "金额"
+        },
+        {
+          name: "当前金额"
+        },
+        {
+          name: "添加时间"
+        },
+        {
+          name: "备注"
+        }
+      ],
+    },
+    moneyNote:{
+      noteTab: [
+        {
+          name: "金额"
+        },
+        {
+          name: "添加时间"
+        },
+        {
+          name: "状态"
+        },
+        {
+          name: "备注"
+        }
+      ],
+    }
 }

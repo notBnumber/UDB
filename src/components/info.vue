@@ -88,11 +88,13 @@ export default {
 
 <style lang="scss" scoped>
 .content {
-  background: url("~@/assets/image/info.png") no-repeat;
+  background: url("http://udb.red/udbapp/img/info.png") no-repeat;
   width: 100%;
   padding: 0.1rem 0 0.13rem 0.3rem;
-  background-size: 100%;
+  // background-size: 100%;
   position: relative;
+  background-position: 100% 100%;
+    background-size: 100% 100%;
   .top {
     display: flex;
     .left {

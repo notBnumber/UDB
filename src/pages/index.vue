@@ -198,7 +198,7 @@ export default {
     }
   },
   mounted() {
-    document.title = "首页";
+    document.title = this.$t('alltitle.index');
     this.init();
     this.$i18n.locale = localStorage.getItem("locale") == null?'zh':localStorage.getItem("locale");
     this.selectText = this.selectList[localStorage.getItem('language') == null?0:localStorage.getItem('language')].name
@@ -250,7 +250,7 @@ export default {
   position: relative;
   width: 100%;
   height: 2.55rem;
-  background: url("~@/assets/image/banner.png") no-repeat;
+  background: url("http://udb.red/udbapp/img/banner.png") no-repeat;
   background-size: 100%;
   .select {
     position: absolute;
@@ -287,7 +287,7 @@ export default {
   width: 3.45rem;
   height: 1.6rem;
   border-radius: 0.1rem;
-  background: url("~@/assets/image/bg.png") no-repeat;
+  background: url("http://udb.red/udbapp/img/bg.png") no-repeat;
   background-size: 100%;
   position: relative;
   left: 0;

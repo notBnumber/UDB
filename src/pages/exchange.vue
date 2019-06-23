@@ -8,7 +8,7 @@
         <div
           class="item"
           :class="[tabIndex == index && 'active']"
-          v-for="(item,index) in list"
+          v-for="(item,index) in $t('exchange.list')"
           :key="index"
           @click="tab(index)"
         >
@@ -17,16 +17,16 @@
         </div>
       </div>
       <div class="duihuan" v-if="tabIndex==0">
-        <div class="title">单价：{{obj.udbprice}}</div>
-        <input type="text" class placeholder="请输入需要兑换的UDB通证数" v-model="UDB">
-        <div class="tip">（提示：最低的兑换数量是1，请输入1的整数倍）</div>
-        <div class="btn df" @click="duiHuan">确认兑换</div>
+        <div class="title">{{$t('exchange.price')}}：{{obj.udbprice}}</div>
+        <input type="text" class :placeholder="$t('exchange.tip1')" v-model="UDB">
+        <div class="tip">（{{$t('exchange.Tip')}}）</div>
+        <div class="btn df" @click="duiHuan">{{$t('exchange.Confirm')}}</div>
       </div>
       <div class="duihuan" v-if="tabIndex==1">
-        <div class="title">单价：{{obj.akprice}}</div>
-        <input type="text" class placeholder="请输入需要兑换的AKFL通证数" v-model="AKl">
-        <div class="tip">（提示：最低的兑换数量是1，请输入1的整数倍）</div>
-        <div class="btn df" @click="duiHuan">确认兑换</div>
+        <div class="title">{{$t('exchange.price')}}：{{obj.akprice}}</div>
+        <input type="text" class :placeholder="$t('exchange.tip2')" v-model="AKl">
+        <div class="tip">（{{$t('exchange.Tip')}}）</div>
+        <div class="btn df" @click="duiHuan">{{$t('exchange.Confirm')}}</div>
       </div>
     </div>
   </div>
@@ -306,7 +306,7 @@ export default {
     }
   },
   mounted() {
-    document.title = "UDB通证";
+    document.title = this.$t('alltitle.udbchange');
     this.init();
 
     this.drawLine();

@@ -14,7 +14,7 @@
       <div
         class="bottom df"
         @click="out"
-      >退出当前用户</div>
+      >{{$t('team.out')}}</div>
     </div>
   </div>
 </template>

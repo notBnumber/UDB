@@ -1,91 +1,52 @@
 <template>
   <div class="login">
-    <img
-      src="@/assets/image/4.png"
-      alt
-      class="logo"
-    >
+    <div class="select">
+      <div class="top" @click="select()">{{selectText}}</div>
+      <div class="bottom" v-if="isSelect">
+        <div
+          class="item df"
+          v-for="(item,index) in selectList"
+          :key="index"
+          @click="changeLanguage(index)"
+        >{{item.name}}</div>
+      </div>
+    </div>
+    <img src="@/assets/image/4.png" alt class="logo">
     <div class="content">
       <div class="item">
-        <img
-          src="@/assets/image/youxiang.png"
-          alt
-        >
-        <input
-          type="text"
-          placeholder="请输入昵称"
-          v-model="name"
-        >
+        <img src="@/assets/image/youxiang.png" alt>
+        <input type="text" :placeholder="$t('reg.tip1')" v-model="name">
       </div>
       <div class="item">
-        <img
-          src="@/assets/image/pwd.png"
-          alt
-        >
-        <input
-          type="text"
-          placeholder="请输入邮箱号"
-          v-model="youxiang"
-        >
+        <img src="@/assets/image/pwd.png" alt>
+        <input type="text" :placeholder="$t('login.tip1')" v-model="youxiang">
       </div>
       <div class="item code">
-        <img
-          src="@/assets/image/pwd.png"
-          alt
-        >
-        <input
-          type="text"
-          placeholder="请输入验证码"
-          v-model="code"
-        >
-        <div
-          class="getCode df"
-          @click="getCode"
-        >{{getCodes}}</div>
+        <img src="@/assets/image/pwd.png" alt>
+        <input type="text" :placeholder="$t('reg.tip2')" v-model="code">
+        <div class="getCode df" @click="getCode">{{getCodes}}</div>
       </div>
       <div class="item">
-        <img
-          src="@/assets/image/pwd.png"
-          alt
-        >
-        <input
-          type="password"
-          placeholder="请输入登录密码"
-          v-model="pwd"
-        >
+        <img src="@/assets/image/pwd.png" alt>
+        <input type="password" :placeholder="$t('login.tip2')" v-model="pwd">
       </div>
       <div class="item">
-        <img
-          src="@/assets/image/pwd.png"
-          alt
-        >
-        <input
-          type="password"
-          placeholder="请再次输入登录密码"
-          v-model="pwd2"
-        >
+        <img src="@/assets/image/pwd.png" alt>
+        <input type="password" :placeholder="$t('reg.tip3')" v-model="pwd2">
       </div>
       <div class="item">
-        <img
-          src="@/assets/image/pwd.png"
-          alt
-        >
-        <input
-          type="text"
-          placeholder="请输入推荐人ID"
-          v-model="id"
-        >
+        <img src="@/assets/image/pwd.png" alt>
+        <input type="text" :placeholder="$t('reg.tip4')" v-model="id">
       </div>
-      <div
-        class="btn df"
-        @click="btn"
-      >注册</div>
+      <div class="btn df" @click="btn">{{$t('login.reg')}}</div>
       <div class="util">
-        <div
-          class="items"
-          @click="login"
-        >账号登录</div>
-        <div class="items"   @click="forget" >忘记密码？</div>
+        <div class="items" @click="login">{{$t('reg.tologin')}}</div>
+        <div class="items" @click="forget">{{$t('login.fogetpsw')}} ？</div>
+      </div>
+      <div class="xieyi">
+        <div class="yes" @click="xieyi = false" v-if="xieyi"></div>
+        <div class="no" @click="xieyi = true" v-else></div>
+        <div class="text" @click="read">同意协议</div>
       </div>
     </div>
   </div>
@@ -97,6 +58,7 @@ export default {
   name: "login",
   data() {
     return {
+      xieyi: false,
       id: "",
       name: "",
       youxiang: "",
@@ -110,11 +72,39 @@ export default {
       checked: false,
       getCodes: "获取验证码",
       setTime: null,
-      timeState: false
+      timeState: false,
+      selectList: [{ name: "CN 中文" }, { name: "EN 英文" }],
+      selectIndex: 0,
+      isSelect: false,
+      selectText: "CN 中文"
     };
   },
   created() {},
   methods: {
+    select() {
+      this.isSelect = !this.isSelect;
+    },
+    changeLanguage(index) {
+      console.log(this.$t("login.login"));
+      this.selectText = this.selectList[index].name;
+      this.isSelect = !this.isSelect;
+      localStorage.setItem("language", index);
+      if (index == 0) {
+        localStorage.setItem("locale", "zh");
+        this.$i18n.locale = localStorage.getItem("locale");
+      } else if (index == 1) {
+        localStorage.setItem("locale", "en");
+        this.$i18n.locale = localStorage.getItem("locale");
+      }
+
+      // for (let item of this.$t("message.tabsList")) {
+      //   item.num = 2;
+      // }
+    },
+    read() {
+      this.$router.push({ path: "/Rule" });
+
+    },
     check() {
       console.log(this.checked);
     },
@@ -125,6 +115,10 @@ export default {
       this.$router.push({ path: "/login" });
     },
     btn() {
+      if (!this.xieyi) {
+        this.$toast("请同意协议");
+        return;
+      }
       // let that = this;
       // console.log(this.phone);
       if (this.youxiang == "") {
@@ -159,6 +153,7 @@ export default {
         this.$toast("请输入推荐人id");
         return;
       }
+
       // let str = Number(this.pwd.split("").length);
       // if (str < 6) {
       //   this.$toast("学生密码个数不能小于6位");
@@ -240,32 +235,74 @@ export default {
           console.log(num);
 
           // this.canSend = false;
-          this.getCodes = "重发(" + num + ")";
+          this.getCodes = this.$t("reg.resendcode") + "(" + num + ")";
           this.timeState = true;
           num--;
         } else {
           console.log(99999);
           this.timeState = false;
           clearInterval(this.setTime);
-          this.getCodes = "获取验证码";
+          this.getCodes = this.$t("reg.sendcode");
           // this.canSend = true;
         }
       }, 1000);
     }
   },
   mounted() {
-    document.title = "注册";
+    document.title = this.$t("alltitle.regin");
+
+    this.$i18n.locale =
+      localStorage.getItem("locale") == null
+        ? "zh"
+        : localStorage.getItem("locale");
+    this.selectText = this.selectList[
+      localStorage.getItem("language") == null
+        ? 0
+        : localStorage.getItem("language")
+    ].name;
+    this.getCodes = this.$t("reg.sendcode");
   }
 };
 </script>
 <style lang="scss" scoped>
 .login {
-  background: url("~@/assets/image/2.png") no-repeat;
+  //   background: url("~@/assets/image/2.jpg") no-repeat;
+  background: url("http://udb.red/udbapp/img/big.png") no-repeat;
+
   width: 100%;
   min-height: 100vh;
   padding: 1rem 0.15rem;
   box-sizing: border-box;
   position: relative;
+  .select {
+    position: absolute;
+    right: 0.13rem;
+    top: 0.05rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    .top {
+      font-size: 0.16rem;
+      font-family: SourceHanSansSC-Regular;
+      font-weight: 400;
+      color: rgba(254, 254, 254, 1);
+    }
+    .bottom {
+      .item {
+        width: 0.9rem;
+        height: 0.3rem;
+        background: rgba(0, 0, 0, 1);
+        opacity: 0.6;
+        font-size: 0.16rem;
+        font-family: SourceHanSansSC-Regular;
+        font-weight: 400;
+        color: rgba(254, 254, 254, 1);
+        &:first-child {
+          border-bottom: 0.01rem solid #ffffff;
+        }
+      }
+    }
+  }
   .logo {
     position: absolute;
     top: 0;
@@ -275,12 +312,13 @@ export default {
     width: 1.23rem;
   }
   .content {
-    padding-bottom: .15rem;
     width: 100%;
     // height: 4.99rem;
     background-color: #fff;
     border-radius: 0.1rem;
     padding-top: 0.82rem;
+    padding-bottom: 0.15rem;
+
     .item {
       margin: auto;
       width: 3.12rem;
@@ -377,6 +415,31 @@ export default {
           border-right: 0.02rem solid rgba(146, 150, 156, 1);
         }
       }
+    }
+  }
+  .xieyi {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .yes {
+      width: 0.15rem;
+      height: 0.15rem;
+      background-color: #495aff;
+      //   border: .01rem solid #000;
+    }
+    .no {
+      width: 0.15rem;
+      height: 0.15rem;
+      background-color: #fff;
+      border: 0.01rem solid #000;
+    }
+    .text {
+      margin-left: 0.15rem;
+      font-size: 0.14rem;
+      font-family: SourceHanSansCN-Regular;
+      font-weight: 400;
+      color: rgba(102, 102, 102, 1);
     }
   }
 }

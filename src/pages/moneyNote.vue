@@ -3,7 +3,7 @@
     <div class="tabs">
       <div
         class="item df"
-        v-for="(item,index) in noteTab"
+        v-for="(item,index) in $t('moneyNote.noteTab')"
         :key="index"
       >{{item.name}}</div>
     </div>

@@ -8,7 +8,7 @@
         <div
           class="item"
           :class="[tabIndex == index && 'active']"
-          v-for="(item,index) in list"
+          v-for="(item,index) in $t('udb.list')"
           :key="index"
           @click="tab(index)"
         >
@@ -19,12 +19,12 @@
       <div class="duihuan" v-if="tabIndex==0">
         <div class="content">
           <div class="left">
-            <div class="top">UDB通证</div>
+            <div class="top">{{$t('udb.udbtz')}}</div>
             <div class="bottom">{{money}}</div>
           </div>
           <div class="right">
-            <div class="open df" @click="open(0)">解仓</div>
-            <div class="open df" @click="open(1)">锁仓</div>
+            <div class="open df" @click="open(0)">{{$t('udb.open')}}</div>
+            <div class="open df" @click="open(1)">{{$t('udb.close')}}</div>
           </div>
         </div>
       </div>
@@ -321,7 +321,7 @@ export default {
     // window.addEventListener("scroll", this.onScroll);
   },
   mounted() {
-    document.title = "UDB通证";
+    document.title = this.$t('alltitle.udbtz');
     this.drawLine();
     // var time = null;
     this.getDateArray();

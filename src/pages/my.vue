@@ -13,12 +13,12 @@
             </div>
             <div class="bottom">
               <div class="id">UID：{{myInfo.userid}}</div>
-              <div class="level" v-if='myInfo.level == 0'>级别：普通用户</div>
-              <div class="level" v-if='myInfo.level == 1'>级别：VIP1星</div>
-              <div class="level" v-if='myInfo.level == 2'>级别：VIP2星</div>
-              <div class="level" v-if='myInfo.level == 3'>级别：VIP3星</div>
-              <div class="level" v-if='myInfo.level == 4'>级别：VIP4星</div>
-              <div class="level" v-if='myInfo.level == 5'>级别：VIP5星</div>
+              <div class="level" v-if='myInfo.level == 0'>{{$t('info.level')}}：{{$t('info.level0')}}</div>
+              <div class="level" v-if='myInfo.level == 1'>{{$t('info.level')}}：{{$t('info.level1')}}</div>
+              <div class="level" v-if='myInfo.level == 2'>{{$t('info.level')}}：{{$t('info.level2')}}</div>
+              <div class="level" v-if='myInfo.level == 3'>{{$t('info.level')}}：{{$t('info.level3')}}</div>
+              <div class="level" v-if='myInfo.level == 4'>{{$t('info.level')}}：{{$t('info.level4')}}</div>
+              <div class="level" v-if='myInfo.level == 5'>{{$t('info.level')}}：{{$t('info.level5')}}</div>
               
             </div>
           </div>
@@ -35,7 +35,7 @@
          <span>{{yemoney}}</span>
        </div>
        <div class="bottoms">
-         余额
+           {{$t('info.yue')}}
        </div>
       </div>
             <div class="item">
@@ -44,7 +44,7 @@
          <span>{{zcmoney}}</span>
        </div>
        <div class="bottoms">
-         资产
+           {{$t('info.Assets')}}
        </div>
       </div>
     </div>
@@ -53,7 +53,7 @@
         <div class="itemContent">
                   <div class="lt">
           <img src="@/assets/image/qianbao.png" alt="">
-          <span>钱包地址</span>
+          <span> {{$t('my.txaddress')}}</span>
         </div>
         <div class="rt"><img src="@/assets/image/jiantou.png" alt=""></div>
         </div>
@@ -65,7 +65,7 @@
           </div> -->
                   <div class="lt">
           <img src="@/assets/image/mima.png" alt="">
-          <span>支付密码</span>
+          <span>{{$t('my.paypsw')}}</span>
         </div>
         <div class="rt"><img src="@/assets/image/jiantou.png" alt=""></div>
         </div>
@@ -74,7 +74,7 @@
         <div class="itemContent">
                   <div class="lt">
           <img src="@/assets/image/tixian.png" alt="">
-          <span>提现管理</span>
+          <span>{{$t('my.txmanagement')}}</span>
         </div>
         <div class="rt"><img src="@/assets/image/jiantou.png" alt=""></div>
         </div>
@@ -83,7 +83,7 @@
         <div class="itemContent">
                   <div class="lt">
           <img src="@/assets/image/chongzhi.png" alt="">
-          <span>充值上传</span>
+          <span>{{$t('my.topupupload')}}</span>
         </div>
         <div class="rt"><img src="@/assets/image/jiantou.png" alt=""></div>
         </div>
@@ -92,7 +92,7 @@
         <div class="itemContent">
                   <div class="lt">
           <img src="@/assets/image/team.png" alt="">
-          <span>我的团队</span>
+          <span>{{$t('my.myteam')}}</span>
         </div>
         <div class="rt"><img src="@/assets/image/jiantou.png" alt=""></div>
         </div>
@@ -101,7 +101,7 @@
         <div class="itemContent">
                   <div class="lt">
           <img src="@/assets/image/shezhi.png" alt="">
-          <span>设置</span>
+          <span>{{$t('my.setting')}}</span>
         </div>
         <div class="rt"><img src="@/assets/image/jiantou.png" alt=""></div>
         </div>
@@ -182,6 +182,7 @@ export default {
 <style lang="scss" scoped>
 .content {
   // padding: 0 .15rem;
+  padding-bottom: .55rem;
 }
 .top {
   width: 100%;

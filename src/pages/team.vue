@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <div class="content">
-      <span>我的直推人</span>
+      <span>{{$t('team.title')}}</span>
       <div class="top">
         <img src="@/assets/image/tab1.png" alt>
         <div class="info">
@@ -9,10 +9,10 @@
           <div class="ids">UID：{{myInfo.userid}}</div>
         </div>
       </div>
-      <span style="margin-top:.15rem;display:block">注册时间:{{myInfo.reg_date}}</span>
+      <span style="margin-top:.15rem;display:block">{{$t('team.time')}}:{{myInfo.reg_date}}</span>
     </div>
     <div class="item">
-      <span>我的团队</span>
+      <span>{{$t('team.team')}}</span>
 
       <div class="top" v-for="item in list">
         <img src="@/assets/image/tab1.png" alt>

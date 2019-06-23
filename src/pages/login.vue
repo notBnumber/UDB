@@ -1,104 +1,84 @@
 <template>
   <div class="login">
-
-        <div class="select">
-      <div class="top" @click='select()'>
-        {{selectText}}
-
-      </div>
-      <div class="bottom" v-if='isSelect'>
-        <div class="item df"  v-for='(item,index) in selectList' :key='index' @click='changeLanguage(index)'>
-          {{item.name}}
-        </div>
+    <div class="select">
+      <div class="top" @click="select()">{{selectText}}</div>
+      <div class="bottom" v-if="isSelect">
+        <div
+          class="item df"
+          v-for="(item,index) in selectList"
+          :key="index"
+          @click="changeLanguage(index)"
+        >{{item.name}}</div>
       </div>
     </div>
-    <img
-      src="@/assets/image/4.png"
-      alt
-      class="logo"
-    >
+    <img src="@/assets/image/4.png" alt class="logo">
     <div class="content">
       <div class="item">
-        <img
-          src="@/assets/image/youxiang.png"
-          alt
-        >
-        <input
-          type="text"
-          placeholder="请输入邮箱号"
-          v-model="email"
-        >
+        <img src="@/assets/image/youxiang.png" alt>
+        <input type="text" :placeholder="$t('login.tip1')" v-model="email">
       </div>
       <div class="item last">
-        <img
-          src="@/assets/image/pwd.png"
-          alt
-        >
-        <input
-          type="password"
-          placeholder="请输入登录密码"
-          v-model="pwd"
-        >
+        <img src="@/assets/image/pwd.png" alt>
+        <input type="password" :placeholder="$t('login.tip2')" v-model="pwd">
       </div>
-      <span v-if="error == false">账号或密码有误，请核对后再输入</span>
-      <div
-        class="btn df"
-        @click="login"
-      >登录</div>
+      <span v-if="error == false">{{$t('login.tip3')}}</span>
+      <div class="btn df" @click="login">{{$t('login.login')}}</div>
       <div class="util">
-        <div class="items" @click="register">注册</div>
-        <div class="items" @click="forget">忘记密码？</div>
+        <div class="items" @click="register">{{$t('login.reg')}}</div>
+        <div class="items" @click="forget">{{$t('login.fogetpsw')}}？</div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-// import qs from 'qs'
-export default {
-  name: "login",
-  data() {
-    return {
-      email: "",
-      pwd: "",
-      student: true,
-      pwdType: "password",
-      state: 0,
-      selectList: [{ name: "CN 中文" }, { name: "EN 英文" }],
-            selectIndex: 0,
-      isSelect: false,
-      selectText: "CN 中文"
-    };
-  },
-  created() {},
-  computed: {
-    error: function() {
-      if (this.pwd == 111) {
-        return false;
-      } else {
-        return true;
-      }
-    }
-  },
-  methods: {
-        select() {
-      this.isSelect = !this.isSelect;
-    },
-        changeLanguage(index) {
-      this.selectText = this.selectList[index].name;
-      this.isSelect = !this.isSelect;
-      localStorage.setItem("language", index);
-      if (index == 0) {
-        localStorage.setItem("locale", "zh");
-        this.$i18n.locale = localStorage.getItem("locale");
-      } else if (index == 1) {
-        localStorage.setItem("locale", "en");
-        this.$i18n.locale = localStorage.getItem("locale");
-      }
+    // import qs from 'qs'
+    export default {
+        name: "login",
+        data() {
+            return {
+                email: "",
+                pwd: "",
+                student: true,
+                pwdType: "password",
+                state: 0,
+                selectList: [{name: "CN 中文"}, {name: "EN 英文"}],
+                selectIndex: 0,
+                isSelect: false,
+                selectText: "CN 中文"
+            };
+        },
+        created() {
+        },
+        computed: {
+            error: function () {
+                if (this.pwd == 111) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        },
+        methods: {
+            select() {
+                this.isSelect = !this.isSelect;
+            },
+            changeLanguage(index) {
+                console.log(this.$t('login.login'))
+                this.selectText = this.selectList[index].name;
+                this.isSelect = !this.isSelect;
+                localStorage.setItem("language", index);
+                if (index == 0) {
+                    localStorage.setItem("locale", "zh");
+                    this.$i18n.locale = localStorage.getItem("locale");
+                } else if (index == 1) {
+                    localStorage.setItem("locale", "en");
+                    this.$i18n.locale = localStorage.getItem("locale");
+                }
 
-      // for (let item of this.$t("message.tabsList")) {
-      //   item.num = 2;
-      // }
+                // for (let item of this.$t("message.tabsList")) {
+                //   item.num = 2;
+                // }
 
     },
     register() {
@@ -106,10 +86,14 @@ export default {
       
     },
     forget() {
-            this.$router.push({ path: "/forget" });
+            this.$router.push({ path: "/register" });
+
+            // this.$router.push({ path: "/forget" });
 
     },
     login() {
+          this.$router.push({ path: "/index" });
+
       this.$api
         .toLogin({
           account: this.email,
@@ -144,32 +128,15 @@ export default {
       this.$router.push({ path: "/index" });
     },
 
-    // 切换身份
-    toStudent() {
-      console.log(2);
+            
+            log(info) {
+                console.log(info);
+            },
+            btn(e) {
+                this.$router.push({path: "/index"});
+            },
 
-      this.student = !this.student;
-      if (this.student == true) {
-        this.state = 0;
-      } else {
-        this.state = 1;
-      }
-    },
-    // 删除号码
-    delPhone() {
-      this.phone = "";
-    },
-    // 显示密码
-    showPwd() {
-      this.pwdType = this.pwdType === "password" ? "text" : "password";
-    }
-  },
-  destroyed() {
-    console.log("离开");
-
-    //页面销毁时关闭长连接
-    // this.websocketclose();
-  },
+        },
   mounted() {
     document.title = "登录";
     this.email = localStorage.getItem('account')
@@ -185,14 +152,15 @@ export default {
 i {
   display: inline-block;
 }
+
 .login {
-  background: url("~@/assets/image/2.png") no-repeat;
+  background: url("http://udb.red/udbapp/img/big.png") no-repeat;
   width: 100%;
   height: 100vh;
   padding: 1rem 0.15rem;
   box-sizing: border-box;
   position: relative;
-    .select {
+  .select {
     position: absolute;
     right: 0.13rem;
     top: 0.05rem;
