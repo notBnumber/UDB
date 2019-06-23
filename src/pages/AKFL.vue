@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="content">
-    <div class="item" v-for='item in 10'>
+    <div class="item" v-for='item in 4'>
 
     </div>
   </div>
@@ -27,7 +27,7 @@ export default {
     width: 3.45rem;
     height: 1.5rem;
     border-radius: 0.1rem;
-    background: url("~@/assets/image/dibai.png") no-repeat;
+    background: url("http://app.udb.red/img/dibai1.png") no-repeat;
     background-size: 100%;
     margin-bottom:.2rem;
   }
