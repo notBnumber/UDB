@@ -2,10 +2,10 @@
   <div class="login">
     <div class="content">
       <div class="df">转账唯一地址，填错自负!!!</div>
-      <input type="text" placeholder="请输入姓名" v-model="content">
-      <span>（点击此处 复制链接地址）</span>
+      <input  id="hidden" type="text" placeholder="请输入地址" v-model="content">
+      <span @click="copy">（点击此处 复制链接地址）</span>
     </div>
-    <div class="btn df" :class="[kong == true && 'active']">修改</div>
+    <div class="btn df" @click="choose" :class="[kong == true && 'active']">修改</div>
   </div>
 </template>
 <script>
@@ -13,7 +13,7 @@ export default {
   name: "login",
   data() {
     return {
-      content: ""
+      content: "33333333333333"
     };
   },
   computed: {
@@ -26,13 +26,30 @@ export default {
     }
   },
   methods: {
+    choose() {
+      this.$router.push({ path: "/chooseAddress" });
+
+    },
     del() {
       this.content = "";
+    },
+    copy() {
+
+              var Url = document.getElementById("hidden");
+              Url.select(); // 选择对象
+              document.execCommand("Copy");
+              this.$toast('复制成功')
+    },
+    init() {
+            this.$api.getInfo().then(res=> {
+        this.content = res.result.userinfo.wallet_add
+        // alert(this.content)
+      })
     }
   },
   mounted() {
     document.title = "设置";
-    this.http = localStorage.getItem("http");
+    this.init()
   }
 };
 </script>

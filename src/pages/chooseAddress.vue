@@ -1,10 +1,10 @@
 <template>
   <div class="login">
     <div class="content">
-      <input type="text" placeholder="请输入姓名" v-model="content">
+      <input type="text" placeholder="请输入地址" v-model="content">
       <img src="@/assets/image/delName.png" alt v-if="content!=''" @click="del">
     </div>
-    <div class="btn df" :class="[kong == true && 'active']">确认</div>
+    <div class="btn df "    @click="submit" :class="[kong == true && 'active']">确认</div>
   </div>
 </template>
 <script>
@@ -28,13 +28,25 @@ export default {
     del() {
       this.content = ''
     },
-    init() {
-
+    submit() {
+      let that   = this
+      if(this.kong) {
+        this.$api.updatemoneyaddress({
+          getaddress:this.content
+        }).then(res=> {
+        this.$toast(res.message)
+        setTimeout(() => {
+          that.$router.back()
+        }, 1500);
+          
+        })
+      } else {
+        this.$toast('请输入地址')
+      }
     }
   },
   mounted() {
-    document.title = "设置";
-    this.init()
+    document.title = "修改钱包地址";
   }
 };
 </script>

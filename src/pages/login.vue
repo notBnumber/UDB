@@ -118,6 +118,9 @@ export default {
         .then(res => {
           if (res.status == 1) {
             localStorage.setItem('login',true)
+            localStorage.setItem('account',this.email)
+            localStorage.setItem('password',this.pwd)
+
           this.$router.push({ path: "/index" });
           } else {
           }
@@ -169,6 +172,9 @@ export default {
   },
   mounted() {
     document.title = "登录";
+    this.email = localStorage.getItem('account')
+    this.pwd = localStorage.getItem('password')
+
         this.$i18n.locale = localStorage.getItem("locale") == null?'zh':localStorage.getItem("locale");
     this.selectText = this.selectList[localStorage.getItem('language') == null?0:localStorage.getItem('language')].name
   },

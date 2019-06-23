@@ -13,14 +13,13 @@
         v-for="(item,index) in noteList"
         :key="index"
       >
-        <div>{{item.addtime}}</div>
-        <div class="num">{{item.nums}}</div>
-        <div>{{item.closetime}}</div>
+        <div>{{item.getmoney}}</div>
+        <div class="num">{{item.addtime}}</div>
+        <div>{{item.status == 0?"未领取":'已领取'}}</div>
         <div
-          class="state df"
-          @click="open(item.ispasstime,item.id)"
+          class=" df"
         >
-          {{item.ispasstime == 0?'锁仓中':'解仓'}}
+          {{item.remark}}
         </div>
       </div>
     </div>
@@ -35,55 +34,27 @@ export default {
     return {
       noteTab: [
         {
-          name: "锁仓时间"
+          name: "金额"
         },
         {
-          name: "数量"
-        },
-        {
-          name: "锁仓期限"
+          name: "添加时间"
         },
         {
           name: "状态"
+        },
+        {
+          name: "备注"
         }
       ],
       noteList: [
-        {
-          state: 0,
-          num: "1200",
-          day: "3个月",
-          time: "2019-06-07 14:28:12"
-        },
-        {
-          state: 1,
-          num: "1200",
-          day: "3个月",
-          time: "2019-06-07 14:28:12"
-        },
-        {
-          state: 2,
-          num: "1200",
-          day: "3个月",
-          time: "2019-06-07 14:28:12"
-        }
       ]
     };
   },
   created() {},
   methods: {
-    open(state,id) {
-      if(state == 1) {
-        // this.$router.push({ path: "/Position"});
-        this.$api.openudb({
-          id:id
-        }).then(res=>{
-          this.$toast(res.message)
-          
-        })
-      }
-    },
+
     init() {
-      this.$api.udbcloselist({}).then(res => {
+      this.$api.zclist({}).then(res => {
         if (res.status == 1) {
           this.noteList = res.result
         } else {
@@ -92,7 +63,8 @@ export default {
     }
   },
   mounted() {
-    document.title = "解仓";
+    document.title = "资产记录";
+
     this.init();
   }
 };

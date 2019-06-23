@@ -22,77 +22,101 @@ const http = axios.create({
   }
 })
 const noSessionPost = axios.create({
-    timeout: 5000,
-    baseURL: URL,
-    header: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-    }
+  timeout: 5000,
+  baseURL: URL,
+  header: {
+    'Content-Type': 'application/x-www-form-urlencoded'
+  }
 })
 
 const form = axios.create({
-    timeout: 60000,
-    baseURL: URL,
-    headers: {
-        'Content-Type': 'multipart/form-data'
-    }
+  timeout: 60000,
+  baseURL: URL,
+  headers: {
+    'Content-Type': 'multipart/form-data'
+  }
 })
 //添加请求拦截器
 http.interceptors.request.use(config => {
-    // Do something before request is sent
-    // console.log(config)
-    if (localStorage.getItem('sessionId')) {
-        // const token = localStorage.getItem('sessionId')
-        // config.data += '&language=' + localStorage.getItem('lang')
-    }
+  // Do something before request is sent
+  // console.log(config)
+  if (localStorage.getItem('sessionId')) {
+    // const token = localStorage.getItem('sessionId')
+    // config.data += '&language=' + localStorage.getItem('lang')
+  }
 
-    return config
+  return config
 }, err => {
 
-    return Promise.reject(error);
+  return Promise.reject(error);
 })
 
 export default {
-    get( url,params = {} ){
-    return new Promise (async (resolve, reject) => {
+  get(url, params = {}) {
+    return new Promise(async (resolve, reject) => {
+      vm.$toast.loading({
+        mask: true,
+        message: "加载中..."
+      });
       try {
-        const data = await http.get(url,{params})
-          const code = Number(data.data.status)
-          const desc = data.data.message
-          if (code != 1) {
-            vm.$toast(data.data.message)
-          }
-          resolve(data.data)
-      }
-      catch(err) {
+        if (localStorage.getItem('locale') == 'zh' || localStorage.getItem('locale') == null) {
+          params.i = ''
+        } else {
+          params.i = 'en-us'
+        }
+        const data = await http.get(url, {
+          params
+        })
+        const code = Number(data.data.status)
+        const desc = data.data.message
+        if (code != 1) {
+          vm.$toast(data.data.message)
+        }
+        vm.$toast.clear();
+
+        resolve(data.data)
+      } catch (err) {
         console.log(err)
         vm.$toast('网络繁忙,请稍后再试')
       }
-    })
+    }) 
   },
   post(url, params = {}, back = true) {
     return new Promise(async (resolve, reject) => {
+      vm.$toast.loading({
+        mask: true,
+        message: "加载中..."
+      });
       try {
+        if (localStorage.getItem('locale') == 'zh' || localStorage.getItem('locale') == null) {
+          // params.i = ''
+
+        } else {
+          params.i = 'en-us'
+        }
+
         const data = await http.post(url, qs.stringify(params))
         const code = Number(data.data.status)
-        if(code == 0){
+        if (code == 0) {
 
         }
         if (code != 1) {
           vm.$toast(data.data.message)
           return
         }
-        if(code == 2){
-          setTimeout(()=>{
+        if (code == 2) {
+          setTimeout(() => {
             // window.location.href = "#/login"
-          },1000)
+          }, 1000)
           return
         }
+        vm.$toast.clear();
 
-                resolve(data.data)
-            } catch (err) {
-                console.log(err)
-                vm.$toast('网络繁忙,请稍后再试')
-            }
+        resolve(data.data)
+      } catch (err) {
+        console.log(err)
+        vm.$toast('网络繁忙,请稍后再试')
+      }
 
     })
   },

@@ -23,6 +23,12 @@
       </div>
     </div>
     <div class="duihuan" v-if="tabIndex==0">
+      <div class="title"  @click="copy">
+        <div class="mon df">复制</div>
+      <input  id="hidden" type="text"   v-model="address">
+        <!-- <input type="text"  disabled  class="inp" v-model="address" id="hidden"> -->
+      </div>
+      <div class="tip" @click="rule">充值说明</div>
       <div class="title">
         <div class="mon df">金额</div>
         <input type="text" placeholder="请输入您的充值金额" class="inp" v-model="moneynum">
@@ -72,13 +78,14 @@
 // import qs from 'qs'
 import Tab from "../components/Tab";
 import info from "../components/info";
-import { ImagePreview } from 'vant';
+import { ImagePreview } from "vant";
 export default {
   components: { Tab, info },
 
   name: "login",
   data() {
     return {
+      address:'',
       imgString: [],
       content: "",
       show: false,
@@ -119,6 +126,18 @@ export default {
   },
   created() {},
   methods: {
+    rule() {
+      this.$router.push({ path: "/Rule" ,query:{state:3}});
+
+    },
+    copy() {
+      var Url = document.getElementById("hidden");
+      Url.select(); // 选择对象
+      document.execCommand("Copy");
+      this.$toast("复制成功");
+
+      // 
+    },
     submit() {
       this.$api
         .addmoney({
@@ -202,11 +221,18 @@ export default {
     },
     next() {
       this.show = !this.show;
+    },
+    init() {
+      this.$api.getmoneyaddress().then(res=> {
+        if(res.status == 1) {
+          this.address = res.result
+        }
+      })
     }
   },
   mounted() {
     document.title = "充值";
-    this.http = localStorage.getItem("http");
+   this.init()
   }
 };
 </script>
@@ -273,6 +299,7 @@ export default {
   .duihuan {
     padding-top: 0.1rem;
     .title {
+      z-index: 999;
       height: 0.44rem;
       text-align: center;
       font-size: 0.14rem;
@@ -410,8 +437,11 @@ export default {
       }
     }
     .tip {
+      width: 100%;
       margin-top: 0.23rem;
       text-align: center;
+      margin-bottom: 0.23rem;
+
     }
     .btnContent {
       padding: 0 0.16rem;
@@ -424,7 +454,7 @@ export default {
           rgba(65, 104, 238, 1)
         );
         border-radius: 0.2rem;
-        margin-top: 0.65rem;
+        margin-top: 0.15rem;
         font-size: 0.14rem;
         font-family: SourceHanSansSC-Regular;
         font-weight: 400;
@@ -469,6 +499,7 @@ export default {
       font-family: SourceHanSansSC-Regular;
       font-weight: 400;
       color: rgba(153, 153, 153, 1);
+      
     }
     .btn {
       width: 100%;

@@ -72,10 +72,10 @@ class API {
   changemoney = params => {
     return http.post("user/changemoney", params);
   };
-  // myApi/myudblist udb通证记录
-  myudblist = params => {
-    return http.post("myApi/myudblist", params);
-  };
+  // // myApi/myudblist udb通证记录
+  // myudblist = params => {
+  //   return http.post("myApi/myudblist", params);
+  // };
   // 上传图片 User/upImg
   upImg = params => {
     return http.post("User/upImg", params);
@@ -104,6 +104,38 @@ class API {
   addrecordlist = params => {
     return http.post("myApi/addrecordlist", params);
   };
+  // 各种记录 myApi/myudblist
+  myudblist = params => {
+    return http.post("myApi/myudblist", params);
+  };
+  // myApi/openudb 解仓
+  openudb = params => {
+    return http.post("myApi/openudb", params);
+  };
+  // 平台地址 PublicApi/getmoneyaddress
+  getmoneyaddress = params => {
+    return http.post("PublicApi/getmoneyaddress", params);
+  };
+  // 修改地址   MyApi/updatemoneyaddress
+  updatemoneyaddress = params => {
+    return http.post("MyApi/updatemoneyaddress", params);
+  };
+  // 余额   MyApi/updatemoneyaddress
+  yueandrplist = params => {
+    return http.post("MyApi/yueandrplist", params);
+  };
+  // 资产列表 MyApi/zclist
+  zclist = params => {
+    return http.post("MyApi/zclist", params);
+  };
+    // 二维码   User/Sharecode
+    Sharecode = params => {
+      return http.post("User/Sharecode", params);
+    };
+    // MyApi/myteam 团队
+    myteam = params => {
+      return http.post("MyApi/myteam", params);
+    };
 }
 
 export default new API();

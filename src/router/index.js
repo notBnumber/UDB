@@ -55,6 +55,11 @@ import exchange from '@/pages/exchange' //兑换
 import Position from '@/pages/Position' //锁仓
 import cartAddress from '@/pages/cartAddress' //钱包地址
 import choosePwd from '@/pages/choosePwd' //设置密码
+import chooseAddress from '@/pages/chooseAddress' //设置密码
+import yueNote from '@/pages/yueNote' //余额列表
+import moneyNote from '@/pages/moneyNote' //资产列表
+import team from '@/pages/team' //团队
+
 Vue.use(Router)
 
 export default new Router({
@@ -340,6 +345,26 @@ export default new Router({
       name: 'choosePwd',
       component: choosePwd
     },
+    {
+      path: '/chooseAddress',
+      name: 'chooseAddress',
+      component: chooseAddress
+    },
+    {
+      path: '/yueNote',
+      name: 'yueNote',
+      component: yueNote
+    },
+    {
+      path: '/moneyNote',
+      name: 'moneyNote',
+      component: moneyNote
+    },
+    {
+      path: '/team',
+      name: 'team',
+      component: team
+    }
   ]
   
 })

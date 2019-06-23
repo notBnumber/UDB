@@ -275,6 +275,7 @@ export default {
     width: 1.23rem;
   }
   .content {
+    padding-bottom: .15rem;
     width: 100%;
     // height: 4.99rem;
     background-color: #fff;

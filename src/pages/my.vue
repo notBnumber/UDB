@@ -137,7 +137,7 @@ export default {
       this.$router.push({ path: "/setting" });
     },
     tixian() {
-      this.$router.push({ path: "/house" });
+      this.$router.push({ path: "/tixiannote" });
     },
     cart() {
       console.log(1);
@@ -148,7 +148,7 @@ export default {
       this.$router.push({ path: "/chongzhiNote" });
     },
     myTeam() {
-      this.$router.push({ path: "/chongzhiNote" });
+      this.$router.push({ path: "/team" });
     },
     pwd() {
       this.$router.push({ path: "/choosePwd" });

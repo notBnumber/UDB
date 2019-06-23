@@ -112,7 +112,7 @@ export default {
         })
         .then(res => {
           if (res.status == 1) {
-            this.noteList = res.result;
+            this.noteList =this.noteList.concat(res.result);
           } else {
           }
         });

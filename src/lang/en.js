@@ -132,7 +132,10 @@ module.exports = {
         name: "Balancetransfer"
       },
       {
-        name: "Reciprocal"
+        name: "BalanceNote"
+      },
+      {
+        name: "UDBNote"
       }
     ],
     noteTab: [{
@@ -149,7 +152,7 @@ module.exports = {
       }
     ],
     tip1: '（ Please enter an integer multiple of 1.）',
-    tip2: 'Please enter an integer multiple of 1.',
+    tip2: 'Please enter the user ID',
     tip3:'Please enter the transfer amount.',
     next:'next',
     ok:'ok'

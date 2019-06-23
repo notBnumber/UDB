@@ -8,12 +8,14 @@ export default {
   components: {},
   data() {
     return {
-      content:'<p>复投富文本</p>'
+      content:'<p>富文本</p>'
     };
   },
   methods: {},
   mounted() {
     document.title = "复投规则";
+    console.log(this.$route.query);
+    
   }
 };
 </script>

@@ -109,6 +109,12 @@ export default {
       else if(index == 4) {
       this.$router.push({ path: "/UDB" });
 
+      } else if (index == 0) {
+      this.$router.push({ path: "/yueNote" });
+
+      } else if(index  == 1 ) {
+      this.$router.push({ path: "/moneyNote" });
+
       }
     },
     detail(index) {
@@ -132,6 +138,7 @@ export default {
       this.$api.indexinfo({}).then(res => {
         if (res.status == 1) {
           let list = this.$t("message.tabsList")
+          this.numList = res.result.moneytype
           for (let i in list) {
             // list[i].num = res.reult.moneytype 
             for(let i in res.result.moneytype ) {
@@ -173,7 +180,15 @@ export default {
         this.$i18n.locale = localStorage.getItem("locale");
       }
       this.brands = this.$t("brands");
-
+                let list = this.$t("message.tabsList")
+          for (let i in list) {
+            // list[i].num = res.reult.moneytype 
+            for(let i in this.numList ) {
+              console.log(1);
+              
+              list[i].num  = this.numList[i]
+            }
+          }
       // for (let item of this.$t("message.tabsList")) {
       //   item.num = 2;
       // }

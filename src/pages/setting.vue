@@ -45,7 +45,7 @@ export default {
         if (res.status == 1) {
           this.$toast('退出成功')
         this.$router.push({ path: "/login" });
-
+            localStorage.setItem('login','')
         } else {
         }
       });

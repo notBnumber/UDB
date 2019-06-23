@@ -1,36 +1,57 @@
 <template lang="html">
   <div class="content">
-    <div class="item" v-for='item in 5'>
+     <scroller :on-infinite="infinite">
+    <div class="item" v-for='item in list'>
       <div class="left">
-        <img src="@/assets/image/qianbao.png" alt="">
+        <div class="img"><img src="@/assets/image/tix.png" alt=""></div>
         <div class='top'>
-          <div class="name">UDB通证提现</div>
-          <div class="money">提现金额：125UDB</div>
+          <div class="name">{{item.remark}}</div>
+          <div class="money">提现金额：{{item.nums}}</div>
         </div>
       </div>
       <div class="right">
-        <div class="state">已通过</div>
-        <div class="time">2019-02-27  14:52:13</div>
+        <div class="state">{{item.status == 1?'申请中':(item.status == 2?'已通过':'已拒绝') }}</div>
+        <div class="time">{{item.addtime}}</div>
       </div>
     </div>
     <div class="no df" v-if='list.length == 0'>
       <img src="@/assets/image/kong.png" alt="">
       <span>暂无任何转入记录</span>
     </div>
+     </scroller>
   </div>
+  
 </template>
 <script>
 export default {
   components: {},
   data() {
     return {
-      list:[
-      ]
+      num: 0,
+      list: []
     };
   },
-  methods: {},
+  methods: {
+    init(num) {
+
+      this.$api
+        .myudblist({
+          page: num,
+          type: 3
+        })
+        .then(res => {
+          this.list = this.list.concat(res.result);
+        });
+    },
+    infinite(done) {
+      this.init(++this.num);
+      done(true);
+      console.log(11111);
+    }
+  },
   mounted() {
-    document.title = '提现记录'
+    document.title = "提现记录";
+    this.init(this.num);
   }
 };
 </script>
@@ -50,10 +71,15 @@ export default {
     align-items: center;
     .left {
       display: flex;
-      img {
+      align-items: center;
+      .img {
         width: 0.32rem;
+        img {
+          width: 100%;
+        }
       }
       .top {
+        flex: 1;
         margin-left: 0.13rem;
         display: flex;
         flex-direction: column;
@@ -87,19 +113,22 @@ export default {
         color: rgba(153, 153, 153, 1);
       }
     }
+    &:last-child {
+      border: none;
+    }
   }
   .no {
     width: 100%;
     display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
+    flex-direction: column;
+    justify-content: flex-start;
     img {
       margin-top: 1.52rem;
-    width: 1rem;
+      width: 1rem;
     }
     span {
       display: block;
-      margin-top: .18rem;
+      margin-top: 0.18rem;
       font-size: 0.14rem;
       font-family: SourceHanSansSC-Regular;
       font-weight: 400;

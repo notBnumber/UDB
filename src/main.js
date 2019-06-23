@@ -43,7 +43,13 @@ Vue.prototype.imgUrl = process.env.API_ROOT
 // import VideoPlayer from 'vue-video-player'
 // Vue.use(VideoPlayer);
 
+// 加载
+import { Loading } from 'vant';
+
+Vue.use(Loading);
+
 // 轮播
+
 import {
   Swipe,
   SwipeItem

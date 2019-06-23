@@ -31,14 +31,21 @@
       <div class="btn df" @click="duiHuan">{{$t('myShareInfo.ok')}}</div>
     </div>
     <div class="tixian" v-if="tabIndex==2">
-      <input type="text" :placeholder=p3 v-model="address">
-      <input type="text" :placeholder=p4 v-model="money">
+      <input type="text" :placeholder="p3" v-model="address">
+      <input type="text" :placeholder="p4" v-model="money">
       <div class="tip">{{$t('myShareInfo.tip3')}}</div>
       <div class="btn df" @click="txudb">{{$t('myShareInfo.ok')}}</div>
     </div>
 
     <div class="note" v-if="tabIndex==3" id="app">
-      <scroller :on-infinite="infinite">
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        :immediate-check="false"
+        :offset="100"
+        @load="getMore"
+      >
         <div class="tabs">
           <div class="item df" v-for="(item,index) in $t('shareNoteTab')" :key="index">{{item.name}}</div>
         </div>
@@ -50,7 +57,7 @@
             <div>{{item.state == 1?'申请中':(item.state == 2?'已通过':'已拒绝')}}</div>
           </div>
         </div>
-      </scroller>
+      </van-list>
     </div>
     <Tab :tabIndex="1"></Tab>
   </div>
@@ -66,6 +73,8 @@ export default {
   name: "login",
   data() {
     return {
+      finished: false,
+      loading: false,
       p1: this.$t("myShareInfo.p1"),
       p2: this.$t("myShareInfo.p2"),
       p3: this.$t("myShareInfo.p3"),
@@ -140,9 +149,8 @@ export default {
         this.AKl = "";
         this.UDB = "";
       } else if (index == 3) {
-        this.noteHeight =
-          document.getElementById("tab").offsetHeight +
-          document.getElementById("top").offsetHeight;
+        // this.noteList = []
+        //       this.getList(0);
       }
     },
     init() {
@@ -198,21 +206,39 @@ export default {
     },
     //
     getList(num) {
+      this.loading = true;
+      // 样式?
+      // 自己边距撑起来
+      // 给内边事件都触发
+      // 暂停了怎么触发?
       this.$api
         .txlist({
           page: num
         })
         .then(res => {
           if (res.status == 1) {
-            this.noteList = this.noteList.concat(res.result);
-          } else {
+            if (res.result.length <= 0) {
+              this.loading = false;
+              this.finished = true; // 没有数据了暂停
+            } else {
+              //否则合并数组
+              this.noteList = this.noteList.concat(res.result);
+              this.loading = false;
+            }
+          } else if (res.status != 1) {
+            this.finished = true;
+              this.loading = false;
+
           }
         });
     },
-    infinite(done) {
-      this.getList(++this.num)
-      done(true);
-      console.log(11111);
+    getMore: function() {
+      //这个都不走了那怎么整你不说根据status判断吗?
+      // alert(8888)
+      this.finished = false;
+
+      this.getList(++this.num);
+      // this.loading  = true
     },
     onScroll() {
       // //可滚动容器的高度
@@ -269,6 +295,7 @@ export default {
   overflow: hidden;
   background-color: #fff;
   padding: 0 0.15rem;
+  padding-bottom: 0.7rem;
 
   .top {
     width: 100%;
@@ -415,10 +442,11 @@ export default {
     }
   }
   .note {
-    position: relative;
-    height: 4.78rem;
-    // overflow-y: auto;
+    // position: relative;
     padding-bottom: 0.7rem;
+
+    height: 4.78rem;
+    overflow-y: auto;
     .tabs {
       height: 0.43rem;
       width: 100%;
