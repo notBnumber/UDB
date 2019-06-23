@@ -13,7 +13,7 @@
         >
         <input
           type="text"
-          placeholder="请输入邮箱号"
+          :placeholder="$t('login.tip1')"
           v-model="youxiang"
         >
       </div>
@@ -24,7 +24,7 @@
         >
         <input
           type="text"
-          placeholder="请输入验证码"
+          :placeholder="$t('reg.tip2')"
           v-model="code"
         >
         <div
@@ -39,7 +39,7 @@
         >
         <input
           type="password"
-          placeholder="请输入登录密码"
+          :placeholder="$t('reset.tip1')"
           v-model="pwd"
         >
       </div>
@@ -50,19 +50,19 @@
         >
         <input
           type="password"
-          placeholder="请再次输入新的登录密码"
+          :placeholder="$t('reset.tip2')"
           v-model="pwd2"
         >
       </div>
       <div
         class="btn df"
-      >重置</div>
+      >{{$t('reset.reset')}}</div>
       <div class="util">
         <div
           class="items"
           @click="login"
-        >账号登录</div>
-        <div class="items"   @click="register" >注册</div>
+        >{{$t('reg.tologin')}}</div>
+        <div class="items"   @click="register" >{{$t('login.reg')}}</div>
       </div>
     </div>
   </div>
@@ -217,21 +217,22 @@ export default {
           console.log(num);
 
           // this.canSend = false;
-          this.getCodes = "重发(" + num + ")";
+          this.getCodes = this.$t('reg.resendcode') + "(" + num + ")";
           this.timeState = true;
           num--;
         } else {
           console.log(99999);
           this.timeState = false;
           clearInterval(this.setTime);
-          this.getCodes = "获取验证码";
+          this.getCodes = this.$t('reg.sendcode');
           // this.canSend = true;
         }
       }, 1000);
     }
   },
   mounted() {
-    document.title = "注册";
+    document.title = this.$t('alltitle.reset');
+      this.getCodes = this.$t('reg.sendcode')
   }
 };
 </script>

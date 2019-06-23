@@ -14,7 +14,7 @@
       <div
         class="item"
         :class="[tabIndex == index && 'active']"
-        v-for="(item,index) in list"
+        v-for="(item,index) in $t('topup.list')"
         :key="index"
         @click="tab(index)"
       >
@@ -24,14 +24,14 @@
     </div>
     <div class="duihuan" v-if="tabIndex==0">
       <div class="title">
-        <div class="mon df">金额</div>
-        <input type="text" placeholder="请输入您的充值金额" class="inp" v-model="moneynum">
+        <div class="mon df">{{$t('topup.money')}}</div>
+        <input type="text" :placeholder="$t('topup.tip1')" class="inp" v-model="moneynum">
       </div>
       <div class="textContent">
-        <textarea name id cols="30" rows="10" maxlength="300" placeholder="充值备注" v-model="content"></textarea>
+        <textarea name id cols="30" rows="10" maxlength="300" :placeholder="$t('topup.tip2')" v-model="content"></textarea>
         <div class="tips">{{content.length}}/300</div>
       </div>
-      <div class="tipss">请上传充值凭证，保持图片清晰度，不可涂改，提高充值审核通过率（图片不超过3张）</div>
+      <div class="tipss">{{$t('topup.tip3')}}</div>
       <div class="contentAdd">
         <div class="imgUrl" v-if="imgUrl.length!=0">
           <div class="imgs df">
@@ -48,21 +48,21 @@
         </div>
       </div>
       <div class="btnContent">
-        <div class="btn df" @click="submit">充值</div>
+        <div class="btn df" @click="submit">{{$t('alltitle.topup')}}</div>
       </div>
     </div>
 
     <!-- 请输入需要兑换的AKFL通证数 -->
     <div class="note" v-if="tabIndex==1">
       <div class="tabs">
-        <div class="item df" v-for="(item,index) in noteTab" :key="index">{{item.name}}</div>
+        <div class="item df" v-for="(item,index) in $t('topup.noteTab')" :key="index">{{item.name}}</div>
       </div>
       <div class="content">
         <div class="item" v-for="(item,index) in noteList" :key="index">
           <div>{{item.addtime}}</div>
           <div class="money" :class="[item.state ==0 && 'active']">{{item.moneynum}}</div>
-          <div>{{item.status == 0?'待确认':(item.status == 1?'已确认':'拒绝')}}</div>
-          <div class="open df" @click="open(item.pzimgarr)">查看凭证</div>
+          <div>{{item.status == 0?$t('topup.waittrue'):(item.status == 1?$t('topup.istrue'):$t('topup.Refused'))}}</div>
+          <div class="open df" @click="open(item.pzimgarr)">{{$t('topup.lookpz')}}</div>
         </div>
       </div>
     </div>
@@ -205,7 +205,7 @@ export default {
     }
   },
   mounted() {
-    document.title = "充值";
+    document.title = this.$t('alltitle.topup');;
     this.http = localStorage.getItem("http");
   }
 };

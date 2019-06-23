@@ -183,7 +183,7 @@ export default {
     }
   },
   mounted() {
-    document.title = "首页";
+    document.title = this.$t('alltitle.index');
     this.init();
     this.$i18n.locale = localStorage.getItem("locale") == null?'zh':localStorage.getItem("locale");
     this.selectText = this.selectList[localStorage.getItem('language') == null?0:localStorage.getItem('language')].name

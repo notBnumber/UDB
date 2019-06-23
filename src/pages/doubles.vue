@@ -7,10 +7,10 @@
       <info></info>
     </div>
     <div class="duihuan">
-      <div class="title">请输入需要复投的金额</div>
-      <input type="text" class :placeholder="place" v-model="money">
-      <div class="tip">（提示：此操作将余额兑换成资产，点击查看规则）</div>
-      <div class="btn df" @click="duihuan">确认兑换</div>
+      <div class="title">{{$t('doubles.tip1')}}</div>
+      <input type="text" class :placeholder="$t('doubles.tip2')" v-model="money">
+      <div class="tip">{{$t('doubles.tip3')}}</div>
+      <div class="btn df" @click="duihuan">{{$t('exchange.Confirm')}}</div>
     </div>
   </div>
 </template>
@@ -123,7 +123,7 @@ export default {
     }
   },
   mounted() {
-    document.title = "复投";
+    document.title =  this.$t('alltitle.futou');
     // this.init();
   },
   created() {
