@@ -184,7 +184,7 @@ export default {
           console.log("验证码", res);
           if (res.status == 1) {
             console.log(res);
-            this.$toast(res.desc);
+            this.$toast(res.message);
             this.$router.push({ path: "/login" });
           }
         });

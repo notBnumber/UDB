@@ -152,6 +152,10 @@ class API {
   resetpsw = params => {
     return http.post("PublicApi/resetpsw", params);
   };
+  // 提交旧数据  MyApi/postolddata
+  postolddata = params => {
+    return http.post("MyApi/postolddata", params);
+  };
 }
 
 export default new API();

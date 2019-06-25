@@ -83,16 +83,16 @@ export default {
   },
   mounted() {
     document.title = "海报中心";
-    this.$api.posterLabel().then(res => {
-      console.log("海报中心标签", res);
-      if (res.code == 1) {
-        this.tabList = res.data;
-        this.active = 0;
-        this.labelId = res.data[0].id;
-        // 获取第一项标签下的海报列表
-        this.getList(this.labelId, 1);
-      }
-    });
+    // this.$api.posterLabel().then(res => {
+    //   console.log("海报中心标签", res);
+    //   if (res.code == 1) {
+    //     this.tabList = res.data;
+    //     this.active = 0;
+    //     this.labelId = res.data[0].id;
+    //     // 获取第一项标签下的海报列表
+    //     this.getList(this.labelId, 1);
+    //   }
+    // });
   }
 };
 </script>

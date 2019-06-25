@@ -25,7 +25,7 @@
       <input
         type="text"
         v-model="old4"
-       :placeholder="$t('old.old4')"
+        :placeholder="$t('old.old4')"
       >
 
       <div class="btnContent">
@@ -70,8 +70,11 @@ export default {
     submit() {
       let that = this;
       this.$api
-        .postopinion({
-          content: this.content
+        .postolddata({
+          yue: this.old1,
+          zc: this.old2,
+          tongzheng: this.old3,
+          maring: this.old4
         })
         .then(res => {
           if (res.status == 1) {
@@ -153,9 +156,9 @@ export default {
     padding-top: 0.1rem;
 
     input {
-      margin-bottom: .1rem;
+      margin-bottom: 0.1rem;
       width: 100%;
-      height: .4rem;
+      height: 0.4rem;
       text-align: left;
       padding-left: 0.2rem;
       font-size: 0.13rem;
@@ -163,8 +166,8 @@ export default {
       font-weight: 400;
       color: rgba(51, 51, 51, 1);
       background: rgba(249, 249, 249, 1) !important;
-      border: .01rem solid #999;
-      border-radius: .2rem;
+      border: 0.01rem solid #999;
+      border-radius: 0.2rem;
     }
 
     input::-webkit-input-placeholder {
@@ -193,7 +196,6 @@ export default {
         color: rgba(51, 51, 51, 1);
       }
     }
-
 
     .btnContent {
       padding: 0 0.16rem;
