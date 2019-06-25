@@ -209,6 +209,7 @@ module.exports = {
       udbtz:'UDB通证',
       futou:'复投',
       topup:'充值',
+      old:'旧数据'
     },
     udb:{
         list: [
@@ -263,6 +264,8 @@ module.exports = {
         tip1:'请输入您的充值金额',
         tip2:'充值备注',
         tip3:'请上传充值凭证，保持图片清晰度，不可涂改，提高充值审核通过率（图片不超过3张）',
+        address:'平台地址',
+        upload:'上传凭证'
     },
     my:{
       txaddress:'提现地址',

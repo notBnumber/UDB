@@ -156,6 +156,10 @@ class API {
   postolddata = params => {
     return http.post("MyApi/postolddata", params);
   };
+  // 获取旧数据列表  getpostnewdata
+  getpostnewdata = params => {
+    return http.post("MyApi/getpostnewdata", params);
+  };
 }
 
 export default new API();

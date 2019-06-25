@@ -1,41 +1,49 @@
 <template>
   <div class="login">
-
     <!-- <div class="title">
       {{$t("message.title")}}
     </div>-->
 
     <div class="duihuan">
-
-      <input
-        type="text"
-        v-model="old1"
-        :placeholder="$t('old.old1')"
-      >
-      <input
-        type="text"
-        v-model="old2"
-        :placeholder="$t('old.old2')"
-      >
-      <input
-        type="text"
-        v-model="old3"
-        :placeholder="$t('old.old3')"
-      >
-      <input
-        type="text"
-        v-model="old4"
-        :placeholder="$t('old.old4')"
-      >
+      <input type="text" v-model="old1" :placeholder="$t('old.old1')">
+      <input type="text" v-model="old2" :placeholder="$t('old.old2')">
+      <input type="text" v-model="old3" :placeholder="$t('old.old3')">
+      <input type="text" v-model="old4" :placeholder="$t('old.old4')">
 
       <div class="btnContent">
-        <div
-          class="btn df"
-          @click="submit"
-        >{{$t('task.btn')}}</div>
+        <div class="btn df" @click="submit">{{$t('task.btn')}}</div>
       </div>
     </div>
-
+    <div class="detail">
+      <div class="item">
+        <div class="left">金额:</div>
+        <div class="right">{{info.yue}}</div>
+      </div>
+      <div class="item">
+        <div class="left">资产:</div>
+        <div class="right">{{info.zc}}</div>
+      </div>
+      <div class="item">
+        <div class="left">通证:</div>
+        <div class="right">{{info.tongzheng}}</div>
+      </div>
+      <div class="item">
+        <div class="left">保证金:</div>
+        <div class="right">{{info.maring}}</div>
+      </div>
+      <div class="item" v-if="info.state == 2">
+        <div class="left">备注:</div>
+        <div class="right">{{info.remark}}</div>
+      </div>
+      <div class="item">
+        <div class="left">状态:</div>
+        <div class="right">{{info.state}}</div>
+      </div>
+      <div class="item">
+        <div class="left">添加时间:</div>
+        <div class="right">{{info.addtime}}</div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -54,7 +62,8 @@ export default {
 
       old3: "",
 
-      old4: ""
+      old4: "",
+      info: {}
     };
   },
   created() {},
@@ -66,6 +75,13 @@ export default {
       this.$toast("复制成功");
 
       //
+    },
+    init() {
+      this.$api.getpostnewdata().then(res => {
+        if (res.status == 1) {
+          this.info = res.result;
+        }
+      });
     },
     submit() {
       let that = this;
@@ -87,7 +103,8 @@ export default {
     }
   },
   mounted() {
-    document.title = this.$t("alltitle.topup");
+    document.title = this.$t("alltitle.old");
+    this.init();
   }
 };
 </script>
@@ -118,37 +135,6 @@ export default {
         position: absolute;
         right: 0.1rem;
         top: 0.1rem;
-      }
-    }
-  }
-  .tab {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-
-    .item {
-      padding-top: 0.15rem;
-      height: 0.52rem;
-      width: 22.5%;
-      font-size: 0.15rem;
-      font-family: SourceHanSansSC-Regular;
-      font-weight: 400;
-      color: rgba(102, 102, 102, 1);
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    .active {
-      font-size: 0.15rem;
-      font-family: SourceHanSansSC-Regular;
-      font-weight: 400;
-      color: rgba(31, 23, 201, 1);
-      .xian {
-        width: 100%;
-        height: 0.02rem;
-        background: rgba(12, 105, 220, 1);
-        border-radius: 0.01rem;
       }
     }
   }
@@ -214,6 +200,26 @@ export default {
         font-family: SourceHanSansSC-Regular;
         font-weight: 400;
         color: rgba(255, 255, 255, 1);
+      }
+    }
+  }
+  .detail {
+    margin-top: .3rem;
+    .item {
+      display: flex;
+      align-items: center;
+      .left {
+        font-size: 0.16rem;
+        font-family: SourceHanSansSC-Regular;
+        font-weight: 400;
+        color: #303030;
+      }
+      .right {
+        margin-left: .1rem;
+        font-size: 0.16rem;
+        font-family: SourceHanSansSC-Regular;
+        font-weight: 400;
+        color: rgba(102, 102, 102, 1);
       }
     }
   }

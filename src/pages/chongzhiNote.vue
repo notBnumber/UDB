@@ -24,8 +24,10 @@
     </div>
     <div class="duihuan" v-if="tabIndex==0">
       <div class="title"  @click="copy">
-        <div class="mon df">复制</div>
+        <div class="mon df">{{$t('topup.upload')}}</div>
       <input  id="hidden" type="text"   v-model="address">
+        <div class="mon df">{{$t('topup.address')}}</div>
+
         <!-- <input type="text"  disabled  class="inp" v-model="address" id="hidden"> -->
       </div>
       <div class="tip" @click="rule">{{$t('topup.title')}}</div>
@@ -50,7 +52,7 @@
         <div class="add" v-if="imgUrl.length<3">
           <input type="file" accept="image/*" ref="avatarInput" @change="changeImage($event)">
           <img src="@/assets/image/add1.png" alt>
-          <span>上传凭证</span>
+          <span>{{$t('topup.upload')}}</span>
         </div>
       </div>
       <div class="btnContent">
@@ -309,6 +311,9 @@ export default {
       background: rgba(249, 249, 249, 1) !important;
       display: flex;
       align-items: center;
+      padding-right: .2rem;
+      padding-left: .2rem;
+
       .mon {
         height: 100%;
         width: 0.6rem;

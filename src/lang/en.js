@@ -189,6 +189,7 @@ module.exports = {
         udbtz:'UDB',
         futou:'cast again',
         topup:'top-up',
+        old:'old data'
     },
     exchange:{
         list: [
@@ -258,6 +259,8 @@ module.exports = {
         tip1:'Please enter your top-up amount',
         tip2:'top-up comment',
         tip3:'Please upload the recharge voucher to maintain the clarity of the picture, which cannot be altered, and improve the pass rate of recharge audit (no more than 3 pictures).',
+        // address:'Platform address',
+        // upload:'Upload vouchers'
     },
     my:{
         txaddress:'Withdrawal address',
