@@ -1,10 +1,18 @@
-<template lang="html">
+<template >
   <div class="content">
     <div class="top">
       <div class="info">
         <div class="left">
-                          <img src="@/assets/image/tab1.png"  v-if="myInfo.img_head == ''" alt="">
-                 <img :src=myInfo.img_head   v-if="myInfo.img_head != ''" alt="">
+          <img
+            src="@/assets/image/tab1.png"
+            v-if="myInfo.img_head == ''"
+            alt=""
+          >
+          <img
+            :src=myInfo.img_head
+            v-if="myInfo.img_head != ''"
+            alt=""
+          >
         </div>
         <div class="right">
           <div class="lt">
@@ -13,97 +21,214 @@
             </div>
             <div class="bottom">
               <div class="id">UID：{{myInfo.userid}}</div>
-              <div class="level" v-if='myInfo.level == 0'>{{$t('info.level')}}：{{$t('info.level0')}}</div>
-              <div class="level" v-if='myInfo.level == 1'>{{$t('info.level')}}：{{$t('info.level1')}}</div>
-              <div class="level" v-if='myInfo.level == 2'>{{$t('info.level')}}：{{$t('info.level2')}}</div>
-              <div class="level" v-if='myInfo.level == 3'>{{$t('info.level')}}：{{$t('info.level3')}}</div>
-              <div class="level" v-if='myInfo.level == 4'>{{$t('info.level')}}：{{$t('info.level4')}}</div>
-              <div class="level" v-if='myInfo.level == 5'>{{$t('info.level')}}：{{$t('info.level5')}}</div>
-              
+              <div
+                class="level"
+                v-if='myInfo.level == 0'
+              >{{$t('info.level')}}：{{$t('info.level0')}}</div>
+              <div
+                class="level"
+                v-if='myInfo.level == 1'
+              >{{$t('info.level')}}：{{$t('info.level1')}}</div>
+              <div
+                class="level"
+                v-if='myInfo.level == 2'
+              >{{$t('info.level')}}：{{$t('info.level2')}}</div>
+              <div
+                class="level"
+                v-if='myInfo.level == 3'
+              >{{$t('info.level')}}：{{$t('info.level3')}}</div>
+              <div
+                class="level"
+                v-if='myInfo.level == 4'
+              >{{$t('info.level')}}：{{$t('info.level4')}}</div>
+              <div
+                class="level"
+                v-if='myInfo.level == 5'
+              >{{$t('info.level')}}：{{$t('info.level5')}}</div>
+
             </div>
           </div>
           <div class="rt">
-            <img src="@/assets/image/return.png" alt="">
-            </div>
+            <img
+              src="@/assets/image/return.png"
+              alt=""
+            >
+          </div>
         </div>
       </div>
     </div>
     <div class="money">
       <div class="item">
-       <div class="tops">
-         <img src="@/assets/image/logo.png" alt="">
-         <span>{{yemoney}}</span>
-       </div>
-       <div class="bottoms">
-           {{$t('info.yue')}}
-       </div>
+        <div class="tops">
+          <img
+            src="@/assets/image/logo.png"
+            alt=""
+          >
+          <span>{{yemoney}}</span>
+        </div>
+        <div class="bottoms">
+          {{$t('info.yue')}}
+        </div>
       </div>
-            <div class="item">
-       <div class="tops">
-         <img src="@/assets/image/logo.png" alt="">
-         <span>{{zcmoney}}</span>
-       </div>
-       <div class="bottoms">
-           {{$t('info.Assets')}}
-       </div>
+      <div class="item">
+        <div class="tops">
+          <img
+            src="@/assets/image/logo.png"
+            alt=""
+          >
+          <span>{{zcmoney}}</span>
+        </div>
+        <div class="bottoms">
+          {{$t('info.Assets')}}
+        </div>
       </div>
     </div>
     <div class="contents">
-      <div class="item" @click='cart'>
+      <div
+        class="item"
+        @click='cart'
+      >
         <div class="itemContent">
-                  <div class="lt">
-          <img src="@/assets/image/qianbao.png" alt="">
-          <span> {{$t('my.txaddress')}}</span>
-        </div>
-        <div class="rt"><img src="@/assets/image/jiantou.png" alt=""></div>
+          <div class="lt">
+            <img
+              src="@/assets/image/qianbao.png"
+              alt=""
+            >
+            <span> {{$t('my.txaddress')}}</span>
+          </div>
+          <div class="rt"><img
+              src="@/assets/image/jiantou.png"
+              alt=""
+            ></div>
         </div>
       </div>
-            <div class="item" @click='pwd'>
+      <div
+        class="item"
+        @click='pwd'
+      >
         <div class="itemContent special">
           <!-- <div class="tip">
             未设置
           </div> -->
-                  <div class="lt">
-          <img src="@/assets/image/mima.png" alt="">
-          <span>{{$t('my.paypsw')}}</span>
-        </div>
-        <div class="rt"><img src="@/assets/image/jiantou.png" alt=""></div>
-        </div>
-      </div>
-            <div class="item" @click=tixian>
-        <div class="itemContent">
-                  <div class="lt">
-          <img src="@/assets/image/tixian.png" alt="">
-          <span>{{$t('my.txmanagement')}}</span>
-        </div>
-        <div class="rt"><img src="@/assets/image/jiantou.png" alt=""></div>
+          <div class="lt">
+            <img
+              src="@/assets/image/mima.png"
+              alt=""
+            >
+            <span>{{$t('my.paypsw')}}</span>
+          </div>
+          <div class="rt"><img
+              src="@/assets/image/jiantou.png"
+              alt=""
+            ></div>
         </div>
       </div>
-            <div class="item" @click='chongzhi'>
+      <div
+        class="item"
+        @click=tixian
+      >
         <div class="itemContent">
-                  <div class="lt">
-          <img src="@/assets/image/chongzhi.png" alt="">
-          <span>{{$t('my.topupupload')}}</span>
-        </div>
-        <div class="rt"><img src="@/assets/image/jiantou.png" alt=""></div>
+          <div class="lt">
+            <img
+              src="@/assets/image/tixian.png"
+              alt=""
+            >
+            <span>{{$t('my.txmanagement')}}</span>
+          </div>
+          <div class="rt"><img
+              src="@/assets/image/jiantou.png"
+              alt=""
+            ></div>
         </div>
       </div>
-            <div class="item" @click='myTeam'>
+      <div
+        class="item"
+        @click='chongzhi'
+      >
         <div class="itemContent">
-                  <div class="lt">
-          <img src="@/assets/image/team.png" alt="">
-          <span>{{$t('my.myteam')}}</span>
-        </div>
-        <div class="rt"><img src="@/assets/image/jiantou.png" alt=""></div>
+          <div class="lt">
+            <img
+              src="@/assets/image/chongzhi.png"
+              alt=""
+            >
+            <span>{{$t('my.topupupload')}}</span>
+          </div>
+          <div class="rt"><img
+              src="@/assets/image/jiantou.png"
+              alt=""
+            ></div>
         </div>
       </div>
-            <div class="item" @click='setting'>
+      <div
+        class="item"
+        @click='myTeam'
+      >
         <div class="itemContent">
-                  <div class="lt">
-          <img src="@/assets/image/shezhi.png" alt="">
-          <span>{{$t('my.setting')}}</span>
+          <div class="lt">
+            <img
+              src="@/assets/image/team.png"
+              alt=""
+            >
+            <span>{{$t('my.myteam')}}</span>
+          </div>
+          <div class="rt"><img
+              src="@/assets/image/jiantou.png"
+              alt=""
+            ></div>
         </div>
-        <div class="rt"><img src="@/assets/image/jiantou.png" alt=""></div>
+      </div>
+      <div
+        class="item"
+        @click='setting'
+      >
+        <div class="itemContent">
+          <div class="lt">
+            <img
+              src="@/assets/image/shezhi.png"
+              alt=""
+            >
+            <span>{{$t('my.setting')}}</span>
+          </div>
+          <div class="rt"><img
+              src="@/assets/image/jiantou.png"
+              alt=""
+            ></div>
+        </div>
+      </div>
+      <div
+        class="item"
+        @click='task'
+      >
+        <div class="itemContent">
+          <div class="lt">
+            <img
+              src="@/assets/image/qianbao.png"
+              alt=""
+            >
+            <span> {{$t('my.Feedback')}}</span>
+          </div>
+          <div class="rt"><img
+              src="@/assets/image/jiantou.png"
+              alt=""
+            ></div>
+        </div>
+      </div>
+      <div
+        class="item"
+        @click='old'
+      >
+        <div class="itemContent">
+          <div class="lt">
+            <img
+              src="@/assets/image/qianbao.png"
+              alt=""
+            >
+            <span> {{$t('my.old')}}</span>
+          </div>
+          <div class="rt"><img
+              src="@/assets/image/jiantou.png"
+              alt=""
+            ></div>
         </div>
       </div>
     </div>
@@ -153,6 +278,12 @@ export default {
     pwd() {
       this.$router.push({ path: "/choosePwd" });
     },
+    task() {
+      this.$router.push({ path: "/task" });
+    },
+        old() {
+      this.$router.push({ path: "/old" });
+    },
     init() {
       this.$api.getInfo({}).then(res => {
         if (res.status == 1) {
@@ -182,7 +313,7 @@ export default {
 <style lang="scss" scoped>
 .content {
   // padding: 0 .15rem;
-  padding-bottom: .55rem;
+  padding-bottom: 0.55rem;
 }
 .top {
   width: 100%;

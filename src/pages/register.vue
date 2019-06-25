@@ -182,7 +182,7 @@ export default {
         })
         .then(res => {
           console.log("验证码", res);
-          if (res.code == 1) {
+          if (res.status == 1) {
             console.log(res);
             this.$toast(res.desc);
             this.$router.push({ path: "/login" });

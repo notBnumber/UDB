@@ -86,13 +86,12 @@
       
     },
     forget() {
-            this.$router.push({ path: "/register" });
+            this.$router.push({ path: "/forget" });
 
             // this.$router.push({ path: "/forget" });
 
     },
     login() {
-          this.$router.push({ path: "/index" });
 
       this.$api
         .toLogin({

@@ -40,23 +40,34 @@ const form = axios.create({
 http.interceptors.request.use(config => {
   // Do something before request is sent
   // console.log(config)
-  if (localStorage.getItem('sessionId')) {
-    // const token = localStorage.getItem('sessionId')
-    // config.data += '&language=' + localStorage.getItem('lang')
-  }
+  // if (!localStorage.getItem('login')) {
+  //   console.log(config);
+  //   window.location.href = '#/login'
+  //   // const token = localStorage.getItem('sessionId')
+  //   // config.data += '&language=' + localStorage.getItem('lang')
+  // }
 
   return config
 }, err => {
 
   return Promise.reject(error);
 })
+// http.interceptors.response.use(response => {
+//   console.log(response,'909000');
+  
+//   return response
+// }, error => {
+//   console.log(response,'909000');
 
+//   return Promise.resolve(error.response)
+// })
 export default {
   get(url, params = {}) {
     return new Promise(async (resolve, reject) => {
       vm.$toast.loading({
         mask: true,
-        message: "加载中..."
+        duration: 0,    
+
       });
       try {
         if (localStorage.getItem('locale') == 'zh' || localStorage.getItem('locale') == null) {
@@ -85,7 +96,7 @@ export default {
     return new Promise(async (resolve, reject) => {
       vm.$toast.loading({
         mask: true,
-        message: "加载中..."
+        duration: 0,    
       });
       try {
         if (localStorage.getItem('locale') == 'zh' || localStorage.getItem('locale') == null) {
@@ -97,6 +108,8 @@ export default {
 
         const data = await http.post(url, qs.stringify(params))
         const code = Number(data.data.status)
+          console.log(Number(code));
+          
         if (code == 0) {
 
         }
@@ -104,13 +117,10 @@ export default {
           vm.$toast(data.data.message)
           return
         }
-        if (code == 2) {
-          setTimeout(() => {
-            // window.location.href = "#/login"
-          }, 1000)
-          return
+      
+        if(code == 1) {
+          vm.$toast.clear();
         }
-        vm.$toast.clear();
 
         resolve(data.data)
       } catch (err) {

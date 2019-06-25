@@ -96,7 +96,7 @@ class API {
   setpsw = params => {
     return http.post("myApi/setpsw", params);
   };
-  // 解仓 
+  // 解仓
   setpsw = params => {
     return http.post("myApi/setpsw", params);
   };
@@ -128,18 +128,30 @@ class API {
   zclist = params => {
     return http.post("MyApi/zclist", params);
   };
-    // 二维码   User/Sharecode
-    Sharecode = params => {
-      return http.post("User/Sharecode", params);
-    };
-    // MyApi/myteam 团队
-    myteam = params => {
-      return http.post("MyApi/myteam", params);
-    };
-    // 协议
-    getxieyi = params => {
-      return http.post("PublicApi/getxieyi", params);
-    };  
+  // 二维码   User/Sharecode
+  Sharecode = params => {
+    return http.post("User/Sharecode", params);
+  };
+  // MyApi/myteam 团队
+  myteam = params => {
+    return http.post("MyApi/myteam", params);
+  };
+  // 协议
+  getxieyi = params => {
+    return http.post("PublicApi/getxieyi", params);
+  };
+  // 反馈列表
+  opinionlist = params => {
+    return http.post("MyApi/opinionlist", params);
+  };
+  // 提交反馈
+  postopinion = params => {
+    return http.post("MyApi/postopinion", params);
+  };
+  // 重置密码 PublicApi/resetpsw
+  resetpsw = params => {
+    return http.post("PublicApi/resetpsw", params);
+  };
 }
 
 export default new API();

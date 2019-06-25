@@ -266,6 +266,8 @@ module.exports = {
         topupupload:'top-up upload',
         myteam:'my team',
         setting:'setting',
+      task:'Feedback',
+        old:'Submitting old data'
     },
     cartAddress:{
       title:'Transfer only address, fill in the wrong conceit!!!',
@@ -310,5 +312,26 @@ module.exports = {
           name: "remark"
         }
       ],
+    },
+    task:{
+      title:"Your complaint or feedback:",
+      btn:"submit",
+      task:'I want feedback.',
+      time:"time",
+      detail:'Details of the question',
+      reply:'Platform response',
+      one:'Not Viewed',
+      two:"Viewed",
+      three:'Replied',
+      tip2:'Feedback content'
+    },
+    old :{
+      old1:'Please enter the old amount',
+      old2:'Please enter old assets',
+
+      old3:'Please enter the old passport',
+
+      old4:'Please enter the old deposit',
+
     }
 }

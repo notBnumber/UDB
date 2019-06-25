@@ -266,11 +266,13 @@ module.exports = {
     },
     my:{
       txaddress:'提现地址',
+      Feedback:'反馈',
       paypsw:'支付密码',
       txmanagement:'提现管理',
       topupupload:'充值上传',
       myteam:'我的团队',
       setting:'设置',
+      old:'提交旧数据'
     },
     cartAddress:{
       title:'转账唯一地址，填错自负!!!',
@@ -315,5 +317,26 @@ module.exports = {
           name: "备注"
         }
       ],
+    },
+    task:{
+      title:"您的投诉或反馈：",
+      btn:"提交",
+      task:'我要反馈',
+      time:"提交时间",
+      detail:'问题详情',
+      reply:'平台回复',
+      one:'未查看',
+      two:"已查看",
+      three:'已回复',
+      tip2:'反馈内容'
+    },
+    old :{
+      old1:'请输入旧金额',
+      old2:'请输入旧资产',
+
+      old3:'请输入旧通证量',
+
+      old4:'请输入旧保证金',
+
     }
 }

@@ -54,15 +54,16 @@
           v-model="pwd2"
         >
       </div>
-      <div
-        class="btn df"
-      >{{$t('reset.reset')}}</div>
+      <div class="btn df" @click="btn">{{$t('reset.reset')}}</div>
       <div class="util">
         <div
           class="items"
           @click="login"
         >{{$t('reg.tologin')}}</div>
-        <div class="items"   @click="register" >{{$t('login.reg')}}</div>
+        <div
+          class="items"
+          @click="register"
+        >{{$t('login.reg')}}</div>
       </div>
     </div>
   </div>
@@ -121,19 +122,11 @@ export default {
         return;
       }
       if (this.pwd == "") {
-        this.$toast("请输入登录密码");
-        return;
-      }
-      if (this.pwd2 == "") {
-        this.$toast("请输入登录密码");
+        this.$toast("请输入新的登录密码");
         return;
       }
       if (this.pwd != this.pwd2) {
-        this.$toast("密码不一致");
-        return;
-      }
-      if (this.id == "") {
-        this.$toast("请输入推荐人id");
+        this.$toast("两次密码不一致");
         return;
       }
       // let str = Number(this.pwd.split("").length);
@@ -155,18 +148,16 @@ export default {
       //   return;
       // }
       this.$api
-        .reg({
+        .resetpsw({
           email: this.youxiang,
           code: this.code,
-          login_pwd: this.pwd,
-          pid: this.id,
-          username: this.name
+          password: this.pwd
         })
         .then(res => {
           console.log("验证码", res);
-          if (res.code == 1) {
+          if (res.status == 1) {
             console.log(res);
-            this.$toast(res.desc);
+            this.$toast(res.message);
             this.$router.push({ path: "/login" });
           }
         });
@@ -204,6 +195,8 @@ export default {
           .then(res => {
             console.log("验证码", res);
             if (res.status == 1) {
+        this.$toast(res.message);
+
               this.getTime(num);
               console.log(res);
             }
@@ -217,22 +210,22 @@ export default {
           console.log(num);
 
           // this.canSend = false;
-          this.getCodes = this.$t('reg.resendcode') + "(" + num + ")";
+          this.getCodes = this.$t("reg.resendcode") + "(" + num + ")";
           this.timeState = true;
           num--;
         } else {
           console.log(99999);
           this.timeState = false;
           clearInterval(this.setTime);
-          this.getCodes = this.$t('reg.sendcode');
+          this.getCodes = this.$t("reg.sendcode");
           // this.canSend = true;
         }
       }, 1000);
     }
   },
   mounted() {
-    document.title = this.$t('alltitle.reset');
-      this.getCodes = this.$t('reg.sendcode')
+    document.title = this.$t("alltitle.reset");
+    this.getCodes = this.$t("reg.sendcode");
   }
 };
 </script>

@@ -60,13 +60,17 @@ import yueNote from '@/pages/yueNote' //余额列表
 import moneyNote from '@/pages/moneyNote' //资产列表
 import team from '@/pages/team' //团队
 import share from '@/pages/share' //分享
+import task from '@/pages/task' //反馈 taskDetail
+import taskDetail from '@/pages/taskDetail' //反馈 taskDetail
+import old from '@/pages/old' //反馈 taskDetail
 Vue.use(Router)
 
 export default new Router({
   
   routes: [{
       path: '/',
-      component: login
+      component: login,
+      redirect: { name: 'login' }
     },
     {
       path: '/login',
@@ -369,6 +373,21 @@ export default new Router({
       path: '/share',
       name: 'share',
       component: share
+    },
+    {
+      path: '/task',
+      name: 'task',
+      component: task
+    },
+    {
+      path: '/taskDetail',
+      name: 'taskDetail',
+      component: taskDetail
+    },
+    {
+      path: '/old',
+      name: 'old',
+      component: old
     }
   ]
   
