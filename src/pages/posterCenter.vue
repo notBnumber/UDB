@@ -82,7 +82,8 @@ export default {
     }
   },
   mounted() {
-    document.title = "海报中心";
+      document.title = this.$t('alltitle.shopcenter');;
+    //document.title = "海报中心";
     // this.$api.posterLabel().then(res => {
     //   console.log("海报中心标签", res);
     //   if (res.code == 1) {

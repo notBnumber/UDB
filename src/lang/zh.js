@@ -209,7 +209,8 @@ module.exports = {
       udbtz:'UDB通证',
       futou:'复投',
       topup:'充值',
-      old:'旧数据'
+      old:'旧数据',
+      shopcenter:'购物中心'
     },
     udb:{
         list: [
