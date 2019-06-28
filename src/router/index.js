@@ -21,7 +21,7 @@ import myShare from '@/pages/myShare' //我要分享
 import posterCenter from '@/pages/posterCenter' //海报中心
 import my from '@/pages/my' //个人中心
 import our from '@/pages/our' //个人中心
-// import myInfo from '@/pages/myInfo' //我的资料
+import myInfo from '@/pages/myInfo' //我的资料
 // import vip from '@/pages/vip' //成为VIP
 // import del from '@/pages/del'
 // import free from '@/pages/free' //去支付
@@ -197,11 +197,11 @@ export default new Router({
     //   name: 'liuyan',
     //   component: liuyan
     // },
-    // {
-    //   path: '/myInfo',
-    //   name: 'myInfo',
-    //   component: myInfo
-    // },
+    {
+      path: '/myInfo',
+      name: 'myInfo',
+      component: myInfo
+    },
     // {
     //   path: '/vip',
     //   name: 'vip',

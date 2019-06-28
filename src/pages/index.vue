@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
   <div class="content">
     <!-- <div style='display:flex;justify-content:space-between'>
       <div @click=china()>中文</div>
@@ -8,6 +8,7 @@
     <span>{{language?Chinese.title:english.title}}</span> -->
     <!--中英文切换 -->
     <div class="title">
+      <div class="moneys df"  v-if="moneys!=0" @click="getMoney">{{moneys}}</div>
     <div class="select">
       <div class="top" @click='select()'>
         {{selectText}}
@@ -106,10 +107,21 @@ export default {
       selectList: [{ name: "CN 中文" }, { name: "EN 英文" }],
       selectIndex: 0,
       isSelect: false,
-      selectText: "CN 中文"
+      selectText: "CN 中文",
+      moneys:''
     };
   },
   methods: {
+    getMoney() {
+      this.$api.geteanring({
+        money:this.moneys
+      }).then(res=>{
+        if(res.status == 1) {
+        this.$toast(res.message)
+
+        }
+      })
+    },
     // 详情
     toDetail(index) {
       if(index == 3) {
@@ -148,6 +160,7 @@ export default {
         if (res.status == 1) {
           let list = this.$t("message.tabsList")
           this.numList = res.result.moneytype
+          this.moneys = res.result.openmoney
           for (let i in list) {
             // list[i].num = res.reult.moneytype 
             for(let i in res.result.moneytype ) {
@@ -261,6 +274,21 @@ export default {
   height: 2.55rem;
   background: url("http://udb.red/udbapp/img/banner.png") no-repeat;
   background-size: 100%;
+  .moneys {
+    border-radius: 50%;
+    overflow: hidden;
+      background: url("~@/assets/image/yuanquan.png") no-repeat;
+  background-size: 100%;
+    position: absolute;
+    width: .46rem;
+    height: .46rem;
+font-size:.09rem;
+font-family:SourceHanSansSC-Regular;
+font-weight:400;
+color:rgba(255,255,255,1);
+left: .8rem;
+bottom: 1.08rem;
+  }
   .select {
     position: absolute;
     right: 0.13rem;

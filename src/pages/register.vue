@@ -81,6 +81,12 @@ export default {
   },
   created() {},
   methods: {
+    getUrlParam(name) {
+      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+      var r = window.location.search.substr(1).match(reg);
+      if (r != null) return unescape(r[2]);
+      return null;
+    },
     select() {
       this.isSelect = !this.isSelect;
     },
@@ -102,8 +108,7 @@ export default {
       // }
     },
     read() {
-      this.$router.push({ path: "/Rule",query:{state:0}});
-
+      this.$router.push({ path: "/Rule", query: { state: 0 } });
     },
     check() {
       console.log(this.checked);
@@ -224,7 +229,7 @@ export default {
             if (res.status == 1) {
               this.getTime(num);
               console.log(res);
-                this.$toast(res.message);
+              this.$toast(res.message);
             }
           });
       }
@@ -247,6 +252,26 @@ export default {
           // this.canSend = true;
         }
       }, 1000);
+    },
+    GetQueryString(name) {
+      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+      var r = window.location.search.substr(1).match(reg); //获取url中"?"符后的字符串并正则匹配
+      var context = "";
+      if (r != null) context = r[2];
+      reg = null;
+      r = null;
+      return context == null || context == "" || context == "undefined"
+        ? ""
+        : context;
+    },
+    getUrlKey: function(name) {
+      return (
+        decodeURIComponent(
+          (new RegExp("[?|&]" + name + "=" + "([^&;]+?)(&|#|;|$)").exec(
+            location.href
+          ) || [, ""])[1].replace(/\+/g, "%20")
+        ) || null
+      );
     }
   },
   mounted() {
@@ -262,6 +287,14 @@ export default {
         : localStorage.getItem("language")
     ].name;
     this.getCodes = this.$t("reg.sendcode");
+
+    console.log(this.getUrlKey("uid"), "kkk");
+
+    if (this.getUrlKey("uid") != null) {
+      this.id = this.getUrlKey("uid");
+    } else {
+      this.id = "";
+    }
   }
 };
 </script>

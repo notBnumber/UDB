@@ -1,42 +1,42 @@
-<template lang="html">
-    <div class="content">
-        <div class="top">
-            <div class="left">
-                <img src="@/assets/image/tab1.png"  v-if="myInfo.img_head == ''" alt="">
-                 <img :src=myInfo.img_head   v-if="myInfo.img_head != ''" alt="">
-            </div>
-            <div class="right">
-                <div class="name">{{myInfo.username}}</div>
-                <div class="info">
-                    <div class="uid">
-                        UID：{{myInfo.userid}}
-                    </div>
-              <div class="level" v-if='myInfo.level == 0'>{{$t('info.level')}}：{{$t('info.level0')}}</div>
-              <div class="level" v-if='myInfo.level == 1'>{{$t('info.level')}}：{{$t('info.level1')}}</div>
-              <div class="level" v-if='myInfo.level == 2'>{{$t('info.level')}}：{{$t('info.level2')}}</div>
-              <div class="level" v-if='myInfo.level == 3'>{{$t('info.level')}}：{{$t('info.level3')}}</div>
-              <div class="level" v-if='myInfo.level == 4'>{{$t('info.level')}}：{{$t('info.level4')}}</div>
-              <div class="level" v-if='myInfo.level == 5'>{{$t('info.level')}}：{{$t('info.level5')}}</div>
-                </div>
-            </div>
+<template >
+  <div class="content">
+    <div class="top">
+      <div class="left">
+        <img src="@/assets/image/tab1.png" v-if="myInfo.img_head == ''" alt>
+        <img :src="myInfo.img_head" v-if="myInfo.img_head != ''" alt>
+      </div>
+      <div class="right">
+        <div class="name">{{myInfo.username}}</div>
+        <div class="info">
+          <!-- <div class="uid" v-if="myInfo.other">UID：xxx</div> -->
+          <div class="uid">UID：{{myInfo.userid}}</div>
+
+          <div class="level" v-if="myInfo.level == 0">{{$t('info.level')}}：{{$t('info.level0')}}</div>
+          <div class="level" v-if="myInfo.level == 1">{{$t('info.level')}}：{{$t('info.level1')}}</div>
+          <div class="level" v-if="myInfo.level == 2">{{$t('info.level')}}：{{$t('info.level2')}}</div>
+          <div class="level" v-if="myInfo.level == 3">{{$t('info.level')}}：{{$t('info.level3')}}</div>
+          <div class="level" v-if="myInfo.level == 4">{{$t('info.level')}}：{{$t('info.level4')}}</div>
+          <div class="level" v-if="myInfo.level == 5">{{$t('info.level')}}：{{$t('info.level5')}}</div>
         </div>
-        <div class="bottom">
-            <div>
-                <span>
-                 {{ $t("info.yue")}}：   
-                </span>
-                <img src="@/assets/image/logo1.png" alt="">
-                <span>{{yemoney}}</span>
-            </div>
-            <div>
-                <span>
-                  {{ $t("info.Assets")}}：      
-                </span>
-                <img src="@/assets/image/logo1.png" alt="">
-                <span>{{zcmoney}}</span>
-            </div>
-        </div>
+      </div>
     </div>
+    <div class="bottom">
+      <div>
+        <span>{{ $t("info.yue")}}：</span>
+        <img src="@/assets/image/logo1.png" alt>
+        <span v-if="!myInfo.other">{{yemoney}}</span>
+
+        <span v-else>xxx</span>
+      </div>
+      <div>
+        <span>{{ $t("info.Assets")}}：</span>
+        <img src="@/assets/image/logo1.png" alt>
+        <span v-if="!myInfo.other">{{zcmoney}}</span>
+
+        <span v-else>xxx</span>
+      </div>
+    </div>
+  </div>
 </template>
 <script>
 export default {
@@ -55,6 +55,7 @@ export default {
       // this.myInfo  = this.info
       console.log(this.info, this.myInfo);
       this.myInfo = this.info.userinfo;
+      this.myInfo.other = this.info.other;
       this.yemoney = this.info.yemoney;
       this.zcmoney = this.info.zcmoney;
     }
@@ -65,6 +66,7 @@ export default {
         if (res.status == 1) {
           // this.$router.push({ path: "/index" });
           this.myInfo = res.result.userinfo;
+          this.myInfo.other = false;
           this.yemoney = res.result.yemoney;
           this.zcmoney = res.result.zcmoney;
         } else {
@@ -94,7 +96,7 @@ export default {
   // background-size: 100%;
   position: relative;
   background-position: 100% 100%;
-    background-size: 100% 100%;
+  background-size: 100% 100%;
   .top {
     display: flex;
     .left {

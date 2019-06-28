@@ -109,7 +109,7 @@ export default {
     return {
       finished: false,
       loading: false,
-            finisheds: false,
+      finisheds: false,
       loadings: false,
       num: 0,
       nums: 0,
@@ -163,12 +163,11 @@ export default {
     getMore: function() {
       this.finished = false;
       console.log(22222222222222222222);
-      
-      if(this.tabIndex == 2) {
-        this.getList(++this.num);
-      } else  if(this.tabIndex == 3){
-      this.getLists(++this.nums);
 
+      if (this.tabIndex == 2) {
+        this.getList(++this.num);
+      } else if (this.tabIndex == 3) {
+        this.getLists(++this.nums);
       }
 
       // this.nums = 0;
@@ -186,36 +185,36 @@ export default {
     },
     tab(index) {
       this.tabIndex = index;
-      if (index == 2) {
-                      this.finished=false,
-      this.loading=false,
-            this.finisheds=false,
-      this.loadings= false,
-        this.nums = 0;
-        this.num = 0;
-        // this.getList(this.num);
-        this.$api.getInfo({}).then(res => {
+              this.$api.getInfo({}).then(res => {
           if (res.status == 1) {
             this.info = res.result;
           } else {
           }
         });
-      } else if (index == 3) {
+      if (index == 2) {
+        (this.finished = false),
+          (this.loading = false),
+          (this.finisheds = false),
+          (this.loadings = false),
+          (this.nums = 0);
+        this.num = 0;
+        // this.getList(this.num);
 
-              this.finished=false,
-      this.loading=false,
-            this.finisheds=false,
-      this.loadings= false,
-        this.nums = 0;
+      } else if (index == 3) {
+        (this.finished = false),
+          (this.loading = false),
+          (this.finisheds = false),
+          (this.loadings = false),
+          (this.nums = 0);
         this.num = 0;
         // this.getLists(this.nums);
 
-        this.$api.getInfo({}).then(res => {
-          if (res.status == 1) {
-            this.info = res.result;
-          } else {
-          }
-        });
+        // this.$api.getInfo({}).then(res => {
+        //   if (res.status == 1) {
+        //     this.info = res.result;
+        //   } else {
+        //   }
+        // });
       }
     },
     next() {
@@ -227,6 +226,7 @@ export default {
           .then(res => {
             if (res.status == 1) {
               this.info = res.result;
+              this.info.other = true;
               this.show = !this.show;
             } else {
             }
@@ -239,6 +239,8 @@ export default {
           .then(res => {
             if (res.status == 1) {
               this.info = res.result;
+              this.info.other = true;
+
               this.show1 = !this.show1;
             } else {
             }
@@ -300,7 +302,7 @@ export default {
     },
     getLists(num) {
       console.log(num);
-      
+
       this.$api
         .myudblist({
           type: 5,
@@ -314,8 +316,8 @@ export default {
             } else {
               //否则合并数组
               this.noteLists = this.noteLists.concat(res.result);
-              console.log(this.noteLists  ,'jjj');
-              
+              console.log(this.noteLists, "jjj");
+
               this.loading = false;
             }
           } else if (res.status != 1) {
@@ -328,9 +330,8 @@ export default {
   mounted() {
     document.title = "互转";
     this.http = localStorage.getItem("http");
-        this.getLists(this.nums);
-        this.getList(this.num);
-
+    this.getLists(this.nums);
+    this.getList(this.num);
   }
 };
 </script>
@@ -345,7 +346,7 @@ export default {
   .top {
     width: 100%;
     height: 1.4rem;
-    
+
     padding: 0.2rem 0 0;
     display: flex;
     justify-content: center;

@@ -2,23 +2,24 @@
   <div class="login">
     <div class="content">
       <div class="item">
+        <input type="file" @change="changeImage($event)">
         <div class="left">头像</div>
         <div class="right">
-          <img src="@/assets/image/tab1.png" alt class="img1">
+          <img :src=myInfo.img_head alt class="img1">
           <img src="@/assets/image/jiantou.png" alt class="img2">
         </div>
       </div>
-      <div class="item">
+      <div class="item" @click="chooseName">
         <div class="left">昵称</div>
         <div class="right">
-           <span>select*from ysk_use...</span>
+          <span>{{myInfo.username}}</span>
           <img src="@/assets/image/jiantou.png" alt class="img2">
         </div>
       </div>
       <div class="item">
         <div class="left">邮箱号</div>
         <div class="right">
-           <span>17788523690@163.com</span>
+          <span>{{myInfo.account}}</span>
           <img src="@/assets/image/jiantou.png" alt class="img2">
         </div>
       </div>
@@ -26,7 +27,7 @@
       <div class="item">
         <div class="left">二维码</div>
         <div class="right">
-          <img src="@/assets/image/Zer.png" alt class="img3">
+          <img :src=code alt class="img3">
           <img src="@/assets/image/jiantou.png" alt class="img2">
         </div>
       </div>
@@ -42,13 +43,93 @@ export default {
       about: "",
       http: "",
       logo: "",
-      phone: ""
+      phone: "",
+      myInfo:{},
+      code:'',
+      imgInfo:'' , //file对象，
+      imgString:''
     };
   },
-  methods: {},
+  methods: {
+    chooseName() {
+      this.$router.push({ path: "/chooseName" });
+
+    },
+    init() {
+      this.$api.getInfo({}).then(res => {
+        if (res.status == 1) {
+          // this.$router.push({ path: "/index" });
+          this.myInfo = res.result.userinfo;
+        } else {
+        }
+      });
+      this.$api.Sharecode().then(res=>{
+        this.code = res.result
+      })
+    },
+        changeImage(e) {
+      console.log(1);
+
+      this.file = e.target.files[0];
+      // this.form = new FormData();
+
+      // form.append("head", file);
+      var reader = new FileReader();
+      var that = this;
+      that.imgInfo=e.target.files[0]
+
+      reader.readAsDataURL(that.file);
+      reader.onload = function(e) {
+        const formd = new FormData();
+        formd.append("uploadfile", that.imgInfo);
+        console.log(formd);
+        that
+          .$axios({
+            url: "http://udb.red/User/upImg",
+            method: "post",
+            data: formd,
+            headers: {
+              "Content-Type": "multipart/form-data"
+            }
+          })
+          //then里面跟一个成功回调函数
+          .then(function(resp) {
+            if (resp.data.status == 1) {
+              that.imgString  =resp.data.result;
+              // console.log(that.imgString);
+
+              // $.toast("成功", "text");
+
+              that.chooseImg(resp.data.result)
+            } else {
+              // $.toast("无法加载", "text");
+            }
+          })
+          // catch中跟一个失败回调函数
+          .catch(function(error) {
+            console.log(error);
+          });
+      };
+    },
+    chooseImg(img) {
+            this.$api
+        .updateinfo({
+          headerimg: img
+        })
+        .then(res => {
+          if (res.status == 1) {
+            this.$toast(res.message);
+            // setTimeout(() => {
+            //   that.$router.back()
+            // }, 1500);
+            this.init()
+          }
+        });
+    }
+  },
   mounted() {
     document.title = "资料";
-    this.http = localStorage.getItem("http");
+    this.init();
   }
 };
 </script>
@@ -78,6 +159,17 @@ export default {
       justify-content: space-between;
       align-items: center;
       border-bottom: 0.01rem solid #eeeeee;
+      position: relative;
+      input {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        right: 0; 
+        z-index: 9;
+        opacity: 0;
+      }
       .left {
         font-size: 0.16rem;
         font-family: SourceHanSansSC-Regular;
@@ -101,7 +193,6 @@ export default {
         }
         span {
           margin-right: 0.12rem;
-
         }
       }
     }

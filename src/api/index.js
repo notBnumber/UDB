@@ -160,6 +160,14 @@ class API {
   getpostnewdata = params => {
     return http.post("MyApi/getpostnewdata", params);
   };
+  // 修改昵称头像 User/updateinfo
+  updateinfo = params => {
+    return http.post("User/updateinfo", params);
+  };
+    // 领取收益
+    geteanring = params => {
+      return http.post("myApi/geteanring", params);
+    };
 }
 
 export default new API();

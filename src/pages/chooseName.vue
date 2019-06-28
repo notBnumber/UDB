@@ -4,7 +4,7 @@
       <input type="text" placeholder="请输入姓名" v-model="content">
       <img src="@/assets/image/delName.png" alt v-if="content!=''" @click="del">
     </div>
-    <div class="btn df" :class="[kong == true && 'active']">确认</div>
+    <div class="btn df" @click="btn" :class="[kong == true && 'active']">确认</div>
   </div>
 </template>
 <script>
@@ -25,16 +25,29 @@ export default {
     }
   },
   methods: {
-    del() {
-      this.content = ''
+    btn() {
+      let that = this
+      this.$api
+        .updateinfo({
+          nickname: this.content
+        })
+        .then(res => {
+          if (res.status == 1) {
+            this.$toast(res.message);
+            setTimeout(() => {
+              that.$router.back()
+            }, 1500);
+          }
+        });
     },
-    init() {
-
-    }
+    del() {
+      this.content = "";
+    },
+    init() {}
   },
   mounted() {
     document.title = "设置";
-    this.init()
+    this.init();
   }
 };
 </script>
@@ -80,11 +93,15 @@ export default {
     font-family: SourceHanSansSC-Regular;
     font-weight: 400;
     color: rgba(255, 255, 255, 1);
-    opacity: .5;
+    opacity: 0.5;
   }
   .active {
-    background:linear-gradient(90deg,rgba(58,48,207,1),rgba(65,104,238,1));
-    color: black; 
+    background: linear-gradient(
+      90deg,
+      rgba(58, 48, 207, 1),
+      rgba(65, 104, 238, 1)
+    );
+    color: black;
     opacity: 1;
   }
 }

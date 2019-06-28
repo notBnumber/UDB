@@ -1,6 +1,6 @@
 <template >
   <div class="content">
-    <div class="top">
+    <div class="top" @click="toInfo">
       <div class="info">
         <div class="left">
           <img
@@ -258,6 +258,10 @@ export default {
     //页面销毁时关闭长连接
   },
   methods: {
+    toInfo() {
+      this.$router.push({ path: "/myInfo" });
+
+    },
     setting() {
       this.$router.push({ path: "/setting" });
     },
