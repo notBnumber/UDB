@@ -4,7 +4,7 @@
       <div class="info">
         <div class="left">
           <img
-            src="@/assets/image/tab1.png"
+            src="@/assets/image/defaulticon.png"
             v-if="myInfo.img_head == ''"
             alt=""
           >

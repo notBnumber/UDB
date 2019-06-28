@@ -189,7 +189,8 @@ module.exports = {
         udbtz:'UDB',
         futou:'cast again',
         topup:'top-up',
-        old:'old data'
+        old:'old data',
+        shopcenter:'shop center',
     },
     exchange:{
         list: [

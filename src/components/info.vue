@@ -2,7 +2,7 @@
     <div class="content">
         <div class="top">
             <div class="left">
-                <img src="@/assets/image/tab1.png"  v-if="myInfo.img_head == ''" alt="">
+                <img src="@/assets/image/defaulticon.png"  v-if="myInfo.img_head == ''" alt="">
                  <img :src=myInfo.img_head   v-if="myInfo.img_head != ''" alt="">
             </div>
             <div class="right">
