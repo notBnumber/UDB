@@ -62,7 +62,7 @@
         <div class="content">
           <div class="item" v-for="(item,index) in noteList" :key="index">
             <div>{{item.get_type == 0?'余额转出':'余额转入'}}</div>
-            <div class="money" :class="[item.state ==0 && 'active']">{{item.id}}</div>
+            <div class="money" :class="[item.state ==0 && 'active']">{{item.get_nums}}</div>
             <div>{{item.now_nums_get}}</div>
             <div>{{item.get_time}}</div>
           </div>
@@ -87,7 +87,7 @@
         <div class="content">
           <div class="item" v-for="(item,index) in noteLists" :key="index">
             <div>{{item.get_type == 0?'UDB转出':'UDB转入'}}</div>
-            <div class="money" :class="[item.state ==0 && 'active']">{{item.id}}</div>
+            <div class="money" :class="[item.state ==0 && 'active']">{{item.get_nums}}</div>
             <div>{{item.now_nums_get}}</div>
             <div>{{item.get_time}}</div>
           </div>
