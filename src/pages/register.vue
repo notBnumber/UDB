@@ -224,6 +224,7 @@ export default {
             if (res.status == 1) {
               this.getTime(num);
               console.log(res);
+                this.$toast(res.message);
             }
           });
       }
