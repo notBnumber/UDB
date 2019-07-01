@@ -113,12 +113,16 @@ export default {
   },
   methods: {
     getMoney() {
+        let t=this;
       this.$api.geteanring({
         money:this.moneys
       }).then(res=>{
         if(res.status == 1) {
         this.$toast(res.message)
 
+        setTimeout(function () {
+            t.init();
+        },800)
         }
       })
     },
@@ -272,21 +276,21 @@ export default {
   position: relative;
   width: 100%;
   height: 2.55rem;
-  background: url("http://udb.red/udbapp/img/banner.png") no-repeat;
+  background: url("http://app.udb.red/img/banner.png") no-repeat;
   background-size: 100%;
   .moneys {
     border-radius: 50%;
     overflow: hidden;
       background: url("~@/assets/image/yuanquan.png") no-repeat;
-  background-size: 100%;
+  background-size: 120%;
     position: absolute;
-    width: .46rem;
+    width: .48rem;
     height: .46rem;
-font-size:.09rem;
+font-size:.16rem;
 font-family:SourceHanSansSC-Regular;
 font-weight:400;
 color:rgba(255,255,255,1);
-left: .8rem;
+left: .55rem;
 bottom: 1.08rem;
   }
   .select {
@@ -324,7 +328,7 @@ bottom: 1.08rem;
   width: 3.45rem;
   height: 1.6rem;
   border-radius: 0.1rem;
-  background: url("http://udb.red/udbapp/img/bg.png") no-repeat;
+  background: url("http://app.udb.red/img/bg.png") no-repeat;
   background-size: 100%;
   position: relative;
   left: 0;

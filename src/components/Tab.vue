@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="wz-tab">
     <router-link to="/index" tag="div" class="tab-item">
-      <img class="tab-icon" v-if="tabIndex==0" src="@/assets/img/icon_a01_.png" alt="">
+      <img class="tab-icon" v-if="tabIndex==0" src="@/assets/img/icon_a01.png" alt="">
       <img class="tab-icon" v-else src="@/assets/img/icon_a04.png" alt="">
       <span class="tab-text" :class="[tabIndex==0 && 'tab-text-sel']">{{$t("tabbar.index") }}</span>
     </router-link>

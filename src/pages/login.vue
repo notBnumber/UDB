@@ -153,7 +153,7 @@ i {
 }
 
 .login {
-  background: url("http://udb.red/udbapp/img/big.png") no-repeat;
+  background: url("http://app.udb.red/img/big.png") no-repeat;
   width: 100%;
   height: 100vh;
   padding: 1rem 0.15rem;

@@ -301,7 +301,7 @@ export default {
 <style lang="scss" scoped>
 .login {
   //   background: url("~@/assets/image/2.jpg") no-repeat;
-  background: url("http://udb.red/udbapp/img/big.png") no-repeat;
+  background: url("http://app.udb.red/img/big.png") no-repeat;
 
   width: 100%;
   min-height: 100vh;
