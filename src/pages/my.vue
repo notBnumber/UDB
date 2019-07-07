@@ -177,24 +177,7 @@
             ></div>
         </div>
       </div>
-      <div
-        class="item"
-        @click='setting'
-      >
-        <div class="itemContent">
-          <div class="lt">
-            <img
-              src="@/assets/image/shezhi.png"
-              alt=""
-            >
-            <span>{{$t('my.setting')}}</span>
-          </div>
-          <div class="rt"><img
-              src="@/assets/image/jiantou.png"
-              alt=""
-            ></div>
-        </div>
-      </div>
+
       <div
         class="item"
         @click='task'
@@ -202,7 +185,7 @@
         <div class="itemContent">
           <div class="lt">
             <img
-              src="@/assets/image/qianbao.png"
+              src="@/assets/image/tousu.png"
               alt=""
             >
             <span> {{$t('my.Feedback')}}</span>
@@ -231,7 +214,26 @@
             ></div>
         </div>
       </div>
+      <div
+              class="item"
+              @click='setting'
+      >
+        <div class="itemContent">
+          <div class="lt">
+            <img
+                    src="@/assets/image/shezhi.png"
+                    alt=""
+            >
+            <span>{{$t('my.setting')}}</span>
+          </div>
+          <div class="rt"><img
+                  src="@/assets/image/jiantou.png"
+                  alt=""
+          ></div>
+        </div>
+      </div>
     </div>
+
     <Tab :tabIndex="3"></Tab>
   </div>
 </template>

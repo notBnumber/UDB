@@ -66,7 +66,7 @@ export default {
     return new Promise(async (resolve, reject) => {
       vm.$toast.loading({
         mask: true,
-        duration: 0,    
+        duration: 0,
 
       });
       try {
@@ -94,10 +94,12 @@ export default {
   },
   post(url, params = {}, back = true) {
     return new Promise(async (resolve, reject) => {
-      vm.$toast.loading({
-        mask: true,
-        duration: 0,    
-      });
+        if (url!='PublicApi/chardata'){
+            vm.$toast.loading({
+                mask: true,
+                duration: 0,
+            });
+        }
       try {
         if (localStorage.getItem('locale') == 'zh' || localStorage.getItem('locale') == null) {
           // params.i = ''

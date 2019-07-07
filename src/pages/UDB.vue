@@ -77,11 +77,30 @@ export default {
           name: "备注"
         }
       ],
-      noteList: []
+      noteList: [],
+      zong: [330, 340, 660, 70, 770, 80],
+      buy: [30, 44, 34, 65, 66, 60],
+      sale: [220, 330, 40, 40, 50, 60],
+      price: [9.59, 9.59, 9.59, 9.59, 9.59, 9.59],
     };
   },
   created() {},
   methods: {
+      getchardata() {
+          this.$api
+              .getchardata({})
+              .then(res => {
+                  if (res.status == 1) {
+                      //console.log(res.result,'得到的')
+                      this.zong = res.result.udbzong;
+                      this.buy = res.result.udbbuy;
+                      this.sale = res.result.udbsell;
+                      this.price = res.result.udb_price;
+                  } else {
+                      this.$toast(res.message);
+                  }
+              });
+      },
     open(index) {
       if (index == 0) {
         this.$router.push({ path: "/jiecang" });
@@ -139,7 +158,7 @@ export default {
     },
     drawLine(arrs) {
       console.log(222);
-
+      let t=this;
       // 基于准备好的dom，初始化echarts实例
       var colors = ["#5793f3", "#d14a61", "#675bba"];
       let myChart = this.$echarts.init(document.getElementById("myChart"));
@@ -154,11 +173,10 @@ export default {
         dataset: {
           source: [
             arrs,
-
-            [this.$t("udbInfo.zong"), 41.1, 30.4, 65.1, 53.3, 83.8, 98.7],
-            [this.$t("udbInfo.buy"), 86.5, 92.1, 85.7, 83.1, 73.4, 55.1],
-            [this.$t("udbInfo.sale"), 24.1, 67.2, 79.5, 86.4, 65.2, 82.5],
-            [this.$t("udbInfo.price"), 55.2, 67.1, 69.2, 72.4, 53.9, 39.1]
+              [this.$t("udbInfo.zong"), t.zong[0], t.zong[1], t.zong[2], t.zong[3], t.zong[4], t.zong[5]],
+              [this.$t("udbInfo.buy"), t.buy[0], t.buy[1], t.buy[2], t.buy[3], t.buy[4], t.buy[5]],
+              [this.$t("udbInfo.sale"), t.sale[0], t.sale[1], t.sale[2], t.sale[3], t.sale[4], t.sale[5]],
+              [this.$t("udbInfo.price"), t.price[0], t.price[1], t.price[2], t.price[3], t.price[4], t.price[5]]
           ]
         },
         xAxis: { type: "category" },
@@ -174,6 +192,7 @@ export default {
     },
     // 实时变化
     getDateArray(endDate, splitTime, count) {
+        this.getchardata();
       if (!endDate) {
         endDate = new Date();
       }
@@ -328,7 +347,7 @@ export default {
     this.init();
     this.getList(this.num);
 
-    this.timeArr = setInterval(this.getDateArray, 50000);
+    this.timeArr = setInterval(this.getDateArray, 2000);
   },
   destroyed() {
     console.log("离开");

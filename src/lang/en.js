@@ -330,12 +330,17 @@ module.exports = {
       tip2:'Feedback content'
     },
     old :{
-      old1:'Please enter the old amount',
-      old2:'Please enter old assets',
-
+      old1:'Please enter phone',
+      old2:'Please enter the old amount',
+      old5:'Initial gold assets',
+      old6:'The remaining money for now',
       old3:'Please enter the old passport',
-
-      old4:'Please enter the old deposit',
+      old4:'Please enter the physical deposit',
+      tip:'Please submit it correctly and truly. If it does not belong to the background audit query data, this number will become invalid',
+      tipiswait:'waiting',
+      tipiispass:'OK',
+      tipisrefuse:'NO,please commint again',
+      checkphone:'The cell phone number is illegal',
 
     }
 }

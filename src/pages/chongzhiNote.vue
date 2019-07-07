@@ -24,13 +24,13 @@
     </div>
     <div class="duihuan" v-if="tabIndex==0">
       <div class="title"  @click="copy">
-        <div class="mon df">{{$t('topup.upload')}}</div>
+        <!--<div class="mon df">{{$t('topup.upload')}}</div>-->
       <input  id="hidden" type="text"   v-model="address">
-        <div class="mon df">{{$t('topup.address')}}</div>
+        <div class="mon df copyaddress">{{$t('topup.address')}}</div>
 
         <!-- <input type="text"  disabled  class="inp" v-model="address" id="hidden"> -->
       </div>
-      <div class="tip" @click="rule">{{$t('topup.title')}}</div>
+      <div class="tip tipcolor" @click="rule">({{$t('topup.title')}})</div>
       <div class="title">
         <div class="mon df">{{$t('topup.money')}}</div>
         <input type="text" :placeholder="$t('topup.tip1')" class="inp" v-model="moneynum">
@@ -239,6 +239,17 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+  .copyaddress{
+    border-radius: 0.1rem;
+    background: linear-gradient(
+                    90deg,
+                    rgba(58, 48, 207, 1),
+                    rgba(65, 104, 238, 1)
+    );
+  }
+  .tipcolor{
+    color: #0c69dc;
+  }
 .login {
   width: 100%;
   min-height: 100vh;
@@ -315,18 +326,19 @@ export default {
       padding-left: .2rem;
 
       .mon {
-        height: 100%;
-        width: 0.6rem;
+        height: 70%;
+        width: 0.8rem;
         font-size: 0.15rem;
         font-family: SourceHanSansCN-Regular;
         font-weight: 400;
-        color: rgba(51, 51, 51, 1);
+        color: white;
+        margin-left: 0.1rem;
       }
       input {
         flex: 1;
         height: 100%;
         text-align: left;
-        padding-left: 0.2rem;
+        /*padding-left: 0.2rem;*/
         font-size: 0.13rem;
         font-family: SourceHanSansCN-Regular;
         font-weight: 400;

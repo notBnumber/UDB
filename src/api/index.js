@@ -168,6 +168,10 @@ class API {
     geteanring = params => {
       return http.post("myApi/geteanring", params);
     };
+    //获取实时表数据
+    getchardata = params => {
+        return http.post("PublicApi/chardata", params);
+    };
 }
 
 export default new API();

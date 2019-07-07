@@ -6,7 +6,9 @@
 
     <div class="duihuan">
       <input type="text" v-model="old1" :placeholder="$t('old.old1')">
+      <input type="text" v-model="old5" :placeholder="$t('old.old5')">
       <input type="text" v-model="old2" :placeholder="$t('old.old2')">
+      <input type="text" v-model="old6" :placeholder="$t('old.old6')">
       <input type="text" v-model="old3" :placeholder="$t('old.old3')">
       <input type="text" v-model="old4" :placeholder="$t('old.old4')">
 
@@ -14,13 +16,22 @@
         <div class="btn df" @click="submit">{{$t('task.btn')}}</div>
       </div>
     </div>
+    <div class="tipss">*&nbsp;{{$t('old.tip')}}</div>
     <div class="detail">
       <div class="item">
-        <div class="left">金额:</div>
+        <div class="left">手机号:</div>
+        <div class="right">{{info.phone}}</div>
+      </div>
+      <div class="item">
+        <div class="left">初入金 余额:</div>
         <div class="right">{{info.yue}}</div>
       </div>
       <div class="item">
-        <div class="left">资产:</div>
+        <div class="left">现余余额:</div>
+        <div class="right">{{info.nowyue}}</div>
+      </div>
+      <div class="item">
+        <div class="left">初入金 资产:</div>
         <div class="right">{{info.zc}}</div>
       </div>
       <div class="item">
@@ -28,8 +39,8 @@
         <div class="right">{{info.tongzheng}}</div>
       </div>
       <div class="item">
-        <div class="left">保证金:</div>
-        <div class="right">{{info.maring}}</div>
+        <div class="left">实物通证:</div>
+        <div class="right">{{info.nowtz}}</div>
       </div>
       <div class="item" v-if="info.state == 2">
         <div class="left">备注:</div>
@@ -37,7 +48,9 @@
       </div>
       <div class="item">
         <div class="left">状态:</div>
-        <div class="right">{{info.state}}</div>
+        <div class="right" v-if="info.state==0">待审核</div>
+        <div class="right"v-if="info.state==1">已通过</div>
+        <div class="right"v-if="info.state==2">已拒绝，请重新提交</div>
       </div>
       <div class="item">
         <div class="left">添加时间:</div>
@@ -63,7 +76,10 @@ export default {
       old3: "",
 
       old4: "",
-      info: {}
+      old5: "",
+      old6: "",
+      info: {},
+      phoneRegexp: /^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\d{8}$/
     };
   },
   created() {},
@@ -85,12 +101,18 @@ export default {
     },
     submit() {
       let that = this;
+        if (!this.phoneRegexp.test(this.old1)) {
+            this.$toast(this.$t("old.checkphone"));
+            return;
+        }
       this.$api
         .postolddata({
-          yue: this.old1,
-          zc: this.old2,
+          yue: this.old2,
+          phone: this.old1,
           tongzheng: this.old3,
-          maring: this.old4
+          nowtz: this.old4,
+          zc: this.old5,
+          nowyue: this.old6,
         })
         .then(res => {
           if (res.status == 1) {
@@ -109,6 +131,15 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+  .tipss {
+    width: 100%;
+    padding: 0 0.16rem;
+    margin-top: 0.26rem;
+    font-size: 0.13rem;
+    font-family: SourceHanSansSC-Regular;
+    font-weight: 400;
+    color: #f90101;
+  }
 .login {
   width: 100%;
   min-height: 100vh;
