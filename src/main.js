@@ -118,9 +118,10 @@ import { RadioGroup, Radio } from 'vant';
 Vue.use(RadioGroup);
 Vue.use(Radio);
 import { Cell, CellGroup } from 'vant';
-
+import { Lazyload } from 'vant';
+Vue.use(Lazyload);
 Vue.use(Cell);
-Vue.use(CellGroup); 
+Vue.use(CellGroup);
 
 // echarts
 import echarts from 'echarts'

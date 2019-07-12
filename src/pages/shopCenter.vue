@@ -1,18 +1,25 @@
 <template lang="html">
   <div class="content">
-    <div class="item" v-for='item in list'>
-      <div class="left">
-        <img src="@/assets/image/qianbao.png" alt="">
-        <div class='top'>
-          <div class="name">UDB通证提现</div>
-          <div class="money">提现金额：125UDB</div>
-        </div>
-      </div>
-      <div class="right">
-        <div class="state">已通过</div>
-        <div class="time">2019-02-27  14:52:13</div>
-      </div>
+    <div class="swiper">
+      <van-swipe :autoplay="2000" :loop="true" indicator-color="#fff">
+        <van-swipe-item v-for="(image, index) in SwiperImg" :key="index">
+          <img :src="image" >
+        </van-swipe-item>
+      </van-swipe>
     </div>
+    <!--<div class="item" v-for='item in list'>-->
+      <!--<div class="left">-->
+        <!--<img src="@/assets/image/qianbao.png" alt="">-->
+        <!--<div class='top'>-->
+          <!--<div class="name">UDB通证提现</div>-->
+          <!--<div class="money">提现金额：125UDB</div>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div class="right">-->
+        <!--<div class="state">已通过</div>-->
+        <!--<div class="time">2019-02-27  14:52:13</div>-->
+      <!--</div>-->
+    <!--</div>-->
     <div class="no df" v-if='list.length == 0'>
       <img src="@/assets/image/kong.png" alt="">
       <span>暂未开放</span>
@@ -31,6 +38,13 @@ export default {
   components: { Tab },
   data() {
     return {
+        SwiperImg: [
+            "http://t2.hddhhn.com/uploads/tu/201812/661/3.jpg",
+            "http://t2.hddhhn.com/uploads/tu/201812/661/4.jpg",
+            "http://t2.hddhhn.com/uploads/tu/201812/661/6.jpg",
+            "http://t2.hddhhn.com/uploads/tu/201812/661/7.jpg"
+        ],
+        currentIndex: 0,
       active: 0,
       mask: false,
       previewImg: "",
@@ -99,6 +113,27 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .swiper {
+    width: 100%;
+    height: 1.4rem;
+    .van-swipe{
+      width: 100%;height: 100%;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    .custom-indicator {
+      position: absolute;
+      right: 5px;
+      bottom: 5px;
+      padding: 2px 5px;
+      font-size: 12px;
+      color: #fff;
+      background: #fff;
+    }
+  }
 .content {
   width: 100%;
   background-color: #fff;

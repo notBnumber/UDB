@@ -18,7 +18,7 @@ import myShare from '@/pages/myShare' //我要分享
 // import shoucang from '@/pages/shoucang' //我的收藏
 // import liuyan from '@/pages/liuyan' //留言反馈
 // import ii from '@/pages/ii' //测试
-import posterCenter from '@/pages/posterCenter' //海报中心
+import shopCenter from '@/pages/shopCenter' //海报中心
 import my from '@/pages/my' //个人中心
 import our from '@/pages/our' //个人中心
 import myInfo from '@/pages/myInfo' //我的资料
@@ -168,9 +168,9 @@ export default new Router({
     //   component: ii
     // },
     {
-      path: '/posterCenter',
-      name: 'posterCenter',
-      component: posterCenter
+      path: '/shopCenter',
+      name: 'shopCenter',
+      component: shopCenter
     },
     {
       path: '/my',
